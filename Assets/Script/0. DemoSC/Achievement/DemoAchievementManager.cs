@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +17,8 @@ public class DemoAchievementManager : MonoBehaviour
     public Image[] reward1Img; //보상 이미지1
     public Image[] reward2Img; //보상 이미지2
     public Sprite[] reward1Sprite; //보상 스프라이트 0:멸치 1:진주 2:멸치보석함의상 3:진주보석함의상 4:멸치보석함무기 5:진주보석함무기
+    public Image pearImg; //상단바 진주
+    public Image anchovyImg; //상단바 멸치
     public Text pageCountTx;
     public Button progressBt;
     public Button completeBt;
@@ -39,6 +40,9 @@ public class DemoAchievementManager : MonoBehaviour
 
     private List<ProgressData> progressDataList;
     private List<CompleteData> completeDataList;
+
+    Image rewardInstace1;
+    Image rewardInstace2;
     void Awake()
     {
         progressDataList = new List<ProgressData>();
@@ -225,29 +229,24 @@ public class DemoAchievementManager : MonoBehaviour
     }
     IEnumerator RewardMoveManager(int rewardBtNumber,string rewardName1,string rewardName2)
     {
+        rewardInstace1 = Instantiate(reward1Img[rewardBtNumber],reward1Img[rewardBtNumber].transform.parent); //복제
+        //튀는 효과
+        int radom = Random.Range(-10000, 10000);
+        rewardInstace1.GetComponent<Rigidbody2D>().gravityScale = 50;
+        rewardInstace1.GetComponent<Rigidbody2D>().AddForce(new Vector2(radom, 15000));
+
+        if (rewardName2 != "")
+        {
+            rewardInstace2 = Instantiate(reward2Img[rewardBtNumber + 1], reward2Img[rewardBtNumber].transform.parent); //복제
+            //튀는 효과
+            radom = Random.Range(-8000, 8000);
+            rewardInstace2.GetComponent<Rigidbody2D>().gravityScale = 50;
+            rewardInstace2.GetComponent<Rigidbody2D>().AddForce(new Vector2(radom, 15000));
+        }
+        yield return new WaitForSeconds(1f);
         lockBtImg[rewardBtNumber].color = new Color(lockBtImg[rewardBtNumber].color.r, lockBtImg[rewardBtNumber].color.g, lockBtImg[rewardBtNumber].color.b,
             0f);
         lockBtImg[rewardBtNumber].gameObject.SetActive(true);
-        int size= 70;
-        for (int i = 0; i < 25; i++) //위로 올라가기
-        {
-            size += 4;
-            progressRewardTx[rewardBtNumber].gameObject.SetActive(false);
-            reward1Img[rewardBtNumber].transform.localPosition = new Vector2(reward1Img[rewardBtNumber].transform.localPosition.x,
-                reward1Img[rewardBtNumber].transform.localPosition.y + 5);
-            reward1Img[rewardBtNumber].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size);
-            reward1Img[rewardBtNumber].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size);
-
-            if (rewardName2 != "")
-            {
-                progressRewardTx2[rewardBtNumber].gameObject.SetActive(false);
-                reward2Img[rewardBtNumber].transform.localPosition = new Vector2(reward2Img[rewardBtNumber].transform.localPosition.x,
-                    reward2Img[rewardBtNumber].transform.localPosition.y + 5);
-                reward2Img[rewardBtNumber].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, size);
-                reward2Img[rewardBtNumber].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, size);
-            }
-            yield return new WaitForFixedUpdate();
-        }
         yield return new WaitForSeconds(0.2f);
         if (rewardName1 != "멸치" && rewardName1 != "진주")
         {
@@ -262,63 +261,14 @@ public class DemoAchievementManager : MonoBehaviour
     }
     void RewardMove(int rewardNumer, string rewardName1, string rewardName2) //업데이트 용
     {
-        int x=0,y = 0;
-        int x2 = 0;
-        float speed = 40f;
-        float speed2 = 40f;
-        if (rewardNumer == 0 || rewardNumer == 1 || rewardNumer == 2)
-        {
-            //위치 조정
-            if (rewardName1 == "멸치")
-                x = 150; //335
-            if (rewardName1 == "진주")
-                x = 550;
-            y = 350 + rewardNumer * 250;
-            x2 = 150;
-            if(rewardName2!="") //스피드 조정
-                speed = 40f + (rewardNumer + 3f);
-        }
-        if (rewardNumer == 3 || rewardNumer == 4 || rewardNumer == 5)
-        {
-            //위치 조정
-            if (rewardName1 == "멸치")
-                x = -850; //335
-            if (rewardName1 == "진주")
-                x = -450;
-            x2 = -850;
-            y = 350 + (rewardNumer-3) * 250;
-            if (rewardName2 != "") //스피드 조정
-                speed2 = 40f + (rewardNumer + 3f);
-        }
-        //첫 번째 보상 이동
-        reward1Img[rewardNumer].transform.localPosition = Vector2.MoveTowards(new Vector2(reward1Img[rewardNumer].transform.localPosition.x,
-            reward1Img[rewardNumer].transform.localPosition.y), new Vector2(x, y), speed);
-        if (rewardName2 != "") //두 번째 보상 이동
-            reward2Img[rewardNumer].transform.localPosition = Vector2.MoveTowards(new Vector2(reward2Img[rewardNumer].transform.localPosition.x,
-                reward2Img[rewardNumer].transform.localPosition.y), new Vector2(x2, y), speed2);
-        if (reward1Img[rewardNumer].transform.localPosition.y + 500 > y) //상단바 애니메이션 시작
-        {
-            if (rewardName1 == "진주")
-                pearlAnim.SetBool("isGet", true);
-            if (rewardName1 == "멸치")
-                anchovyAnim.SetBool("isGet", true);
-            if (rewardName2 != "")
-                anchovyAnim.SetBool("isGet", true);
-        }
-        if (reward1Img[rewardNumer].transform.localPosition.y == y) //보상 애니메이션 종료
-        {
-            reward1Img[rewardNumer].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 70);
-            reward1Img[rewardNumer].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 70);
-            reward2Img[rewardNumer].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 70);
-            reward2Img[rewardNumer].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 70);
-            reward1Img[rewardNumer].transform.localPosition = new Vector2(-57, 44);
-            reward2Img[rewardNumer].transform.localPosition = new Vector2(-57, -37);
-            progressRewardTx[rewardNumer].gameObject.SetActive(true);
-            progressRewardTx2[rewardNumer].gameObject.SetActive(true);
-            isReward[rewardNumer] = false;
-            InputData();
-            PageChange();
-        }
+        if (rewardName1 == "멸치")
+            rewardInstace1.transform.position = Vector2.MoveTowards(rewardInstace1.transform.position, anchovyImg.transform.position, 10f);
+        else if (rewardName1 == "진주")
+            rewardInstace1.transform.position = Vector2.MoveTowards(rewardInstace1.transform.position, pearImg.transform.position, 10f);
+        if(rewardName2!="")
+            rewardInstace2.transform.position = Vector2.MoveTowards(rewardInstace2.transform.position, pearImg.transform.position, 10f);
+        InputData();
+        PageChange();
     }
     void RewardGetAndDataSetting(int rewardBtNumber)
     {
