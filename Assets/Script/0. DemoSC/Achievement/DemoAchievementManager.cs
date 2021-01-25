@@ -17,6 +17,7 @@ public class DemoAchievementManager : MonoBehaviour
     public Image[] reward1Img; //보상 이미지1
     public Image[] reward2Img; //보상 이미지2
     public Sprite[] reward1Sprite; //보상 스프라이트 0:멸치 1:진주 2:멸치보석함의상 3:진주보석함의상 4:멸치보석함무기 5:진주보석함무기
+    public GameObject[] instancePostion; //보상 이미지 인스턴스의 부모
     public Image pearImg; //상단바 진주
     public Image anchovyImg; //상단바 멸치
     public Text pageCountTx;
@@ -41,8 +42,6 @@ public class DemoAchievementManager : MonoBehaviour
     private List<ProgressData> progressDataList;
     private List<CompleteData> completeDataList;
 
-    Image rewardInstace1;
-    Image rewardInstace2;
     void Awake()
     {
         progressDataList = new List<ProgressData>();
@@ -56,14 +55,6 @@ public class DemoAchievementManager : MonoBehaviour
         isProgressPage = true;
         CategoryChange(progressBt, completeBt);
         PageChange();
-    }
-    void Update()
-    {
-        for(int i=0; i<6; i++)
-        {
-            if (isReward[i])
-                RewardMove(i, progressDataList[6 * thisPage + i].rewardname, progressDataList[6 * thisPage + i].rewardname2);
-        }
     }
     public void ProgressBtClick()
     {
@@ -227,9 +218,11 @@ public class DemoAchievementManager : MonoBehaviour
                 pageCountTx.text = thisPage + 1 + "/" + Mathf.Ceil((float)completeDataList.Count / 6);
         }
     }
-    IEnumerator RewardMoveManager(int rewardBtNumber,string rewardName1,string rewardName2)
+    void RewardMoveManager(int rewardBtNumber,string rewardName1,string rewardName2)
     {
-        rewardInstace1 = Instantiate(reward1Img[rewardBtNumber],reward1Img[rewardBtNumber].transform.parent); //복제
+        Image rewardInstace1 = Instantiate(reward1Img[rewardBtNumber],reward1Img[rewardBtNumber].transform.parent); //복제
+        rewardInstace1.transform.parent = instancePostion[rewardBtNumber].transform;
+        InputInstanceMove(rewardInstace1);
         //튀는 효과
         int radom = Random.Range(-10000, 10000);
         rewardInstace1.GetComponent<Rigidbody2D>().gravityScale = 50;
@@ -237,46 +230,42 @@ public class DemoAchievementManager : MonoBehaviour
 
         if (rewardName2 != "")
         {
-            rewardInstace2 = Instantiate(reward2Img[rewardBtNumber + 1], reward2Img[rewardBtNumber].transform.parent); //복제
+            Image rewardInstace2 = Instantiate(reward2Img[rewardBtNumber + 1], reward2Img[rewardBtNumber].transform.parent); //복제
+            rewardInstace2.transform.parent = instancePostion[rewardBtNumber].transform;
+            InputInstanceMove(rewardInstace2);
             //튀는 효과
             radom = Random.Range(-8000, 8000);
             rewardInstace2.GetComponent<Rigidbody2D>().gravityScale = 50;
             rewardInstace2.GetComponent<Rigidbody2D>().AddForce(new Vector2(radom, 15000));
         }
-        yield return new WaitForSeconds(1f);
         lockBtImg[rewardBtNumber].color = new Color(lockBtImg[rewardBtNumber].color.r, lockBtImg[rewardBtNumber].color.g, lockBtImg[rewardBtNumber].color.b,
             0f);
         lockBtImg[rewardBtNumber].gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.2f);
         if (rewardName1 != "멸치" && rewardName1 != "진주")
         {
             reward1Img[rewardBtNumber].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 70);
             reward1Img[rewardBtNumber].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 70);
             progressRewardTx[rewardBtNumber].gameObject.SetActive(true);
-            InputData();
-            PageChange();
         }
-        else
-            isReward[rewardBtNumber] = true;
-    }
-    void RewardMove(int rewardNumer, string rewardName1, string rewardName2) //업데이트 용
-    {
-        if (rewardName1 == "멸치")
-            rewardInstace1.transform.position = Vector2.MoveTowards(rewardInstace1.transform.position, anchovyImg.transform.position, 10f);
-        else if (rewardName1 == "진주")
-            rewardInstace1.transform.position = Vector2.MoveTowards(rewardInstace1.transform.position, pearImg.transform.position, 10f);
-        if(rewardName2!="")
-            rewardInstace2.transform.position = Vector2.MoveTowards(rewardInstace2.transform.position, pearImg.transform.position, 10f);
         InputData();
         PageChange();
+    }
+    void InputInstanceMove(Image instance)
+    {
+        instance.gameObject.AddComponent<InstanceMove>();
+        instance.gameObject.GetComponent<InstanceMove>().pearlAnim = pearlAnim;
+        instance.gameObject.GetComponent<InstanceMove>().anchovyAnim = anchovyAnim;
+        instance.gameObject.GetComponent<InstanceMove>().pearlPosition = pearImg.transform.position;
+        instance.gameObject.GetComponent<InstanceMove>().anchovyPostion = anchovyImg.transform.position;
+        instance.gameObject.GetComponent<InstanceMove>().rewardSprite = reward1Sprite;
     }
     void RewardGetAndDataSetting(int rewardBtNumber)
     {
         pearlAnim.SetBool("isGet", false);
         anchovyAnim.SetBool("isGet", false);
-        StartCoroutine(RewardMoveManager(rewardBtNumber, progressDataList[6 * thisPage + rewardBtNumber].rewardname, progressDataList[6 * thisPage + rewardBtNumber].rewardname2));
         soundEffectAS.clip = rewardGetClip;
         soundEffectAS.Play();
+
         for (int i = 0; i < DemoDataManager.moneyItemList.Count; i++) //보상 주기
         {
             if (DemoDataManager.moneyItemList[i].name.Equals(progressDataList[6 * thisPage + rewardBtNumber].rewardname))
@@ -287,7 +276,7 @@ public class DemoAchievementManager : MonoBehaviour
             DemoDataManager.moneyItemList[0].count += progressDataList[6 * thisPage + rewardBtNumber].rewardcount2;
             DemoDataManager.achievementDataList[0].progressvalue += progressDataList[6 * thisPage + rewardBtNumber].rewardcount2;
         }
-        if (progressDataList[6 * thisPage + rewardBtNumber].rewardname == "멸치") //업적
+        if (progressDataList[6 * thisPage + rewardBtNumber].rewardname == "멸치") //업적 연동
             DemoDataManager.achievementDataList[0].progressvalue += progressDataList[6 * thisPage + rewardBtNumber].rewardcount;
         if (progressDataList[6 * thisPage + rewardBtNumber].rewardname == "진주")
             DemoDataManager.achievementDataList[1].progressvalue += progressDataList[6 * thisPage + rewardBtNumber].rewardcount;
@@ -366,6 +355,8 @@ public class DemoAchievementManager : MonoBehaviour
                 DemoDataManager.achievementDataList[6].value = 17;
             DemoDataManager.achievementDataList[6].rewardname = "진주보석함무기";
         }
+
+        RewardMoveManager(rewardBtNumber, progressDataList[6 * thisPage + rewardBtNumber].rewardname, progressDataList[6 * thisPage + rewardBtNumber].rewardname2);
     }
     void InputData() //진행 업적과 완료 업적으로 나눠서 데이터 넣기
     {
