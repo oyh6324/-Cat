@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -69,10 +70,10 @@ public class DemoShopPageManager : MonoBehaviour
     void Update()
     {
         //상자 이용권 개수 확인
-        anchovyboxFreeCount_C = DemoDataManager.moneyItemList[3].count;
-        pearlboxFreeCount_C = DemoDataManager.moneyItemList[4].count;
-        anchovyboxFreeCount_W = DemoDataManager.moneyItemList[5].count;
-        pearlboxFreeCount_W = DemoDataManager.moneyItemList[6].count;
+        anchovyboxFreeCount_C = DemoDataManager.moneyItemList[3].count; //멸치 의상
+        pearlboxFreeCount_C = DemoDataManager.moneyItemList[4].count; //진주 의상
+        anchovyboxFreeCount_W = DemoDataManager.moneyItemList[5].count; //멸치 무기
+        pearlboxFreeCount_W = DemoDataManager.moneyItemList[6].count; //진주 무기
         if (PlayerPrefs.HasKey("isClothes")) //무료이용권세팅
             ClothesBoxFreeSet();
         else

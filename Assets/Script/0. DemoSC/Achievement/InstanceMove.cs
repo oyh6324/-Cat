@@ -45,6 +45,7 @@ public class InstanceMove : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         isMove = true;
+        gameObject.GetComponent<Rigidbody2D>().gravityScale = 0f;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -37,7 +37,6 @@ public class DemoAchievementManager : MonoBehaviour
 
     private bool isProgressPage;
     private int thisPage;
-    private bool[] isReward;
 
     private List<ProgressData> progressDataList;
     private List<CompleteData> completeDataList;
@@ -46,7 +45,6 @@ public class DemoAchievementManager : MonoBehaviour
     {
         progressDataList = new List<ProgressData>();
         completeDataList = new List<CompleteData>();
-        isReward = new bool[6];
     }
     void OnEnable()
     {
@@ -126,6 +124,14 @@ public class DemoAchievementManager : MonoBehaviour
         InputData();
         outBt.transform.localPosition = new Vector2(-1160, outBt.transform.localPosition.y);
         inBt.transform.localPosition = new Vector2(-1110, inBt.transform.localPosition.y);
+    }
+    void RewardTextSetting()
+    {
+        for(int i=0; i<reward1Img.Length; i++)
+        {
+            progressRewardTx[i].transform.position = new Vector2(progressRewardTx[i].transform.position.x, reward1Img[i].transform.position.y);
+            progressRewardTx2[i].transform.position = new Vector2(progressRewardTx2[i].transform.position.x, reward2Img[i].transform.position.y);
+        }
     }
     void PageChange()
     {
@@ -217,11 +223,12 @@ public class DemoAchievementManager : MonoBehaviour
             else
                 pageCountTx.text = thisPage + 1 + "/" + Mathf.Ceil((float)completeDataList.Count / 6);
         }
+        RewardTextSetting();
     }
     void RewardMoveManager(int rewardBtNumber,string rewardName1,string rewardName2)
     {
         Image rewardInstace1 = Instantiate(reward1Img[rewardBtNumber],reward1Img[rewardBtNumber].transform.parent); //복제
-        rewardInstace1.transform.parent = instancePostion[rewardBtNumber].transform;
+        rewardInstace1.transform.SetParent(instancePostion[rewardBtNumber].transform);
         InputInstanceMove(rewardInstace1);
         //튀는 효과
         int radom = Random.Range(-10000, 10000);
