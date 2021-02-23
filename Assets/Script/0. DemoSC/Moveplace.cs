@@ -54,6 +54,7 @@ public class Moveplace : MonoBehaviour
         DataManager.characterDatasList[0].stage += 1;
         DataManager.achievementDataList[2].progressvalue += 1;*/
 
+        //스테이지로 가는 버튼. 후에 사운드 관련 (맨 아래 두 줄) 빼고 다 삭제하면 됨
         //데모 시험
         DemoDataManager.moneyItemList[2].count -= 1;
         DemoDataManager.characterDatasList[0].stage += 1;

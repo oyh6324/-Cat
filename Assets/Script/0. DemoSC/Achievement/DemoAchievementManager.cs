@@ -129,6 +129,7 @@ public class DemoAchievementManager : MonoBehaviour
     {
         for(int i=0; i<reward1Img.Length; i++)
         {
+            progressRewardTx[i].gameObject.SetActive(true);
             progressRewardTx[i].transform.position = new Vector2(progressRewardTx[i].transform.position.x, reward1Img[i].transform.position.y);
             progressRewardTx2[i].transform.position = new Vector2(progressRewardTx2[i].transform.position.x, reward2Img[i].transform.position.y);
         }
@@ -192,7 +193,8 @@ public class DemoAchievementManager : MonoBehaviour
                 pageCountTx.text = thisPage + 1 + "/1";
             else
                 pageCountTx.text = thisPage + 1 + "/" + Mathf.Ceil((float)progressDataList.Count / 6);
-
+            
+            RewardTextSetting();
         }
         else //완료 페이지 볼때
         {
@@ -204,7 +206,7 @@ public class DemoAchievementManager : MonoBehaviour
                     progressTitleTx[i].text = completeDataList[6 * thisPage + i].name;
                     reward1Img[i].gameObject.SetActive(false);
                     reward2Img[i].gameObject.SetActive(false);
-                    progressRewardTx[i].text = "보상 완료";
+                    progressRewardTx[i].gameObject.SetActive(false);
                     progressBar[i].value = 1;
                     progressCountTx[i].text = "Max";
                     lockBtImg[i].gameObject.SetActive(true); //버튼 잠금
@@ -223,7 +225,6 @@ public class DemoAchievementManager : MonoBehaviour
             else
                 pageCountTx.text = thisPage + 1 + "/" + Mathf.Ceil((float)completeDataList.Count / 6);
         }
-        RewardTextSetting();
     }
     void RewardMoveManager(int rewardBtNumber,string rewardName1,string rewardName2)
     {
