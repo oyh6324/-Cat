@@ -10,7 +10,7 @@ public class DemoCatManager : MonoBehaviour
     public Text expSliderBarTx;
     public Text levelTx;
     public Text playerNameTx;
-    public Animator catAnim; //고양이 애니메이터
+    public Animator catAnim;
 
     //고양이 옷
     public Image helmetImg;
