@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class AlarmManager : MonoBehaviour
 {
+    //안녕
     public Image achieveAlarmImg;
     public Image inventoryAlarmImg;
     public Image weaponAlarmImg;
