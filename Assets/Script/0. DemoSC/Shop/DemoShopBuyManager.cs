@@ -23,28 +23,28 @@ public class DemoShopBuyManager : MonoBehaviour
     private bool[] isFreeBox; //0:멸치의상 1:진주의상 2:멸치무기 3:진주무기
 
     //구매 상품 목록
-    //0:멸치 보석함 1:진주 보석함 2:멸치1000 3:멸치2000 4:멸치3000 5:진주50 6:진주100 7:진주200 8:열쇠1 9:열쇠3 10:열쇠
+    //0:멸치 보석함 1:진주 보석함 2:멸치1000 3:멸치2000 4:멸치3000 5:진주20 6:진주50 7:진주100 8:열쇠1 9:열쇠3 10:열쇠5
     List<BuyItemdData> buyitemdataList;
     private bool[] productNumber;
 
     void Start()
     {
-        productNumber = new bool[11];
-        isFreeBox = new bool[4];
-
         //구매 상품 목록 초기화
         buyitemdataList = new List<BuyItemdData>();
         buyitemdataList.Add(new BuyItemdData("멸치 보석함을 ", "멸치", 10000, "마리", "", 1));
         buyitemdataList.Add(new BuyItemdData("진주 보석함을 ", "진주", 100, "개", "", 1));
-        buyitemdataList.Add(new BuyItemdData("멸치 1000마리를 ", "진주", 30, "개", "멸치", 1000));
-        buyitemdataList.Add(new BuyItemdData("멸치 2000마리를  ", "진주", 50, "개", "멸치", 2000));
-        buyitemdataList.Add(new BuyItemdData("멸치 3000마리를", "진주", 80, "개", "멸치", 3000));
-        buyitemdataList.Add(new BuyItemdData("진주 50개를 ", "", 1000, "원으", "진주", 50));
-        buyitemdataList.Add(new BuyItemdData("진주 100개를 ", "", 1500, "원으", "진주", 1000));
-        buyitemdataList.Add(new BuyItemdData("진주 200개를 ", "", 2500, "원으", "진주", 200));
+        buyitemdataList.Add(new BuyItemdData("멸치 1000마리를 ", "진주", 10, "개", "멸치", 1000));
+        buyitemdataList.Add(new BuyItemdData("멸치 2000마리를 ", "진주", 15, "개", "멸치", 2000));
+        buyitemdataList.Add(new BuyItemdData("멸치 3000마리를 ", "진주", 20, "개", "멸치", 3000));
+        buyitemdataList.Add(new BuyItemdData("진주 20개를 ", "멸치", 3000, "마리", "진주", 20));
+        buyitemdataList.Add(new BuyItemdData("진주 50개를 ", "멸치", 6500, "마리", "진주", 50));
+        buyitemdataList.Add(new BuyItemdData("진주 100개를 ", "멸치", 12000, "마리", "진주", 100));
         buyitemdataList.Add(new BuyItemdData("열쇠 1개를 ", "진주", 10, "개", "열쇠", 1));
         buyitemdataList.Add(new BuyItemdData("열쇠 3개를 ", "진주", 25, "개", "열쇠", 3));
         buyitemdataList.Add(new BuyItemdData("열쇠 5개를 ", "진주", 40, "개", "열쇠", 5));
+
+        productNumber = new bool[buyitemdataList.Count];
+        isFreeBox = new bool[4];
     }
     //버튼 연결
     public void AnchovyboxBtClick()
@@ -171,7 +171,7 @@ public class DemoShopBuyManager : MonoBehaviour
             buyitemdataList[itemnumber].priceUnit + "로 구매하시겠습니까?";
 
         //무엇을 사는지
-        for (int i = 0; i < 11; i++)
+        for (int i = 0; i < buyitemdataList.Count; i++)
         {
             if (i == itemnumber)
                 productNumber[i] = true;
@@ -185,13 +185,13 @@ public class DemoShopBuyManager : MonoBehaviour
         bool isBuy = false;
 
         //어떤 물건을 살 건지
-        for (int i = 0; i < 11; i++)
+        for (int i = 0; i < buyitemdataList.Count; i++)
         {
             if (productNumber[i])
                 tempNumber = i;
         }
         //구매 가능 여부
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < DemoDataManager.moneyItemList.Count; i++)
         {
             if (DemoDataManager.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].priceName))
             {
@@ -224,7 +224,7 @@ public class DemoShopBuyManager : MonoBehaviour
                     PlayerPrefs.SetInt("진주무기뽑기", 1);
             }
             //계산
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < DemoDataManager.moneyItemList.Count; i++)
             {
                 if (DemoDataManager.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].getProductName))
                     DemoDataManager.moneyItemList[i].count += buyitemdataList[tempNumber].getProduct;
@@ -233,6 +233,8 @@ public class DemoShopBuyManager : MonoBehaviour
             }
             if (buyitemdataList[tempNumber].getProductName == "멸치") //업적 연동
                 DemoDataManager.achievementDataList[0].progressvalue += buyitemdataList[tempNumber].getProduct;
+            if(buyitemdataList[tempNumber].getProductName=="진주")
+                DemoDataManager.achievementDataList[1].progressvalue += buyitemdataList[tempNumber].getProduct;
             if (productNumber[0] || productNumber[1]) //상자구매시 구매화면
             {
                 StartCoroutine(WatingForBoxOpen());

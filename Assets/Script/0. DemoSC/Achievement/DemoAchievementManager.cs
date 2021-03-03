@@ -297,7 +297,7 @@ public class DemoAchievementManager : MonoBehaviour
                 DemoDataManager.achievementDataList[i].level += 1;
                 progressDataList[6 * thisPage + rewardBtNumber].level = DemoDataManager.achievementDataList[i].level;
                 if (progressDataList[6 * thisPage + rewardBtNumber].name == "의상 Lv.3 만들기" || progressDataList[6 * thisPage + rewardBtNumber].name == "의상 Lv.4 만들기" ||
-                    progressDataList[6 * thisPage + rewardBtNumber].name == "의상 Lv.3 만들기")
+                    progressDataList[6 * thisPage + rewardBtNumber].name == "의상 Lv.5 만들기")
                 {
                     if (DemoDataManager.achievementDataList[i].level == 2)
                         DemoDataManager.achievementDataList[i].value = 5;
@@ -311,7 +311,7 @@ public class DemoAchievementManager : MonoBehaviour
                     DemoDataManager.achievementDataList[i].rewardcount2 += 500;
                 }
                 if (progressDataList[6 * thisPage + rewardBtNumber].name == "무기 Lv.3 만들기" || progressDataList[6 * thisPage + rewardBtNumber].name == "무기 Lv.4 만들기" ||
-                    progressDataList[6 * thisPage + rewardBtNumber].name == "무기 Lv.3 만들기")
+                    progressDataList[6 * thisPage + rewardBtNumber].name == "무기 Lv.5 만들기")
                 {
                     if (DemoDataManager.achievementDataList[i].level == 2)
                         DemoDataManager.achievementDataList[i].value = 5;
