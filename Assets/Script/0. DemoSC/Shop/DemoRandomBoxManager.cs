@@ -115,7 +115,7 @@ public class DemoRandomBoxManager : MonoBehaviour
             for (int i = 3; i < 6; i++)
             {
                 if (statList[i].number != 0)
-                    setTx.text += statList[i].name + " +" + statList[i].number + "  ";
+                    setTx.text += statList[i].name + " +" + statList[i].number + "\n";
             }
             if (clothesSetcrip != 0)
                 setTx.text += "크리티컬 확률 +" + clothesSetcrip + "%";
