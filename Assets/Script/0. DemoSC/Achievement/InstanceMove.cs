@@ -40,7 +40,10 @@ public class InstanceMove : MonoBehaviour
             instance.transform.position = Vector2.MoveTowards(instance.transform.position, targetPosition, 12f); //이동
         }
     }
-
+    private void OnDisable()
+    {
+        Destroy(gameObject);
+    }
     IEnumerator waitMove()
     {
         yield return new WaitForSeconds(1f);

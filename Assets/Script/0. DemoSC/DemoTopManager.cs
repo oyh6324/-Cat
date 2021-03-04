@@ -6,7 +6,7 @@ using System;
 
 public class DemoTopManager : MonoBehaviour
 {
-    //0:lobby 1:shop 2:inventory 3:Weapon 4:Achievement 5:collection
+    //0:lobby 1:shop 2:inventory 3:Weapon 4:Achievement 5:collection 6: stageSelect
     public Canvas[] onCanvas;
 
     //멸치, 진주, 열쇠의 개수

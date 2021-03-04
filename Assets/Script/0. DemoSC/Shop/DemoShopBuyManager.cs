@@ -123,7 +123,7 @@ public class DemoShopBuyManager : MonoBehaviour
         soundEffectAS.Play();
         if (DemoTopManager.isLobby) //로비에서 뒤로가기 눌렀을때 메시지 창
             Application.Quit();
-        else
+        else //상점에 있을 때
         {
             if (isFreeUse) //무료뽑기 진행 시
             {
