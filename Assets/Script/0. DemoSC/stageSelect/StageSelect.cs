@@ -12,10 +12,11 @@ public class StageSelect : MonoBehaviour
 
     //메세지
     public Canvas messageCanvas;
+    public Image stageMessage;
     public Text messageTx;
+    public Text stageTitleTx;
     public GameObject yesNobts;
     public GameObject okBt;
-    public GameObject yesBt_forStage;
 
     private int stageNumber;
 
@@ -23,6 +24,11 @@ public class StageSelect : MonoBehaviour
     {
         soundEffectAS.clip = divingClip;
         soundEffectAS.Play();
+    }
+    private void Update()
+    {
+        if (!messageCanvas.gameObject.activeSelf)
+            stageTitleTx.gameObject.SetActive(false);
     }
     public void Stage1Click()
     {
@@ -103,11 +109,25 @@ public class StageSelect : MonoBehaviour
     {
         UseKey();
     }
+    public void NoBtClick()
+    {
+        stageMessage.gameObject.SetActive(false);
+        messageCanvas.gameObject.SetActive(false);
+    }
+    public void OkBtClick()
+    {
+        okBt.SetActive(false);
+        yesNobts.SetActive(true);
+        stageMessage.gameObject.SetActive(false);
+        messageCanvas.gameObject.SetActive(false);
+    }
     private void StageCilck()
     {
         messageCanvas.gameObject.SetActive(true);
-        yesBt_forStage.SetActive(true);
+        stageMessage.gameObject.SetActive(true);
+        stageTitleTx.gameObject.SetActive(true);
         messageTx.text = "열쇠를 사용하시겠습니까?";
+        stageTitleTx.text = "Stage " + stageNumber;
 
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
@@ -117,10 +137,10 @@ public class StageSelect : MonoBehaviour
         if (DemoDataManager.moneyItemList[2].count > 0) //열쇠가 있다면
         {
             DemoDataManager.moneyItemList[2].count--; //열쇠 소모
-            if (stageNumber > DemoDataManager.characterDatasList[0].stage)
+            if (stageNumber > DemoDataManager.characterDatasList[0].stage) //새로운 스테이지라면
                 DemoDataManager.characterDatasList[0].stage += 1; //캐릭터가 입장한 스테이지 증가
 
-            yesBt_forStage.SetActive(false);
+            stageMessage.gameObject.SetActive(false);
             messageCanvas.gameObject.SetActive(false);
 
             //해당 스테이지로 이동
@@ -128,8 +148,8 @@ public class StageSelect : MonoBehaviour
         else //열쇠 없을 때
         {
             messageTx.text = "열쇠가 부족해요!";
+            stageTitleTx.gameObject.SetActive(false);
             okBt.SetActive(true);
-            yesBt_forStage.SetActive(false);
             yesNobts.SetActive(false);
         }
 
