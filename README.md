@@ -48,6 +48,11 @@ Script 파일의 1번부터 6번 해당.
 ## 리소스 파일
 처음으로 플레이할 때 유저의 저장 공간에 넣을 데이터가 들어 있음.
 
+- AchievementDataText: 업적 데이터
+- DemoClothesItemDataText: 의상 데이터
+- DemoWeaponItemDataText: 무기 데이터
+- MonsterCollectioniDataText: 도감을 위한 몬스터 데이터
+
 ## 이미지 파일
 
 - 0. Ui: Ui와 관련된 모든 이미지
