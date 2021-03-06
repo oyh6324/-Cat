@@ -6,7 +6,7 @@ using System;
 
 public class DemoTopManager : MonoBehaviour
 {
-    //0:lobby 1:shop 2:inventory 3:Weapon 4:Achievement 5:collection
+    //0:lobby 1:shop 2:inventory 3:Weapon 4:Achievement 5:collection 6: stageSelect
     public Canvas[] onCanvas;
 
     //멸치, 진주, 열쇠의 개수
@@ -50,13 +50,13 @@ public class DemoTopManager : MonoBehaviour
             if ((int)keyTime == 0)
             {
                 DemoDataManager.moneyItemList[2].count += 1;
-                keyTime = 15;
+                keyTime = 900;
             }
         }
         else
         {
             keyTimeTx.text = "";
-            keyTime = 15;
+            keyTime = 900;
         }
         //안드로이드 뒤로가기
         if (Application.platform == RuntimePlatform.Android)
@@ -219,16 +219,16 @@ public class DemoTopManager : MonoBehaviour
             else
             {
                 float tempTime = totalSeconds - PlayerPrefs.GetFloat("열쇠 타이머");
-                DemoDataManager.moneyItemList[2].count += ((int)tempTime / 15) + 1;
+                DemoDataManager.moneyItemList[2].count += ((int)tempTime / 900) + 1;
                 if (DemoDataManager.moneyItemList[2].count > 5)
                     DemoDataManager.moneyItemList[2].count = 5;
-                keyTime = 15 - (tempTime) % 15;
+                keyTime = 900 - (tempTime) % 900;
             }
             PlayerPrefs.DeleteKey("게임 종료 시간");
             PlayerPrefs.DeleteKey("열쇠 타이머");
         }
         else
-            keyTime = 15;
+            keyTime = 900;
     }
     void DirectShop(string directName)
     {

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Moveplace : MonoBehaviour
 {   
-    //0:lobby 1:shop 2:inventory 3:weapon 4:achievement 5: collection
+    //0:lobby 1:shop 2:inventory 3:weapon 4:achievement 5: collection 6: stageSelect
     public Canvas[] thisCanvas;
     public Animator catAnim;
     public Image statImg;
@@ -50,18 +50,8 @@ public class Moveplace : MonoBehaviour
     }
     public void PlayBtClick()
     {
-        /*DataManager.moneyItemList[2].count -= 1;
-        DataManager.characterDatasList[0].stage += 1;
-        DataManager.achievementDataList[2].progressvalue += 1;*/
 
-        //스테이지로 가는 버튼. 후에 사운드 관련 (맨 아래 두 줄) 빼고 다 삭제하면 됨
-        //데모 시험
-        DemoDataManager.moneyItemList[2].count -= 1;
-        DemoDataManager.characterDatasList[0].stage += 1;
-        DemoDataManager.achievementDataList[2].progressvalue += 1;
-
-        soundEffectAS.clip = buttonClickClip;
-        soundEffectAS.Play();
+        PlayerMove(6, 0);
     }
     public void CatBtClick()
     {
