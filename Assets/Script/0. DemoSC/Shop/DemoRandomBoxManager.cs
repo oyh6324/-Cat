@@ -32,14 +32,20 @@ public class DemoRandomBoxManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey("멸치의상뽑기"))
         {
-            random = Random.Range(0, 7);
+            randomPercent = Random.Range(0, 100);
+            if (randomPercent < 50) //1등급
+                random = Random.Range(0, 3);
+            else if (randomPercent < 90) //2등급
+                random = Random.Range(3, 6);
+            else //3등급
+                random = 6;
             ClothesBoxRandom();
             PlayerPrefs.DeleteKey("멸치의상뽑기");
         }
         if (PlayerPrefs.HasKey("진주의상뽑기"))
         {
             randomPercent = Random.Range(0, 100);
-            if (randomPercent < 60) //3등급
+            if (randomPercent < 80) //3등급
                 random = 6;
             else if (randomPercent < 100) //4등급
                 random = Random.Range(6, 9);
@@ -48,14 +54,20 @@ public class DemoRandomBoxManager : MonoBehaviour
         }
         if (PlayerPrefs.HasKey("멸치무기뽑기"))
         {
-            random = Random.Range(0, 4);
+            randomPercent = Random.Range(0, 100);
+            if (randomPercent < 50) //1등급
+                random = 0;
+            else if (randomPercent < 90) //2등급
+                random = 1;
+            else //3등급
+                random = Random.Range(2, 4);
             WeaponBoxRandom();
             PlayerPrefs.DeleteKey("멸치무기뽑기");
         }
         if (PlayerPrefs.HasKey("진주무기뽑기"))
         {
             randomPercent = Random.Range(0, 100);
-            if (randomPercent < 60) //3등급
+            if (randomPercent < 80) //3등급
                 random = Random.Range(2, 4);
             else if (randomPercent < 100) //4등급
                 random = 4;
