@@ -67,5 +67,4 @@ public class CatManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         catAnim.SetBool("isCatClick", false);
     }
-    //main test
 }

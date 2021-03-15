@@ -15,6 +15,9 @@ public class DemoRandomBoxManager : MonoBehaviour
     public Text exTx;
     public Text statTx;
     public Text setTx;
+    public Image itemImg;
+    public Sprite[] clothesSprite;
+    public Sprite[] weaponSprite;
     //오디오
     public AudioSource soundEffectAS;
     public AudioClip buttonClickClip;
@@ -29,14 +32,20 @@ public class DemoRandomBoxManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey("멸치의상뽑기"))
         {
-            random = Random.Range(0, 7);
+            randomPercent = Random.Range(0, 100);
+            if (randomPercent < 50) //1등급
+                random = Random.Range(0, 3);
+            else if (randomPercent < 90) //2등급
+                random = Random.Range(3, 6);
+            else //3등급
+                random = 6;
             ClothesBoxRandom();
             PlayerPrefs.DeleteKey("멸치의상뽑기");
         }
         if (PlayerPrefs.HasKey("진주의상뽑기"))
         {
             randomPercent = Random.Range(0, 100);
-            if (randomPercent < 60) //3등급
+            if (randomPercent < 80) //3등급
                 random = 6;
             else if (randomPercent < 100) //4등급
                 random = Random.Range(6, 9);
@@ -45,14 +54,20 @@ public class DemoRandomBoxManager : MonoBehaviour
         }
         if (PlayerPrefs.HasKey("멸치무기뽑기"))
         {
-            random = Random.Range(0, 4);
+            randomPercent = Random.Range(0, 100);
+            if (randomPercent < 50) //1등급
+                random = 0;
+            else if (randomPercent < 90) //2등급
+                random = 1;
+            else //3등급
+                random = Random.Range(2, 4);
             WeaponBoxRandom();
             PlayerPrefs.DeleteKey("멸치무기뽑기");
         }
         if (PlayerPrefs.HasKey("진주무기뽑기"))
         {
             randomPercent = Random.Range(0, 100);
-            if (randomPercent < 60) //3등급
+            if (randomPercent < 80) //3등급
                 random = Random.Range(2, 4);
             else if (randomPercent < 100) //4등급
                 random = 4;
@@ -122,6 +137,18 @@ public class DemoRandomBoxManager : MonoBehaviour
         }
         if (DemoDataManager.allClothesItemList[random].count == 1)
             DemoDataManager.allClothesItemList[random].isnew = true;
+
+        //의상 스프라이트
+        itemImg.sprite = clothesSprite[random];
+        //이미지 위치 선정
+        itemImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 500);
+        itemImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 500);
+        if (clothesName=="어항"||clothesName=="스노쿨링"||clothesName=="우주 헬멧")
+            itemImg.transform.localPosition = new Vector2(-5, 60);
+        else if(clothesName=="우주복"||clothesName=="멜빵 바지" || clothesName=="나뭇잎 바지")
+            itemImg.transform.localPosition = new Vector2(-5, 210);
+        else
+            itemImg.transform.localPosition = new Vector2(-5, 80);
     }
     void WeaponBoxRandom()
     {
@@ -145,6 +172,13 @@ public class DemoRandomBoxManager : MonoBehaviour
 
         if (DemoDataManager.allWeaponItemList[random].count == 1)
             DemoDataManager.allWeaponItemList[random].isnew = true;
+
+        //무기 스프라이트
+        itemImg.sprite = weaponSprite[random];
+        //이미지 위치, 크기 선정
+        itemImg.transform.localPosition = new Vector2(-5, 125);
+        itemImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 300);
+        itemImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 300);
     }
     void AchievementCheck()
     {

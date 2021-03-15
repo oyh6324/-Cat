@@ -86,6 +86,8 @@ public class Moveplace : MonoBehaviour
             statExTx.text += "\n" + DemoDataManager.characterDatasList[0].setname + " 세트 적용!" + "\nSTR +" + DemoDataManager.characterDatasList[0].setstr +
                         "\nDEF +" + DemoDataManager.characterDatasList[0].setdef + "\nAGI +" + DemoDataManager.characterDatasList[0].setagi + "\n크리티컬 확률 +" +
                          DemoDataManager.characterDatasList[0].setcrip;
+        if (DemoDataManager.characterDatasList[0].weapon == "")
+            statExTx.text += "\n(무기를 착용하세요!)";
     }
 
     /*void StatOpen() //정식 버전

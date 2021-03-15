@@ -143,7 +143,7 @@ public class StageSelect : MonoBehaviour
             stageMessage.gameObject.SetActive(false);
             messageCanvas.gameObject.SetActive(false);
 
-            //해당 스테이지로 이동
+            //해당 스테이지로 이동 코드
         }
         else //열쇠 없을 때
         {
