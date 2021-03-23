@@ -22,7 +22,8 @@ public class DemoAlarmManager : MonoBehaviour
             if (DemoDataManager.achievementDataList[i].progressvalue >= DemoDataManager.achievementDataList[i].value &&
                 DemoDataManager.achievementDataList[i].maxlevel > DemoDataManager.achievementDataList[i].level)
                 achieveAlarmImg.gameObject.SetActive(true);
-            if (DemoDataManager.achievementDataList[i].progressvalue < DemoDataManager.achievementDataList[i].value)
+            if (DemoDataManager.achievementDataList[i].progressvalue < DemoDataManager.achievementDataList[i].value ||
+                DemoDataManager.achievementDataList[i].maxlevel == DemoDataManager.achievementDataList[i].level)
                 achieveCount++;
         }
         if (achieveCount == DemoDataManager.achievementDataList.Count)
