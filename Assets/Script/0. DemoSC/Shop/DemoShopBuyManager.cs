@@ -17,6 +17,7 @@ public class DemoShopBuyManager : MonoBehaviour
     public AudioSource soundEffectAS;
     public AudioClip buttonClickClip;
     public AudioClip paperClickClip;
+    public AudioClip boxOpenClip;
 
     //무료권 사용여부
     private bool isFreeUse;
@@ -267,7 +268,9 @@ public class DemoShopBuyManager : MonoBehaviour
     {
         messageImg.gameObject.SetActive(false);
         boxWatingImg.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        soundEffectAS.clip = boxOpenClip;
+        soundEffectAS.Play();
+        yield return new WaitForSeconds(2f);
         boxWatingImg.gameObject.SetActive(false);
         boxonImg.gameObject.SetActive(true);
     }
