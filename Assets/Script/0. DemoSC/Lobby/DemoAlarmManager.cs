@@ -20,9 +20,10 @@ public class DemoAlarmManager : MonoBehaviour
         for (int i = 0; i < DemoDataManager.achievementDataList.Count; i++) //업적 알람
         {
             if (DemoDataManager.achievementDataList[i].progressvalue >= DemoDataManager.achievementDataList[i].value &&
-                DemoDataManager.achievementDataList[i].maxlevel != DemoDataManager.achievementDataList[i].level)
+                DemoDataManager.achievementDataList[i].maxlevel > DemoDataManager.achievementDataList[i].level)
                 achieveAlarmImg.gameObject.SetActive(true);
-            if (DemoDataManager.achievementDataList[i].progressvalue < DemoDataManager.achievementDataList[i].value)
+            if (DemoDataManager.achievementDataList[i].progressvalue < DemoDataManager.achievementDataList[i].value ||
+                DemoDataManager.achievementDataList[i].maxlevel == DemoDataManager.achievementDataList[i].level)
                 achieveCount++;
         }
         if (achieveCount == DemoDataManager.achievementDataList.Count)

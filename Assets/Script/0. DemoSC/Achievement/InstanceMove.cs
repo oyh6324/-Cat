@@ -9,7 +9,7 @@ public class InstanceMove : MonoBehaviour
     private bool isMove;
     private Animator targetAnim;
 
-    public Sprite[] rewardSprite; //0:멸치 1:진주
+    public Sprite[] rewardSprite; //0:멸치 1:진주 2:멸치보석함의상 3:진주보석함의상 4:멸치보석함무기 5:진주보석함무기
 
     public Vector2 pearlPosition; //상단 진주 위치
     public Vector2 anchovyPostion; //상단 멸치 위치
@@ -35,6 +35,10 @@ public class InstanceMove : MonoBehaviour
             {
                 targetPosition = pearlPosition;
                 targetAnim = pearlAnim;
+            }
+            else
+            {
+                Destroy(gameObject);
             }
 
             instance.transform.position = Vector2.MoveTowards(instance.transform.position, targetPosition, 12f); //이동
