@@ -339,13 +339,13 @@ public class DemoInventoryPageManager : MonoBehaviour
         statExTx.text = "레벨: " + DemoDataManager.characterDatasList[0].level + "\n이름: " + DemoDataManager.characterDatasList[0].name + "\nHP: " + DemoDataManager.characterDatasList[0].hp +
             "\nSTR: " + DemoDataManager.characterDatasList[0].str;
         if (allItemStr != 0)
-            statExTx.text += " (+" + allItemStr + ")";
+            statExTx.text += " (+" + (allItemStr + DemoDataManager.characterDatasList[0].setstr) + ")";
         statExTx.text += "\nDEF: " + DemoDataManager.characterDatasList[0].def;
         if (allItemDef != 0)
-            statExTx.text += " (+" + allItemDef + ")";
+            statExTx.text += " (+" + (allItemDef + DemoDataManager.characterDatasList[0].setdef) + ")";
         statExTx.text += "\nAGI: " + DemoDataManager.characterDatasList[0].agi;
         if (allItemAgi != 0)
-            statExTx.text += " (+" + allItemAgi + ")";
+            statExTx.text += " (+" + (allItemAgi + DemoDataManager.characterDatasList[0].setagi) + ")";
         statExTx.text += "\n공격 속도: " + DemoDataManager.characterDatasList[0].itemspeed + "\n크리티컬 확률: " + DemoDataManager.characterDatasList[0].crip;
         if (allItemCrip != 0)
             statExTx.text += " (+" + allItemCrip + "%)";
