@@ -18,12 +18,17 @@ public class StageSelect : MonoBehaviour
     public GameObject yesNobts;
     public GameObject okBt;
 
+    public Image[] flags;
+    public int stageCount;
+
     private int stageNumber;
 
     private void OnEnable()
     {
         soundEffectAS.clip = divingClip;
         soundEffectAS.Play();
+
+        StageFlagOn();
     }
     private void Update()
     {
@@ -155,5 +160,15 @@ public class StageSelect : MonoBehaviour
 
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
+    }
+    private void StageFlagOn()
+    {
+        for(int i=0; i<stageCount; i++)
+        {
+            if (PlayerPrefs.HasKey("stage clear" + stageCount))
+                flags[i].gameObject.SetActive(true);
+            else
+                flags[i].gameObject.SetActive(false);
+        }
     }
 }
