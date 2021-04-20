@@ -140,6 +140,19 @@ public class StageSelect : MonoBehaviour
     }
     private void UseKey()
     {
+        if (DemoDataManager.characterDatasList[0].weapon == "") //아무것도 착용 하지 않았을 시
+        { //기본 무기 장착
+            DemoDataManager.characterDatasList[0].weapon = DemoDataManager.allWeaponItemList[0].name;
+            DemoDataManager.characterDatasList[0].itemstr += DemoDataManager.allWeaponItemList[0].str;
+            DemoDataManager.characterDatasList[0].itemspeed += DemoDataManager.allWeaponItemList[0].strspeed;
+            DemoDataManager.characterDatasList[0].itemcrip += DemoDataManager.allWeaponItemList[0].crip;
+
+            DemoDataManager.characterDatasList[0].allstr = DemoDataManager.characterDatasList[0].str + DemoDataManager.characterDatasList[0].itemstr;
+            DemoDataManager.characterDatasList[0].alldef = DemoDataManager.characterDatasList[0].def + DemoDataManager.characterDatasList[0].itemdef;
+            DemoDataManager.characterDatasList[0].allagi = DemoDataManager.characterDatasList[0].agi + DemoDataManager.characterDatasList[0].itemagi;
+            DemoDataManager.characterDatasList[0].allcrip = DemoDataManager.characterDatasList[0].crip + DemoDataManager.characterDatasList[0].itemcrip;
+        }
+
         if (DemoDataManager.moneyItemList[2].count > 0) //열쇠가 있다면
         {
             DemoDataManager.moneyItemList[2].count--; //열쇠 소모
