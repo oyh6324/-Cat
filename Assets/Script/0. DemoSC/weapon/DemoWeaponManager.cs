@@ -118,6 +118,7 @@ public class DemoWeaponManager : MonoBehaviour
     void OnDisable()
     {
         StatSetDestroy();
+
         DemoDataManager.characterDatasList[0].allstr = DemoDataManager.characterDatasList[0].str + DemoDataManager.characterDatasList[0].itemstr;
         DemoDataManager.characterDatasList[0].alldef = DemoDataManager.characterDatasList[0].def + DemoDataManager.characterDatasList[0].itemdef;
         DemoDataManager.characterDatasList[0].allagi = DemoDataManager.characterDatasList[0].agi + DemoDataManager.characterDatasList[0].itemagi;
