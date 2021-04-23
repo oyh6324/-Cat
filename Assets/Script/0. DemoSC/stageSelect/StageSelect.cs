@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -163,6 +162,7 @@ public class StageSelect : MonoBehaviour
             messageCanvas.gameObject.SetActive(false);
 
             //해당 스테이지로 이동 코드
+            //stageNumber로 몇 번째 스테이지인지 알 수 있음
         }
         else //열쇠 없을 때
         {

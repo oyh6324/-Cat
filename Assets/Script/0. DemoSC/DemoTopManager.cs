@@ -73,6 +73,7 @@ public class DemoTopManager : MonoBehaviour
     }
     void OnEnable()
     {
+        KeyTimeSet();
         if (PlayerPrefs.HasKey("효과음제거"))
         {
             soundEffectAS.volume = 0;
