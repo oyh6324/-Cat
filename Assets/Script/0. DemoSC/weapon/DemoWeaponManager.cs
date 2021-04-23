@@ -178,6 +178,16 @@ public class DemoWeaponManager : MonoBehaviour
     }
     public void UpgradeBtClick()
     {
+        for(int i=0; i<weaponItemDataList.Count; i++)
+        {
+            if(DemoDataManager.characterDatasList[0].weapon== weaponItemDataList[i].name)
+            {
+                DemoDataManager.characterDatasList[0].itemstr -= weaponItemDataList[i].str;
+                DemoDataManager.characterDatasList[0].itemspeed -= weaponItemDataList[i].strspeed;
+                DemoDataManager.characterDatasList[0].itemcrip -= weaponItemDataList[i].crip;
+            }
+        }
+
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
         DemoDataManager.allWeaponItemList[thisPage].strspeed -= (decimal)0.02;
@@ -203,6 +213,16 @@ public class DemoWeaponManager : MonoBehaviour
         InputWeaponData();
         StatSetting();
         AchievementCheck();
+
+        for (int i = 0; i < weaponItemDataList.Count; i++)
+        {
+            if (DemoDataManager.characterDatasList[0].weapon == weaponItemDataList[i].name)
+            {
+                DemoDataManager.characterDatasList[0].itemstr += weaponItemDataList[i].str;
+                DemoDataManager.characterDatasList[0].itemspeed += weaponItemDataList[i].strspeed;
+                DemoDataManager.characterDatasList[0].itemcrip += weaponItemDataList[i].crip;
+            }
+        }
     }
     void AchievementCheck() //업적 연동
     {

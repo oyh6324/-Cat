@@ -24,6 +24,13 @@ public class DemoShopPageManager : MonoBehaviour
     //보석함 구분
     public Text anchovyBoxTx;
     public Text pearlBoxTx;
+    //무료이용권 이미지
+    public Image anchvoyTicket;
+    public Image pearlTicket;
+    public Sprite anchovy_clo;
+    public Sprite pearl_clo;
+    public Sprite anchovy_wea;
+    public Sprite pearl_wea;
     //오디오
     public AudioSource soundEffectAS;
     public AudioSource bgmAS;
@@ -150,6 +157,8 @@ public class DemoShopPageManager : MonoBehaviour
         pearlBoxTx.text = "3성~5성 확정 의상 보석함";
         anchovyboxFreeTx.text = "무료이용권: " + anchovyboxFreeCount_C;
         pearlboxFreeTx.text = "무료이용권: " + pearlboxFreeCount_C;
+        anchvoyTicket.sprite = anchovy_clo;
+        pearlTicket.sprite = pearl_clo;
 
         if (anchovyboxFreeCount_C > 0)
             anchovyboxFreePriceTx.text = "무료이용권 사용";
@@ -166,6 +175,8 @@ public class DemoShopPageManager : MonoBehaviour
         pearlBoxTx.text = "3성~5성 확정 무기 보석함";
         anchovyboxFreeTx.text = "무료이용권: " + anchovyboxFreeCount_W;
         pearlboxFreeTx.text = "무료이용권: " + pearlboxFreeCount_W;
+        anchvoyTicket.sprite = anchovy_wea;
+        pearlTicket.sprite = pearl_wea;
 
         if (anchovyboxFreeCount_W > 0)
             anchovyboxFreePriceTx.text = "무료이용권 사용";
