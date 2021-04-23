@@ -173,7 +173,7 @@ public class DemoDataManager : MonoBehaviour
             monsterCollectionDataList.Add(new DemoMonsterCollectionData(row[0], row[1], row[2], row[3], stage, isreward));
         }
         //캐릭터 데이터 추가
-        characterDatasList.Add(new DemoCharacterData("User", "", "", "", "", "", 1, 7, 3, 5, 100, 0, 0, 0, 7, 3, 5, 0, 0, 0, 0, 0, 600, 5, 0, 5, 0, 0));
+        characterDatasList.Add(new DemoCharacterData("dmlduddlekduddlqkqh", "", "", "", "", "", 1, 7, 3, 5, 100, 0, 0, 0, 7, 3, 5, 0, 0, 0, 0, 0, 600, 5, 0, 5, 0, 0));
         //돈, 무료이용권 데이터 추가
         moneyItemList.Add(new DemoMoneyItemData("멸치", 1000000));
         moneyItemList.Add(new DemoMoneyItemData("진주", 10000));

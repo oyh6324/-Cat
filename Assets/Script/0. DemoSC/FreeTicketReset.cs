@@ -22,14 +22,14 @@ public class FreeTicketReset : MonoBehaviour
     {
         if (DemoDataManager.moneyItemList[3].count <= 0) //멸치 의상 쿠폰
         {
-            if (System.DateTime.Now.ToString("hhss") == "0000") //게임 도중 오전 12시가 되면 충전
+            if (System.DateTime.Now.ToString("hhmm") == "0000") //게임 도중 오전 12시가 되면 충전
             {
                 DemoDataManager.moneyItemList[3].count++;
             }
         }
         if (DemoDataManager.moneyItemList[5].count <= 0)
         {
-            if (System.DateTime.Now.ToString("hhss") == "0000")
+            if (System.DateTime.Now.ToString("hhmm") == "0000")
             { 
                 DemoDataManager.moneyItemList[5].count++;
             }
