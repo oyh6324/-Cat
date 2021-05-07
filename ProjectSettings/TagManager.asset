@@ -4,7 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - TopReward
+  - Tile
+  - Enemy
+  - bullet
+  - Fall
+  - Collider
+  - EnemySkill
   layers:
   - Default
   - TransparentFX
@@ -14,14 +19,14 @@ TagManager:
   - UI
   - 
   - 
-  - message
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - background
+  - tile
+  - bullet
+  - Enemy
+  - Player
+  - PlayerDemeged
+  - EnemyDie
+  - EnemySkill
   - 
   - 
   - 
@@ -42,9 +47,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: BackWeapon
-    uniqueID: 4239505361
+  - name: background
+    uniqueID: 2561639829
     locked: 0
-  - name: MainWeapon
-    uniqueID: 3038410269
+  - name: animation
+    uniqueID: 378241927
+    locked: 0
+  - name: tile
+    uniqueID: 2413768693
+    locked: 0
+  - name: Player
+    uniqueID: 170708741
     locked: 0
