@@ -24,7 +24,7 @@ TagManager:
   - bullet
   - Enemy
   - Player
-  - PlayerDemeged
+  - PlayerDamaged
   - EnemyDie
   - EnemySkill
   - 

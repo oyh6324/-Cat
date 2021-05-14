@@ -18,10 +18,11 @@ public class 정어리 : MonoBehaviour
     private int MonstercurHp;
     int PlayerStr;
     public float MonsterSpeed;
-    public string name;
+    public string aniName;
     // Start is called before the first frame update
     void Start()
     {
+        float r = Random.Range(4, 5);
         isDied = false;
         rigid = GetComponent<Rigidbody2D>();
         traceTarget = GetComponent<GameObject>();
@@ -34,7 +35,7 @@ public class 정어리 : MonoBehaviour
         PlayerStr = 30;
         //PlayerStr=DemoDataManager.characterDatasList[0].allstr;
         MonsterSpeed = 2f;
-        Invoke("onHurricane", 4f);
+        Invoke("onHurricane", r);
     }
     private void Update()
     {
@@ -67,7 +68,7 @@ public class 정어리 : MonoBehaviour
             if (rayhit.collider == null)
             {
                 nextmove *= -1;
-                CancelInvoke();
+                CancelInvoke("Think");
                 Invoke("Think", 1.5f);
             }
         }
@@ -88,7 +89,6 @@ public class 정어리 : MonoBehaviour
     {
         if (collision.gameObject.tag == "bullet")
         {
-            Debug.Log(name);
             if (MonstercurHp < PlayerStr)
             {
                 isDied = true;
@@ -125,7 +125,7 @@ public class 정어리 : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             traceTarget = collision.gameObject;
-            CancelInvoke();
+            //CancelInvoke("Think");
         }
         else
         {
@@ -148,7 +148,7 @@ public class 정어리 : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             isTracing = false;
-            CancelInvoke();
+            CancelInvoke("Think");
             StartCoroutine("Think");
         }
         else
@@ -200,16 +200,19 @@ public class 정어리 : MonoBehaviour
     }
     void onHurricane()
     {
-        anim.SetBool("정어리회오리", true);
-        anim.SetInteger("MonsterIndex", 1);
+        CancelInvoke("offHurricane");
+        anim.SetBool(aniName, true);
+        anim.SetInteger("MonsterIndex", index);
         MonsterSpeed = MonsterSpeed + 0.5f;
         Invoke("offHurricane", 4f);
     }
     void offHurricane()
     {
-        anim.SetBool("정어리회오리", false);
-        anim.SetInteger("MonsterIndex", 1);
+        float r = Random.Range(3, 5);
+        CancelInvoke("onHurricane");
+        anim.SetBool(aniName, false);
+        anim.SetInteger("MonsterIndex", index);
         MonsterSpeed =MonsterSpeed-0.5f;
-        Invoke("onHurricane", 4f);
+        Invoke("onHurricane",r);
     }
 }

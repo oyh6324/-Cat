@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
     public static float maxSpeed;
     public float JumpPower;
     SpriteRenderer spriterenderer;
+    public GameObject weapon;
     Animator anim;
 
     //hp manage
@@ -33,7 +34,7 @@ public class PlayerMove : MonoBehaviour
         isSlow = false;
         isLiving = true;
         rigid = GetComponent<Rigidbody2D>();
-        spriterenderer = GetComponent<SpriteRenderer>(); //ray 위함
+        spriterenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         maxHp = 300; //maxHp=DemoDataManager.characterDatasList[0].hp; 수정해야함
         curHp = maxHp;
@@ -116,12 +117,12 @@ public class PlayerMove : MonoBehaviour
         if(collision.gameObject.tag=="Enemy")
         {
             damage = MonsterStat.MonsterStr[MonsterIndex];
-            onDameged(collision.transform.position);
+            onDamaged(collision.transform.position);
         }
         else if(collision.gameObject.tag=="EnemySkill")
         {
             damage = MonsterStat.MonsterAttackStr[MonsterIndex];
-            onDameged(collision.transform.position);
+            onDamaged(collision.transform.position);
         }
         if(collision.gameObject.tag=="Fall") //Player fall
         {
@@ -129,7 +130,7 @@ public class PlayerMove : MonoBehaviour
             StartCoroutine(offFall());
         }
     }
-    void onDameged(Vector2 targetPos)
+    void onDamaged(Vector2 targetPos)
     {
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
         if (curHp >damage)
@@ -158,6 +159,7 @@ public class PlayerMove : MonoBehaviour
     }
     IEnumerator onDied()
     {
+        weapon.SetActive(false);
         isLiving = false;
         gameObject.layer = 13;
         curHp = 0;
@@ -197,6 +199,7 @@ public class PlayerMove : MonoBehaviour
     {
         yield return new WaitForSeconds(1.2f);
         curHp = maxHp;
+        weapon.SetActive(true);
         Vector2 relifePos = new Vector2(transform.position.x, transform.position.y + 0.5f);
         transform.position = relifePos;
         isLiving = true;
