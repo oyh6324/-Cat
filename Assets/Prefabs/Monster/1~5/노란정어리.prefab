@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4003187ba011dd43b1ff33c1f01f12b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  index: 7
+  index: 1
   bar: {fileID: 2683243635021030152}
   MonsterSpeed: 0
   aniName: "\uC815\uC5B4\uB9AC\uD68C\uC624\uB9AC"

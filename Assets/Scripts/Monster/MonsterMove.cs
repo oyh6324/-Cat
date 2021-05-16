@@ -92,7 +92,7 @@ public class MonsterMove : MonoBehaviour
     {
         if (collision.gameObject.tag == "bullet")
         {
-            if (MonstercurHp <= PlayerStr)
+            if (MonstercurHp < PlayerStr)
             {              
                 MonstercurHp = 0;
                 isDied = true;
