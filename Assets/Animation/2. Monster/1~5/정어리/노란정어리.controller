@@ -10,7 +10,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: MonsterIndex
-    m_EventTreshold: 1
+    m_EventTreshold: 7
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6476459461965494909}
   m_Solo: 0
@@ -94,7 +94,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: MonsterIndex
-    m_EventTreshold: 1
+    m_EventTreshold: 7
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2101227053963895422}
   m_Solo: 0
@@ -179,7 +179,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: MonsterIndex
-    m_EventTreshold: 1
+    m_EventTreshold: 7
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7076324798075755759}
   m_Solo: 0
@@ -218,7 +218,7 @@ AnimatorController:
   - m_Name: MonsterIndex
     m_Type: 3
     m_DefaultFloat: 0
-    m_DefaultInt: 1
+    m_DefaultInt: 7
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: "\uC815\uC5B4\uB9AC\uD68C\uC624\uB9AC"
@@ -253,7 +253,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: MonsterIndex
-    m_EventTreshold: 1
+    m_EventTreshold: 7
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6476459461965494909}
   m_Solo: 0
@@ -278,7 +278,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 6
     m_ConditionEvent: MonsterIndex
-    m_EventTreshold: 1
+    m_EventTreshold: 7
   - m_ConditionMode: 1
     m_ConditionEvent: MonsterDie
     m_EventTreshold: 0
@@ -309,7 +309,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 6
     m_ConditionEvent: MonsterIndex
-    m_EventTreshold: 1
+    m_EventTreshold: 7
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5505837526056087840}
   m_Solo: 0
