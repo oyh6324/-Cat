@@ -13,9 +13,11 @@ public class PlayerAttack : MonoBehaviour
     private int agi;
     private decimal crip;
     private bool isShooting;
+    Animator anim;
     private void Start()
     {
         //coolTime=DemoDataManager.characterDatasList[0].itemspeed-DemoDataManager.characterDatasList[0].allagi*0.005m;
+        anim = GetComponent<Animator>();
         coolTime = 0.2m; //총속
         agi = 15;
         isShooting = false;
@@ -25,6 +27,7 @@ public class PlayerAttack : MonoBehaviour
         if (Input.GetKey(KeyCode.Z) && isShooting == false)
         {
             StartCoroutine(shoot());
+            anim.SetTrigger("PlayerShoot");
         }
     }
     IEnumerator shoot()
