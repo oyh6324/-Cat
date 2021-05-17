@@ -89,7 +89,7 @@ public class 정어리 : MonoBehaviour
     {
         if (collision.gameObject.tag == "bullet")
         {
-            if (MonstercurHp < PlayerStr)
+            if (MonstercurHp <= PlayerStr)
             {
                 isDied = true;
                 MonstercurHp = 0;
@@ -106,7 +106,7 @@ public class 정어리 : MonoBehaviour
         }
         if (collision.gameObject.tag == "Player")
         {
-            PlayerMove.MonsterIndex = 1;
+            PlayerMove.MonsterIndex = index;
         }
     }
     private void barinvisible()
