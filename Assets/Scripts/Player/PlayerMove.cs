@@ -119,7 +119,7 @@ public class PlayerMove : MonoBehaviour
             damage = MonsterStat.MonsterStr[MonsterIndex];
             onDamaged(collision.transform.position);
         }
-        else if(collision.gameObject.tag=="EnemySkill")
+        else if(collision.gameObject.tag=="EnemySkill"||collision.gameObject.tag=="EnemyBullet")
         {
             damage = MonsterStat.MonsterAttackStr[MonsterIndex];
             onDamaged(collision.transform.position);

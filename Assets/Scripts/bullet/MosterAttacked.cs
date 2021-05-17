@@ -62,7 +62,7 @@ public class MosterAttacked : MonoBehaviour
             Destroy(bullet);
             //OnDestroy();
         }
-        if(collision.gameObject.tag=="Collider")
+        if(collision.gameObject.tag=="Collider"||collision.gameObject.tag=="EmemySkill")
         {
             Destroy(bullet);
         }
