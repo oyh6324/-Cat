@@ -207,6 +207,7 @@ MonoBehaviour:
   index: 2
   bar: {fileID: 7420864339741819493}
   MonsterSpeed: 0
+  droppos: {fileID: 4977820693686630055}
 --- !u!114 &5104002152180447869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,7 +223,7 @@ MonoBehaviour:
   drop: {fileID: 6226737508373744839, guid: 061282aabbb5e8a42a26ded6b7785a0b, type: 3}
   tr: {fileID: 7835925727932089405}
   index: 2
-  speed: 2
+  speed: 1
 --- !u!1001 &1603738655330132508
 PrefabInstance:
   m_ObjectHideFlags: 0

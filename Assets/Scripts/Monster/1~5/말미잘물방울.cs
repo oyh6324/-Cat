@@ -12,16 +12,8 @@ public class 말미잘물방울 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("shoot", speed);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            CancelInvoke();
-            Invoke("shoot", speed);
-        }
+        Invoke("skill", speed);
+        anim = GetComponent<Animator>();
     }
     // Update is called once per frame
     void shoot()
@@ -30,15 +22,21 @@ public class 말미잘물방울 : MonoBehaviour
         Rigidbody2D rigid = dropclone.GetComponent<Rigidbody2D>();
         if (this.gameObject.transform.localScale.x == -0.6f)
         {
-            //drop.transform.localScale = new Vector3(0.8f, 0.8f, 1);
             rigid.AddForce(Vector2.right * 6, ForceMode2D.Impulse);
         }
         else if (this.gameObject.transform.localScale.x == 0.6f)
         {
-            //drop.transform.localScale = new Vector3(-0.8f, 0.8f, 1);
             rigid.AddForce(Vector2.left * 6, ForceMode2D.Impulse);
         }
-        Invoke("shoot", speed);
+        anim.SetTrigger("MonsterSkill");
+        //Invoke("skill", speed);
         Destroy(dropclone, 1.2f);
+        anim.SetBool("MonsterSkill", false);
+        Invoke("skill", speed);
+    }
+    void skill() //skill 애니 트리거 설정
+    {
+        anim.SetBool("MonsterSkill",true);
+
     }
 }

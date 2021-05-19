@@ -16,10 +16,12 @@ public class 말미잘 : MonoBehaviour
     public float MonsterSpeed;
     SpriteRenderer spriterenderer;
     GameObject traceTarget;
+    public GameObject droppos;
     // Start is called before the first frame update
     void Start()
     {
         isDied = false;
+        isTracing = false;
         traceTarget = GetComponent<GameObject>();
         spriterenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -33,18 +35,17 @@ public class 말미잘 : MonoBehaviour
     void Update()
     {
         bar.value = Mathf.Lerp(bar.value, (float)MonstercurHp / (float)TotalHp, Time.deltaTime * 10);
-        if (isDied == false)
+        if (isDied == false && isTracing == true) 
         {
             Vector3 playerPos = traceTarget.transform.position;
             if (playerPos.x < transform.position.x)
             {
-                transform.localScale= new Vector3(0.6f, 0.6f, 1);
-                //spriterenderer.flipX = false;
+                this.gameObject.transform.localScale= new Vector3(0.6f, 0.6f, 1);
             }
             else if (playerPos.x >= transform.position.x)
             {
-                transform.localScale = new Vector3(-0.6f, 0.6f, 1);
-                //spriterenderer.flipX = true;
+                this.gameObject.transform.localScale = new Vector3(-0.6f, 0.6f, 1);
+                bar.transform.localScale = new Vector3(-0.007f, 0.005f, 1);
             }
         }
     }
@@ -76,6 +77,7 @@ public class 말미잘 : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            isTracing = true;
             traceTarget = collision.gameObject;
             CancelInvoke();
         }
