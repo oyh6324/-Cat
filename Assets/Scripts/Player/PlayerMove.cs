@@ -11,11 +11,12 @@ public class PlayerMove : MonoBehaviour
     public static float maxSpeed;
     public float JumpPower;
     SpriteRenderer spriterenderer;
+    public SpriteRenderer gunsprite;
     public GameObject weapon;
     Animator anim;
 
     //hp manage
-    bool isLiving;
+    public static bool isLiving;
     public Slider hpbar;
     public Image Heart1;
     public Image Heart2;
@@ -35,6 +36,7 @@ public class PlayerMove : MonoBehaviour
         isLiving = true;
         rigid = GetComponent<Rigidbody2D>();
         spriterenderer = GetComponent<SpriteRenderer>();
+        //gunsprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         maxHp = 300; //maxHp=DemoDataManager.characterDatasList[0].hp; 수정해야함
         curHp = maxHp;
@@ -86,7 +88,7 @@ public class PlayerMove : MonoBehaviour
         Hptx.text = curHp + "/" + maxHp;
     }
     private void FixedUpdate()
-    { 
+    {
         //press directionn key
         float h = Input.GetAxisRaw("Horizontal");
         Vector3 raypos = new Vector3(transform.position.x, transform.position.y - 0.5f); //지면에 붙어있는지 확인하는 선
@@ -119,7 +121,7 @@ public class PlayerMove : MonoBehaviour
             damage = MonsterStat.MonsterStr[MonsterIndex];
             onDamaged(collision.transform.position);
         }
-        else if(collision.gameObject.tag=="EnemySkill")
+        else if(collision.gameObject.tag=="EnemySkill"||collision.gameObject.tag=="EnemyBullet")
         {
             damage = MonsterStat.MonsterAttackStr[MonsterIndex];
             onDamaged(collision.transform.position);
@@ -130,6 +132,13 @@ public class PlayerMove : MonoBehaviour
             StartCoroutine(offFall());
         }
     }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag=="EnemyBullet")
+        {
+            Destroy(collision.gameObject);
+        }
+    }
     void onDamaged(Vector2 targetPos)
     {
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
@@ -138,6 +147,7 @@ public class PlayerMove : MonoBehaviour
             gameObject.layer = 13;
             curHp -= damage;
             spriterenderer.color = new Color(1, 1, 1, 0.4f); //반투명화
+            gunsprite.color = new Color(1, 1, 1, 0.4f); //반투명화
             rigid.velocity = Vector2.zero; //붙은 가속 제거
             rigid.AddForce(new Vector2(dirc * 10f,5f), ForceMode2D.Impulse);
             anim.SetTrigger("isAttacked");
@@ -156,6 +166,7 @@ public class PlayerMove : MonoBehaviour
     {
         gameObject.layer = 12;
         spriterenderer.color = new Color(1, 1, 1, 1);
+        gunsprite.color = new Color(1, 1, 1, 1);
     }
     IEnumerator onDied()
     {
@@ -164,8 +175,10 @@ public class PlayerMove : MonoBehaviour
         gameObject.layer = 13;
         curHp = 0;
         anim.SetTrigger("isDying");
+
         for(int i=1; i<=5; i++)
         {
+            gunsprite.color = new Color(1, 1, 1, 1 - 0.2f * i);
             spriterenderer.color = new Color(1, 1, 1, 1 - 0.2f * i);
             yield return new WaitForSeconds(0.58f);
         }
@@ -199,15 +212,16 @@ public class PlayerMove : MonoBehaviour
     {
         yield return new WaitForSeconds(1.2f);
         curHp = maxHp;
-        weapon.SetActive(true);
         Vector2 relifePos = new Vector2(transform.position.x, transform.position.y + 0.5f);
         transform.position = relifePos;
-        isLiving = true;
         for (int i = 1; i <= 5; i++)
         {
             spriterenderer.color = new Color(1, 1, 1, 0+ 0.2f * i);
+            gunsprite.color = new Color(1, 1, 1, 0 +0.2f * i);
             yield return new WaitForSeconds(0.5f);
         }
+        isLiving = true;
+        weapon.SetActive(true);
         gameObject.layer = 12;
     }
 

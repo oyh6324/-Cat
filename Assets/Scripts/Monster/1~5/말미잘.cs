@@ -9,19 +9,24 @@ public class 말미잘 : MonoBehaviour
     public int index;
     public Slider bar;
     int TotalHp;
-    private int curHp;
     int PlayerStr;
-    public GameObject traceTarget;
     bool isTracing;
     private bool isDied;
+    private int MonstercurHp;
+    public float MonsterSpeed;
+    SpriteRenderer spriterenderer;
+    GameObject traceTarget;
+    public GameObject droppos;
     // Start is called before the first frame update
     void Start()
     {
         isDied = false;
         isTracing = false;
+        traceTarget = GetComponent<GameObject>();
+        spriterenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         TotalHp = MonsterStat.MonsterTotalHp[index];
-        curHp = TotalHp;
+        MonstercurHp = TotalHp;
         PlayerStr = 30;
         //PlayerStr=DemoDataManager.characterDatasList[0].allstr;
     }
@@ -29,38 +34,68 @@ public class 말미잘 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bar.value = Mathf.Lerp(bar.value, (float)curHp / (float)TotalHp, Time.deltaTime * 10);
+        bar.value = Mathf.Lerp(bar.value, (float)MonstercurHp / (float)TotalHp, Time.deltaTime * 10);
+        if (isDied == false && isTracing == true) 
+        {
+            Vector3 playerPos = traceTarget.transform.position;
+            if (playerPos.x < transform.position.x)
+            {
+                this.gameObject.transform.localScale= new Vector3(0.6f, 0.6f, 1);
+                bar.transform.localScale = new Vector3(0.007f, 0.005f, 1);
+            }
+            else if (playerPos.x >= transform.position.x)
+            {
+                this.gameObject.transform.localScale = new Vector3(-0.6f, 0.6f, 1);
+                bar.transform.localScale = new Vector3(-0.007f, 0.005f, 1);
+            }
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "bullet")
         {
-            if (curHp < PlayerStr)
+            if (MonstercurHp <= PlayerStr)
             {
-                curHp = 0;
-                StartCoroutine(Died());
+                MonstercurHp = 0;
+                isDied = true;
+                gameObject.layer = 14;
+                anim.SetInteger("MonsterIndex", index);
+                anim.SetTrigger("MonsterDie");
             }
             else
             {
                 anim.SetInteger("MonsterIndex", index);
                 anim.SetTrigger("MonsterAttacked");
-                curHp -= PlayerStr;
+                MonstercurHp -= PlayerStr;
             }
         }
-        if(collision.gameObject.tag=="Player")
+        if (collision.gameObject.tag == "Player")
         {
-            PlayerMove.MonsterIndex = 2;
+            PlayerMove.MonsterIndex = index;
         }
     }
-    IEnumerator Died()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        isDied = true;
-        gameObject.layer = 14;
-        anim.SetInteger("MonsterIndex", index);
-        anim.SetTrigger("MonsterDie");
-        yield return new WaitForSeconds(0.5f);
+        if (collision.gameObject.tag == "Player")
+        {
+            isTracing = true;
+            traceTarget = collision.gameObject;
+            CancelInvoke();
+        }
+        else
+        {
+            return;
+        }
+    }
+    private void barinvisible()
+    {
         bar.gameObject.SetActive(false);
-        yield return new WaitForSeconds(1f);
-        gameObject.SetActive(false);
+    }
+    private void Died()
+    {
+        if (isDied == true)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

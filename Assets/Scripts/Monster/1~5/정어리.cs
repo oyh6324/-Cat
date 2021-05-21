@@ -68,6 +68,7 @@ public class 정어리 : MonoBehaviour
             if (rayhit.collider == null)
             {
                 nextmove *= -1;
+                rigid.velocity = Vector2.zero;
                 CancelInvoke("Think");
                 Invoke("Think", 1.5f);
             }

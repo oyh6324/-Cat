@@ -10,6 +10,7 @@ TagManager:
   - Fall
   - Collider
   - EnemySkill
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - PlayerDamaged
   - EnemyDie
   - EnemySkill
-  - 
+  - EnemyBullet
   - 
   - 
   - 

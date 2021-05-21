@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class 고등어 : MonoBehaviour
 {
-    
+    public float speed;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag=="Player")
         {
             PlayerMove.MonsterIndex = 0;
             lowspeed();
-            Invoke("normalSpeed", 2f);
+            Invoke("normalSpeed", speed);
         }
     }
     void lowspeed()

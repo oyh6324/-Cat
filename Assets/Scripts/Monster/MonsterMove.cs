@@ -71,7 +71,8 @@ public class MonsterMove : MonoBehaviour
             if (rayhit.collider == null)
             {
                 nextmove *= -1;
-                CancelInvoke();
+                rigid.velocity = Vector2.zero;
+                CancelInvoke("Think");
                 Invoke("Think", 1.5f);
             }
         }
