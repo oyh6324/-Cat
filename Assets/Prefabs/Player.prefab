@@ -731,6 +731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpPower: 9.5
+  gunsprite: {fileID: 2876281570587035890}
   weapon: {fileID: 3920580589976134754}
   hpbar: {fileID: 4622017647001638790}
   Heart1: {fileID: 4622017647472226715}

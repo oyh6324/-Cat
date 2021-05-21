@@ -22,8 +22,11 @@ AnimationClip:
     - time: 0
       value: {fileID: -6793235076653000176, guid: 536736ea695054748bdd887741b513da,
         type: 3}
-    - time: 0.5833333
+    - time: 0.33333334
       value: {fileID: 128469832563918681, guid: 536736ea695054748bdd887741b513da,
+        type: 3}
+    - time: 0.5
+      value: {fileID: -6793235076653000176, guid: 536736ea695054748bdd887741b513da,
         type: 3}
     attribute: m_Sprite
     path: 
@@ -46,12 +49,13 @@ AnimationClip:
     pptrCurveMapping:
     - {fileID: -6793235076653000176, guid: 536736ea695054748bdd887741b513da, type: 3}
     - {fileID: 128469832563918681, guid: 536736ea695054748bdd887741b513da, type: 3}
+    - {fileID: -6793235076653000176, guid: 536736ea695054748bdd887741b513da, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.59999996
+    m_StopTime: 0.51666665
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -70,4 +74,12 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.33333334
+    functionName: shoot
+    data: 
+    objectReferenceParameter: {fileID: 9100000, guid: 787212171c56005499349f4fca646d90,
+      type: 2}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

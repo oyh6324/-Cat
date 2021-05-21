@@ -24,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Z) && isShooting == false)
+        if (Input.GetKey(KeyCode.Z) && isShooting == false&&PlayerMove.isLiving==true)
         {
             StartCoroutine(shoot());
             anim.SetTrigger("PlayerShoot");
