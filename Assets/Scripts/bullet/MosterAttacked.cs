@@ -67,6 +67,7 @@ public class MosterAttacked : MonoBehaviour
             Destroy(bullet);
         }
     }
+    
     private void OnDestroy()
     {
         Destroy(bullet);

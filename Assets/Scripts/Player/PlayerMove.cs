@@ -132,6 +132,13 @@ public class PlayerMove : MonoBehaviour
             StartCoroutine(offFall());
         }
     }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag=="EnemyBullet")
+        {
+            Destroy(collision.gameObject);
+        }
+    }
     void onDamaged(Vector2 targetPos)
     {
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;

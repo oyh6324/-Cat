@@ -41,6 +41,7 @@ public class 말미잘 : MonoBehaviour
             if (playerPos.x < transform.position.x)
             {
                 this.gameObject.transform.localScale= new Vector3(0.6f, 0.6f, 1);
+                bar.transform.localScale = new Vector3(0.007f, 0.005f, 1);
             }
             else if (playerPos.x >= transform.position.x)
             {

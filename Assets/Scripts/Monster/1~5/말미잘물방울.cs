@@ -28,8 +28,7 @@ public class 말미잘물방울 : MonoBehaviour
         {
             rigid.AddForce(Vector2.left * 6, ForceMode2D.Impulse);
         }
-        //Invoke("skill", speed);
-        Destroy(dropclone, 1.2f);
+        Destroy(dropclone, 1.5f);
         anim.SetBool("MonsterSkill", false);
         Invoke("skill", speed);
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class 정어리 : MonoBehaviour
+public class 천사어 : MonoBehaviour
 {
     Rigidbody2D rigid;
     private int nextmove;
@@ -19,6 +19,7 @@ public class 정어리 : MonoBehaviour
     int PlayerStr;
     public float MonsterSpeed;
     public string aniName;
+    bool PlaySkill;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,8 +36,9 @@ public class 정어리 : MonoBehaviour
         PlayerStr = 30;
         //PlayerStr=DemoDataManager.characterDatasList[0].allstr;
         MonsterSpeed = 2f;
-        Invoke("onHurricane", r);
+        PlaySkill = true;
     }
+
     private void Update()
     {
         bar.value = Mathf.Lerp(bar.value, (float)MonstercurHp / (float)TotalHp, Time.deltaTime * 10);
@@ -90,6 +92,7 @@ public class 정어리 : MonoBehaviour
     {
         if (collision.gameObject.tag == "bullet")
         {
+            Destroy(collision.gameObject);
             if (MonstercurHp <= PlayerStr)
             {
                 isDied = true;
@@ -116,7 +119,7 @@ public class 정어리 : MonoBehaviour
     }
     private void Died()
     {
-        if(isDied==true)
+        if (isDied == true)
         {
             Destroy(gameObject);
         }
@@ -126,7 +129,11 @@ public class 정어리 : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             traceTarget = collision.gameObject;
-            //CancelInvoke("Think");
+            if(PlaySkill==true)
+            {
+                onSkill();
+                Debug.Log(PlaySkill);
+            }
         }
         else
         {
@@ -199,21 +206,25 @@ public class 정어리 : MonoBehaviour
         }
         transform.position += moveVelocity * (MonsterSpeed + 1f) * Time.deltaTime;
     }
-    void onHurricane()
+    void onSkill()
     {
-        CancelInvoke("offHurricane");
         anim.SetBool(aniName, true);
+        MonsterSpeed = MonsterSpeed + 1;
         anim.SetInteger("MonsterIndex", index);
-        MonsterSpeed = MonsterSpeed + 0.5f;
-        Invoke("offHurricane", 4f);
+        gameObject.tag = "EnemySkill";
+        Invoke("offSkill", 0.5f);
     }
-    void offHurricane()
+    void offSkill()
     {
-        float r = Random.Range(3, 5);
-        CancelInvoke("onHurricane");
+        PlaySkill = false;
+        gameObject.tag = "Enemy";
         anim.SetBool(aniName, false);
         anim.SetInteger("MonsterIndex", index);
-        MonsterSpeed =MonsterSpeed-0.5f;
-        Invoke("onHurricane",r);
+        MonsterSpeed = MonsterSpeed - 1;
+        Invoke("boolSkill", 4f);
+    }
+    void boolSkill()
+    {
+        PlaySkill = true;
     }
 }

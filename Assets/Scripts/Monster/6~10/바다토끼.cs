@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class 정어리 : MonoBehaviour
+public class 바다토끼 : MonoBehaviour
 {
     Rigidbody2D rigid;
     private int nextmove;
@@ -19,6 +19,9 @@ public class 정어리 : MonoBehaviour
     int PlayerStr;
     public float MonsterSpeed;
     public string aniName;
+    bool PlaySkill;
+    public GameObject drop;
+    public Transform tr;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,8 +38,9 @@ public class 정어리 : MonoBehaviour
         PlayerStr = 30;
         //PlayerStr=DemoDataManager.characterDatasList[0].allstr;
         MonsterSpeed = 2f;
-        Invoke("onHurricane", r);
+        PlaySkill = true;
     }
+
     private void Update()
     {
         bar.value = Mathf.Lerp(bar.value, (float)MonstercurHp / (float)TotalHp, Time.deltaTime * 10);
@@ -45,11 +49,15 @@ public class 정어리 : MonoBehaviour
             Vector3 playerPos = traceTarget.transform.position;
             if (playerPos.x < transform.position.x)
             {
-                spriterenderer.flipX = false;
+                this.gameObject.transform.localScale = new Vector3(0.6f, 0.6f, 1);
+                drop.transform.localScale = new Vector3(0.5f, 0.5f, 0);
+                bar.transform.localScale = new Vector3(0.007f, 0.005f, 1);
             }
             else if (playerPos.x >= transform.position.x)
             {
-                spriterenderer.flipX = true;
+                this.gameObject.transform.localScale = new Vector3(-0.6f, 0.6f, 1);
+                drop.transform.localScale = new Vector3(-0.5f, 0.5f, 0);
+                bar.transform.localScale = new Vector3(-0.007f, 0.005f, 1);
             }
         }
     }
@@ -74,22 +82,23 @@ public class 정어리 : MonoBehaviour
             }
         }
         else
-        {
-            PlayerTracing();
-        }
+            return;
         if (nextmove == 1)
         {
-            spriterenderer.flipX = true;
+            this.gameObject.transform.localScale = new Vector3(-0.6f, 0.6f, 1);
+            //spriterenderer.flipX = true;
         }
         else if (nextmove == -1)
         {
-            spriterenderer.flipX = false;
+            this.gameObject.transform.localScale = new Vector3(0.6f, 0.6f, 1);
+            //spriterenderer.flipX = false;
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "bullet")
         {
+            Destroy(collision.gameObject);
             if (MonstercurHp <= PlayerStr)
             {
                 isDied = true;
@@ -116,7 +125,7 @@ public class 정어리 : MonoBehaviour
     }
     private void Died()
     {
-        if(isDied==true)
+        if (isDied == true)
         {
             Destroy(gameObject);
         }
@@ -125,8 +134,11 @@ public class 정어리 : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            PlaySkill = true;
+            rigid.velocity = Vector2.zero; //붙은 가속 제거
+            isTracing = true;
             traceTarget = collision.gameObject;
-            //CancelInvoke("Think");
+            anim.SetBool("MonsterSkill", true);
         }
         else
         {
@@ -135,22 +147,17 @@ public class 정어리 : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            isTracing = true;
-        }
-        else
-        {
-            return;
-        }
+        if(collision.gameObject.tag=="Player")
+            traceTarget = collision.gameObject;
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            isTracing = false;
+            PlaySkill = false;
             CancelInvoke("Think");
-            StartCoroutine("Think");
+            Invoke("Think", 4f);
+            anim.SetBool("MonsterSkill", false);
         }
         else
             return;
@@ -161,59 +168,30 @@ public class 정어리 : MonoBehaviour
     {
         if (isDied == false)
         {
+            isTracing = false;
             nextmove = Random.Range(-1, 2);
             float nextThinkTime = Random.Range(1f, 4f);
             Invoke("Think", nextThinkTime);
         }
     }
-    void PlayerTracing() //플레이어 추적 움직임 설정
+    void shoot()
     {
-        Vector3 moveVelocity = Vector3.zero;
-        string dist = "";
-        if (isTracing && isDied == false)
+        GameObject dropclone = Instantiate(drop, tr.position, tr.rotation);
+        Rigidbody2D rigid = dropclone.GetComponent<Rigidbody2D>();
+        if(drop.transform.localScale.x==0.5f)
         {
-            Vector3 playerPos = traceTarget.transform.position;
-
-            if (playerPos.x < transform.position.x)
-            {
-                dist = "Left";
-                spriterenderer.flipX = false;
-            }
-            else if (playerPos.x > transform.position.x)
-            {
-                dist = "Right";
-                spriterenderer.flipX = true;
-            }
+            rigid.AddForce(Vector2.left * 4, ForceMode2D.Impulse);
         }
         else
         {
-            StartCoroutine("Think");
+            rigid.AddForce(Vector2.right * 4, ForceMode2D.Impulse);
         }
-        if (dist == "Left")
-        {
-            moveVelocity = Vector3.left;
-        }
-        else if (dist == "Right")
-        {
-            moveVelocity = Vector3.right;
-        }
-        transform.position += moveVelocity * (MonsterSpeed + 1f) * Time.deltaTime;
+        StartCoroutine(activedrop(dropclone));
+        Destroy(dropclone,4f);
     }
-    void onHurricane()
+    IEnumerator activedrop(GameObject drop)
     {
-        CancelInvoke("offHurricane");
-        anim.SetBool(aniName, true);
-        anim.SetInteger("MonsterIndex", index);
-        MonsterSpeed = MonsterSpeed + 0.5f;
-        Invoke("offHurricane", 4f);
-    }
-    void offHurricane()
-    {
-        float r = Random.Range(3, 5);
-        CancelInvoke("onHurricane");
-        anim.SetBool(aniName, false);
-        anim.SetInteger("MonsterIndex", index);
-        MonsterSpeed =MonsterSpeed-0.5f;
-        Invoke("onHurricane",r);
+        yield return new WaitForSeconds(1f);
+        drop.gameObject.SetActive(false);
     }
 }
