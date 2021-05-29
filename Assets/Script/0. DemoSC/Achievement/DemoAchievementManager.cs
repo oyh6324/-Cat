@@ -135,15 +135,22 @@ public class DemoAchievementManager : MonoBehaviour
             reward1Img[i].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 100f);
             reward1Img[i].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 50f);
 
-            progressRewardTx[i].transform.position = new Vector2(reward1Img[i].transform.position.x+130, reward1Img[i].transform.position.y);
+
+            progressRewardTx[i].transform.position = new Vector2(progressRewardTx[i].transform.position.x, reward1Img[i].transform.position.y);
+            progressRewardTx[i].rectTransform.offsetMax = new Vector2(0, progressRewardTx[i].rectTransform.offsetMax.y);
+            progressRewardTx[i].rectTransform.offsetMin = new Vector2(130, progressRewardTx[i].rectTransform.offsetMin.y);
         }
         else
         {
             reward1Img[i].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 70f);
             reward1Img[i].rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 70f);
 
-            progressRewardTx[i].transform.position = new Vector2(reward1Img[i].transform.position.x+ 100, reward1Img[i].transform.position.y);
-            progressRewardTx2[i].transform.position = new Vector2(reward2Img[i].transform.position.x+ 100, reward2Img[i].transform.position.y);
+            progressRewardTx[i].transform.position = new Vector2(progressRewardTx[i].transform.position.x, reward1Img[i].transform.position.y);
+            progressRewardTx2[i].transform.position = new Vector2(progressRewardTx2[i].transform.position.x, reward2Img[i].transform.position.y);
+            progressRewardTx[i].rectTransform.offsetMax = new Vector2(0, progressRewardTx[i].rectTransform.offsetMax.y);
+            progressRewardTx[i].rectTransform.offsetMin = new Vector2(100, progressRewardTx[i].rectTransform.offsetMin.y);
+            progressRewardTx2[i].rectTransform.offsetMax = new Vector2(0, progressRewardTx2[i].rectTransform.offsetMax.y);
+            progressRewardTx2[i].rectTransform.offsetMin = new Vector2(100, progressRewardTx2[i].rectTransform.offsetMin.y);
         }
     }
     void PageChange()
