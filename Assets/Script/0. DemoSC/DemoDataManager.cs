@@ -90,7 +90,6 @@ public class DemoDataManager : MonoBehaviour
 
     void Awake()
     {
-        //PlayerPrefs.DeleteAll();
         if (PlayerPrefs.HasKey("first"))
             LoadAllData();
         else

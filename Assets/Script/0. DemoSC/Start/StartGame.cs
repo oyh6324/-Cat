@@ -9,6 +9,7 @@ public class StartGame : MonoBehaviour
     public GameObject lobbyCanvas;
     public GameObject barCanvas;
     public GameObject tutorialCanvas;
+    public GameObject stageSelectCanvas;
 
     public Image background;
     public Image inputName;
@@ -28,6 +29,17 @@ public class StartGame : MonoBehaviour
 
     private FadeIO fadeIO;
     private bool tutorial;
+    private void Awake()
+    {
+        //PlayerPrefs.DeleteAll();
+        if (PlayerPrefs.HasKey("returnCat"))
+        {
+            PlayerPrefs.DeleteKey("returnCat");
+            this.gameObject.SetActive(false);
+            stageSelectCanvas.SetActive(true);
+            barCanvas.SetActive(true);
+        }
+    }
     private void Start()
     {
         bgmAS.clip = startBgm;

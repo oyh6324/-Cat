@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StageSelect : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class StageSelect : MonoBehaviour
 
     public Image[] locks;
     public Image[] flags;
+
+    public Image fadeInOut;
 
     private int stageNumber;
 
@@ -161,8 +164,8 @@ public class StageSelect : MonoBehaviour
             stageMessage.gameObject.SetActive(false);
             messageCanvas.gameObject.SetActive(false);
 
-            //해당 스테이지로 이동 코드
-            //stageNumber로 몇 번째 스테이지인지 알 수 있음
+            PlayerPrefs.SetInt("stageNumber", stageNumber);
+            SceneManager.LoadScene("Stage");
         }
         else //열쇠 없을 때
         {

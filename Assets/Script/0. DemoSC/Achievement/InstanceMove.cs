@@ -50,7 +50,7 @@ public class InstanceMove : MonoBehaviour
     }
     IEnumerator waitMove()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         isMove = true;
         gameObject.GetComponent<Rigidbody2D>().gravityScale = 0f;
     }
