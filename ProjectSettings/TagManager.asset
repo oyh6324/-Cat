@@ -11,6 +11,7 @@ TagManager:
   - Collider
   - EnemySkill
   - EnemyBullet
+  - TopReward
   layers:
   - Default
   - TransparentFX
@@ -59,4 +60,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 170708741
+    locked: 0
+  - name: UI
+    uniqueID: 154537763
     locked: 0
