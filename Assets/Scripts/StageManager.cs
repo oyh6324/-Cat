@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class StageManager : MonoBehaviour
 {
@@ -32,11 +33,28 @@ public class StageManager : MonoBehaviour
 
     public GameObject player;
 
+    public AudioMixer audiomixer;
+    private AudioSource messageAS;
+    public AudioClip buttonClip;
+    public AudioClip failClip;
+    public AudioClip clearClip;
+
     private int stageNumber;
     private bool clearCheck;
     private bool failCheck;
     private void Awake()
     {
+        //음향
+        if (PlayerPrefs.HasKey("효과음제거"))
+            audiomixer.SetFloat("Effect", -80f);
+        else
+            audiomixer.SetFloat("Effect", 0f);
+
+        if (PlayerPrefs.HasKey("배경음제거"))
+            audiomixer.SetFloat("BGM", -80f);
+        else
+            audiomixer.SetFloat("BGM", 0f);
+
         stageNumber= PlayerPrefs.GetInt("stageNumber");
         map[(stageNumber-1)/5].SetActive(true); //바탕
         stage[stageNumber - 1].SetActive(true); //스테이지
@@ -66,24 +84,30 @@ public class StageManager : MonoBehaviour
     {
         if (failCheck) return;
 
-        Debug.Log("클리어 실패");
+        audiomixer.SetFloat("BGM", -80f);
         messageCanvas.SetActive(true);
+        messageAS = messageCanvas.GetComponent<AudioSource>();
+        messageAS.PlayOneShot(failClip);
+        Debug.Log("클리어 실패");
         fail.SetActive(true);
         failCheck = true;
     }
     public void BackBtClick()
     {
+        messageAS.PlayOneShot(buttonClip);
         PlayerPrefs.SetInt("returnCat", 1);
         SceneManager.LoadScene("Cat");
     }
     public void AgainBtClick()
     {
+        messageAS.PlayOneShot(buttonClip);
         message.gameObject.SetActive(true);
         messageTx.text = "열쇠를 사용하시겠습니까?";
     }
     public void YesBtClick()
     {
-        if(DemoDataManager.moneyItemList[2].count<1)
+        messageAS.PlayOneShot(buttonClip);
+        if (DemoDataManager.moneyItemList[2].count<1)
         {
             messageTx.text = "열쇠가 부족해요!";
             yesNo.SetActive(false);
@@ -97,10 +121,12 @@ public class StageManager : MonoBehaviour
     }
     public void NoBtClick()
     {
+        messageAS.PlayOneShot(buttonClip);
         message.gameObject.SetActive(false);
     }
     public void MokBtClick()
     {
+        messageAS.PlayOneShot(buttonClip);
         yesNo.SetActive(true);
         ok.SetActive(false);
         message.gameObject.SetActive(false);
@@ -111,14 +137,19 @@ public class StageManager : MonoBehaviour
 
         Debug.Log("clear"); // clear 확인 변수값 설정
 
+        audiomixer.SetFloat("BGM", -80f);
         messageCanvas.SetActive(true);
+        messageAS = messageCanvas.GetComponent<AudioSource>();
+        messageAS.PlayOneShot(clearClip);
         clears.SetActive(true);
         EXPGet();
         clearCheck = true;
     }
     public void ClearBtClick()
     {
-        if(PlayerPrefs.HasKey("stage clear")&&PlayerPrefs.GetInt("stage clear") >= stageNumber) //이미 클리어 한 게임이라면
+        messageAS.PlayOneShot(buttonClip);
+
+        if (PlayerPrefs.HasKey("stage clear")&&PlayerPrefs.GetInt("stage clear") >= stageNumber) //이미 클리어 한 게임이라면
         {
             PlayerPrefs.SetInt("returnCat", 1);
             SceneManager.LoadScene("Cat");
@@ -243,6 +274,7 @@ public class StageManager : MonoBehaviour
     }
     public void OkBtClick()
     {
+        messageAS.PlayOneShot(buttonClip);
         PlayerPrefs.SetInt("returnCat", 1);
         SceneManager.LoadScene("Cat");
     }

@@ -28,8 +28,8 @@ public class StageSelect : MonoBehaviour
 
     private void OnEnable()
     {
-        soundEffectAS.clip = divingClip;
-        soundEffectAS.Play();
+        //soundEffectAS.clip = divingClip;
+        soundEffectAS.PlayOneShot(divingClip);
 
         StageFlagOn();
     }

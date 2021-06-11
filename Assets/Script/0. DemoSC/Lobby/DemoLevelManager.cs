@@ -24,13 +24,17 @@ public class DemoLevelManager : MonoBehaviour
     //오디오
     public AudioSource soundEffectAS;
     public AudioClip buttonClickClip;
+    public AudioClip levelUpClip;
 
     private Sprite reward1;
     private Sprite reward2;
     void OnEnable()
     {
         if (DemoDataManager.characterDatasList[0].exp >= DemoDataManager.characterDatasList[0].totalexp)
+        {
+            soundEffectAS.PlayOneShot(levelUpClip);
             LevelUpReward();
+        }
     }
     public void OkBtClick()
     {
