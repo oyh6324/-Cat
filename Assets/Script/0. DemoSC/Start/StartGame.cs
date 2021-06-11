@@ -42,6 +42,17 @@ public class StartGame : MonoBehaviour
     }
     private void Start()
     {
+        //음향
+        if (PlayerPrefs.HasKey("효과음제거"))
+            effectAS.volume = 0f;
+        else
+            effectAS.volume = 1f;
+
+        if (PlayerPrefs.HasKey("배경음제거"))
+            bgmAS.volume = 0f;
+        else
+            bgmAS.volume = 0.3f;
+
         bgmAS.clip = startBgm;
         bgmAS.Play();
     }
