@@ -23,39 +23,39 @@ public class DemoCatManager : MonoBehaviour
     public AudioClip catClip;
     void OnEnable()
     {
-        expSliberBar.value = (float)DemoDataManager.characterDatasList[0].exp / (float)DemoDataManager.characterDatasList[0].totalexp;
-        expSliderBarTx.text = DemoDataManager.characterDatasList[0].exp.ToString() + "/" + DemoDataManager.characterDatasList[0].totalexp.ToString();
-        levelTx.text = "Lv." + DemoDataManager.characterDatasList[0].level;
-        playerNameTx.text = DemoDataManager.characterDatasList[0].name;
+        expSliberBar.value = (float)DemoDataManager.Instance.characterDatasList[0].exp / (float)DemoDataManager.Instance.characterDatasList[0].totalexp;
+        expSliderBarTx.text = DemoDataManager.Instance.characterDatasList[0].exp.ToString() + "/" + DemoDataManager.Instance.characterDatasList[0].totalexp.ToString();
+        levelTx.text = "Lv." + DemoDataManager.Instance.characterDatasList[0].level;
+        playerNameTx.text = DemoDataManager.Instance.characterDatasList[0].name;
     }
     void Update()
     {
-        if (DemoDataManager.characterDatasList[0].helmet == "")
+        if (DemoDataManager.Instance.characterDatasList[0].helmet == "")
             helmetImg.gameObject.SetActive(false);
-        if (DemoDataManager.characterDatasList[0].top == "")
+        if (DemoDataManager.Instance.characterDatasList[0].top == "")
             topImg.gameObject.SetActive(false);
-        if (DemoDataManager.characterDatasList[0].bottoms == "")
+        if (DemoDataManager.Instance.characterDatasList[0].bottoms == "")
             bottomsImg.gameObject.SetActive(false);
-        for(int i=0; i<DemoDataManager.allClothesItemList.Count; i++)
+        for(int i=0; i<DemoDataManager.Instance.allClothesItemList.Count; i++)
         {
-            if (DemoDataManager.characterDatasList[0].helmet == DemoDataManager.allClothesItemList[i].name)
+            if (DemoDataManager.Instance.characterDatasList[0].helmet == DemoDataManager.Instance.allClothesItemList[i].name)
             {
                 helmetImg.sprite = clothesSprite[i];
                 helmetImg.gameObject.SetActive(true);
             }
-            if (DemoDataManager.characterDatasList[0].top == DemoDataManager.allClothesItemList[i].name)
+            if (DemoDataManager.Instance.characterDatasList[0].top == DemoDataManager.Instance.allClothesItemList[i].name)
             {
                 topImg.sprite = clothesSprite[i];
                 topImg.gameObject.SetActive(true);
             }
-            if (DemoDataManager.characterDatasList[0].bottoms == DemoDataManager.allClothesItemList[i].name)
+            if (DemoDataManager.Instance.characterDatasList[0].bottoms == DemoDataManager.Instance.allClothesItemList[i].name)
             {
                 bottomsImg.sprite = clothesSprite[i];
                 bottomsImg.gameObject.SetActive(true);
             }
         }
 
-        if(DemoDataManager.characterDatasList[0].helmet=="우주 헬멧")
+        if(DemoDataManager.Instance.characterDatasList[0].helmet=="우주 헬멧")
         {
             catAnim.SetBool("isHelmet", true);
         }

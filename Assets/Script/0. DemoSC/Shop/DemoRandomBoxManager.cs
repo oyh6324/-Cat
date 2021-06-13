@@ -96,22 +96,22 @@ public class DemoRandomBoxManager : MonoBehaviour
     {
         //설명에 필요한 정보 옮겨담기
         List<Stat> statList = new List<Stat>();
-        string clothesName = DemoDataManager.allClothesItemList[random].name;
-        int clothesLevel = DemoDataManager.allClothesItemList[random].level;
-        string clothesEx = DemoDataManager.allClothesItemList[random].ex;
-        int clothesStar = DemoDataManager.allClothesItemList[random].star;
-        decimal clothesSetcrip = DemoDataManager.allClothesItemList[random].setcrip;
+        string clothesName = DemoDataManager.Instance.allClothesItemList[random].name;
+        int clothesLevel = DemoDataManager.Instance.allClothesItemList[random].level;
+        string clothesEx = DemoDataManager.Instance.allClothesItemList[random].ex;
+        int clothesStar = DemoDataManager.Instance.allClothesItemList[random].star;
+        decimal clothesSetcrip = DemoDataManager.Instance.allClothesItemList[random].setcrip;
 
-        statList.Add(new Stat("STR", DemoDataManager.allClothesItemList[random].str));
-        statList.Add(new Stat("DEF", DemoDataManager.allClothesItemList[random].def));
-        statList.Add(new Stat("AGI", DemoDataManager.allClothesItemList[random].agi));
+        statList.Add(new Stat("STR", DemoDataManager.Instance.allClothesItemList[random].str));
+        statList.Add(new Stat("DEF", DemoDataManager.Instance.allClothesItemList[random].def));
+        statList.Add(new Stat("AGI", DemoDataManager.Instance.allClothesItemList[random].agi));
 
         //세트 착용 시 추가 스탯
-        statList.Add(new Stat("STR", DemoDataManager.allClothesItemList[random].setstr));
-        statList.Add(new Stat("DEF", DemoDataManager.allClothesItemList[random].setdef));
-        statList.Add(new Stat("AGI", DemoDataManager.allClothesItemList[random].setagi));
+        statList.Add(new Stat("STR", DemoDataManager.Instance.allClothesItemList[random].setstr));
+        statList.Add(new Stat("DEF", DemoDataManager.Instance.allClothesItemList[random].setdef));
+        statList.Add(new Stat("AGI", DemoDataManager.Instance.allClothesItemList[random].setagi));
 
-        DemoDataManager.allClothesItemList[random].count += 1; //보유 개수 추가
+        DemoDataManager.Instance.allClothesItemList[random].count += 1; //보유 개수 추가
 
         for (int i = 0; i < clothesStar; i++) //등급 표시
             classTx.text += "★";
@@ -124,7 +124,7 @@ public class DemoRandomBoxManager : MonoBehaviour
             if (statList[i].number != 0)
                 statTx.text += statList[i].name + " +" + statList[i].number + "\n";
         }
-        if (DemoDataManager.allClothesItemList[random].setname != "") //세트 효과 표시
+        if (DemoDataManager.Instance.allClothesItemList[random].setname != "") //세트 효과 표시
         {
             setTx.text = "세트 적용 시\n";
             for (int i = 3; i < 6; i++)
@@ -135,8 +135,8 @@ public class DemoRandomBoxManager : MonoBehaviour
             if (clothesSetcrip != 0)
                 setTx.text += "크리티컬 확률 +" + clothesSetcrip + "%";
         }
-        if (DemoDataManager.allClothesItemList[random].count == 1)
-            DemoDataManager.allClothesItemList[random].isnew = true;
+        if (DemoDataManager.Instance.allClothesItemList[random].count == 1)
+            DemoDataManager.Instance.allClothesItemList[random].isnew = true;
 
         //의상 스프라이트
         itemImg.sprite = clothesSprite[random];
@@ -153,15 +153,15 @@ public class DemoRandomBoxManager : MonoBehaviour
     void WeaponBoxRandom()
     {
         //정보 옮겨담기
-        string weaponName = DemoDataManager.allWeaponItemList[random].name;
-        int weaponLevel = DemoDataManager.allWeaponItemList[random].level;
-        int weaponStar = DemoDataManager.allWeaponItemList[random].star;
-        string weaponEX = DemoDataManager.allWeaponItemList[random].ex;
-        int weaponStr = DemoDataManager.allWeaponItemList[random].str;
-        decimal weaponSpeed = DemoDataManager.allWeaponItemList[random].strspeed;
-        decimal weaponCrip = DemoDataManager.allWeaponItemList[random].crip;
+        string weaponName = DemoDataManager.Instance.allWeaponItemList[random].name;
+        int weaponLevel = DemoDataManager.Instance.allWeaponItemList[random].level;
+        int weaponStar = DemoDataManager.Instance.allWeaponItemList[random].star;
+        string weaponEX = DemoDataManager.Instance.allWeaponItemList[random].ex;
+        int weaponStr = DemoDataManager.Instance.allWeaponItemList[random].str;
+        decimal weaponSpeed = DemoDataManager.Instance.allWeaponItemList[random].strspeed;
+        decimal weaponCrip = DemoDataManager.Instance.allWeaponItemList[random].crip;
 
-        DemoDataManager.allWeaponItemList[random].count += 1;
+        DemoDataManager.Instance.allWeaponItemList[random].count += 1;
 
         for (int i = 0; i < weaponStar; i++) //등급 표시
             classTx.text += "★";
@@ -170,8 +170,8 @@ public class DemoRandomBoxManager : MonoBehaviour
         exTx.text = weaponEX; //설명 표시
         statTx.text = "STR +" + weaponStr + "\nSPEED " + weaponSpeed + "\n크티리컬 확률 +" + weaponCrip + "%"; //스탯 효과 표시
 
-        if (DemoDataManager.allWeaponItemList[random].count == 1)
-            DemoDataManager.allWeaponItemList[random].isnew = true;
+        if (DemoDataManager.Instance.allWeaponItemList[random].count == 1)
+            DemoDataManager.Instance.allWeaponItemList[random].isnew = true;
 
         //무기 스프라이트
         itemImg.sprite = weaponSprite[random];
@@ -183,24 +183,24 @@ public class DemoRandomBoxManager : MonoBehaviour
     void AchievementCheck()
     {
         int helmetCount = 0, topCount = 0, bottomsCount = 0, weaponCount = 0;
-        for (int i = 0; i < DemoDataManager.allClothesItemList.Count; i++)
+        for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++)
         {
-            if (DemoDataManager.allClothesItemList[i].type == "헬멧" && DemoDataManager.allClothesItemList[i].count > 0)
+            if (DemoDataManager.Instance.allClothesItemList[i].type == "헬멧" && DemoDataManager.Instance.allClothesItemList[i].count > 0)
                 helmetCount++;
-            if (DemoDataManager.allClothesItemList[i].type == "상의" && DemoDataManager.allClothesItemList[i].count > 0)
+            if (DemoDataManager.Instance.allClothesItemList[i].type == "상의" && DemoDataManager.Instance.allClothesItemList[i].count > 0)
                 topCount++;
-            if (DemoDataManager.allClothesItemList[i].type == "하의" && DemoDataManager.allClothesItemList[i].count > 0)
+            if (DemoDataManager.Instance.allClothesItemList[i].type == "하의" && DemoDataManager.Instance.allClothesItemList[i].count > 0)
                 bottomsCount++;
         }
-        for (int i = 0; i < DemoDataManager.allWeaponItemList.Count; i++)
+        for (int i = 0; i < DemoDataManager.Instance.allWeaponItemList.Count; i++)
         {
-            if (DemoDataManager.allWeaponItemList[i].count > 0)
+            if (DemoDataManager.Instance.allWeaponItemList[i].count > 0)
                 weaponCount++;
         }
-        DemoDataManager.achievementDataList[3].progressvalue = helmetCount;
-        DemoDataManager.achievementDataList[4].progressvalue = topCount;
-        DemoDataManager.achievementDataList[5].progressvalue = bottomsCount;
-        DemoDataManager.achievementDataList[6].progressvalue = weaponCount;
+        DemoDataManager.Instance.achievementDataList[3].progressvalue = helmetCount;
+        DemoDataManager.Instance.achievementDataList[4].progressvalue = topCount;
+        DemoDataManager.Instance.achievementDataList[5].progressvalue = bottomsCount;
+        DemoDataManager.Instance.achievementDataList[6].progressvalue = weaponCount;
     }
     public class Stat
     {

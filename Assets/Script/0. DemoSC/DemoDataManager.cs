@@ -80,22 +80,43 @@ public class DemoMonsterCollectionData
 }
 public class DemoDataManager : MonoBehaviour
 {
-    public static List<DemoWeaponItemData> allWeaponItemList;
-    public static List<DemoClothesItemData> allClothesItemList;
-    public static List<DemoCharacterData> characterDatasList;
-    public static List<DemoAchievementData> achievementDataList;
-    public static List<DemoMonsterCollectionData> monsterCollectionDataList;
+    public  List<DemoWeaponItemData> allWeaponItemList;
+    public  List<DemoClothesItemData> allClothesItemList;
+    public  List<DemoCharacterData> characterDatasList;
+    public  List<DemoAchievementData> achievementDataList;
+    public  List<DemoMonsterCollectionData> monsterCollectionDataList;
     //0: anchovy 1:pearl 2:key 3:anchovyboxClothes 4:pearlboxClothes 5:anchovyboxWeapon 6:pearlboxWeapon 
-    public static List<DemoMoneyItemData> moneyItemList;
+    public List<DemoMoneyItemData> moneyItemList;
+
+    private static DemoDataManager instance=null;
 
     void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         if (PlayerPrefs.HasKey("first"))
             LoadAllData();
         else
         {
             PlayerPrefs.SetInt("first", 1);
             SaveFirstData();
+        }
+    }
+    public static DemoDataManager Instance
+    {
+        get
+        {
+            if (null == instance)
+                return null;
+            return instance;
         }
     }
     void OnApplicationPause(bool pause) //홈버튼 눌렀을 때

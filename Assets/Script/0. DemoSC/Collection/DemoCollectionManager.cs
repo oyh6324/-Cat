@@ -67,12 +67,12 @@ public class DemoCollectionManager : MonoBehaviour
     {
 
         StartCoroutine(rewardAnimation(0));
-        DemoDataManager.moneyItemList[0].count += 50;
-        DemoDataManager.achievementDataList[0].progressvalue += 50;
+        DemoDataManager.Instance.moneyItemList[0].count += 50;
+        DemoDataManager.Instance.achievementDataList[0].progressvalue += 50;
         for (int i = 0; i < monsterDataList.Count; i++)
         {
             if (monsterDataList[i].stage == (thisPage + 1) * 5)
-                DemoDataManager.monsterCollectionDataList[i].isreward = true;
+                DemoDataManager.Instance.monsterCollectionDataList[i].isreward = true;
         }
         PageChage();
     }
@@ -98,12 +98,12 @@ public class DemoCollectionManager : MonoBehaviour
     }
     void PictureReward(int index)
     {
-        DemoDataManager.moneyItemList[0].count += 30;
-        DemoDataManager.achievementDataList[0].progressvalue += 30;
+        DemoDataManager.Instance.moneyItemList[0].count += 30;
+        DemoDataManager.Instance.achievementDataList[0].progressvalue += 30;
         for (int i = 0; i < monsterDataList.Count; i++)
         {
             if (monsterDataList[i].name == pictureNameTx[index].text)
-                DemoDataManager.monsterCollectionDataList[i].isreward = true;
+                DemoDataManager.Instance.monsterCollectionDataList[i].isreward = true;
         }
         PageChage();
     }
@@ -128,7 +128,7 @@ public class DemoCollectionManager : MonoBehaviour
         {
             if (monsterDataList[i].stage == (thisPage + 1) * 5) //해당 페이지의 보스 고르기
             {
-                if (monsterDataList[i].stage <= DemoDataManager.characterDatasList[0].stage) //보스를 만났다면 보스 출력
+                if (monsterDataList[i].stage <= DemoDataManager.Instance.characterDatasList[0].stage) //보스를 만났다면 보스 출력
                 {
                     bossLockImg.gameObject.SetActive(false);
                     bossPictureImg.sprite = monsterSprite[i];
@@ -156,7 +156,7 @@ public class DemoCollectionManager : MonoBehaviour
             }
             if (monsterDataList[i].stage < (thisPage + 1) * 5 && monsterDataList[i].stage >= (thisPage * 5) + 1) //해당 페이지의 스테이지 잡몹들 고르기
             {
-                if (monsterDataList[i].stage <= DemoDataManager.characterDatasList[0].stage) //해당 스테이지를 갔다면 출력
+                if (monsterDataList[i].stage <= DemoDataManager.Instance.characterDatasList[0].stage) //해당 스테이지를 갔다면 출력
                 {
                     pictureLockImg[count].gameObject.SetActive(false);
                     pictureImg[count].sprite = monsterSprite[i];
@@ -190,9 +190,9 @@ public class DemoCollectionManager : MonoBehaviour
     void InputData()
     {
         monsterDataList.Clear();
-        for (int i = 0; i < DemoDataManager.monsterCollectionDataList.Count; i++)
-            monsterDataList.Add(new monsterData(DemoDataManager.monsterCollectionDataList[i].name, DemoDataManager.monsterCollectionDataList[i].realname, DemoDataManager.monsterCollectionDataList[i].habitat,
-                DemoDataManager.monsterCollectionDataList[i].kind, DemoDataManager.monsterCollectionDataList[i].stage, DemoDataManager.monsterCollectionDataList[i].isreward));
+        for (int i = 0; i < DemoDataManager.Instance.monsterCollectionDataList.Count; i++)
+            monsterDataList.Add(new monsterData(DemoDataManager.Instance.monsterCollectionDataList[i].name, DemoDataManager.Instance.monsterCollectionDataList[i].realname, DemoDataManager.Instance.monsterCollectionDataList[i].habitat,
+                DemoDataManager.Instance.monsterCollectionDataList[i].kind, DemoDataManager.Instance.monsterCollectionDataList[i].stage, DemoDataManager.Instance.monsterCollectionDataList[i].isreward));
     }
     public class monsterData
     {

@@ -37,11 +37,11 @@ public class DemoTopManager : MonoBehaviour
     void Update()
     {
         //상단의 멸치, 진주, 열쇠 개수 카운트
-        anchovyCount.text = DemoDataManager.moneyItemList[0].count.ToString();
-        pearlCount.text = DemoDataManager.moneyItemList[1].count.ToString();
-        keyCount.text = DemoDataManager.moneyItemList[2].count.ToString();
+        anchovyCount.text = DemoDataManager.Instance.moneyItemList[0].count.ToString();
+        pearlCount.text = DemoDataManager.Instance.moneyItemList[1].count.ToString();
+        keyCount.text = DemoDataManager.Instance.moneyItemList[2].count.ToString();
 
-        if (DemoDataManager.moneyItemList[2].count < 5) //열쇠 타이머
+        if (DemoDataManager.Instance.moneyItemList[2].count < 5) //열쇠 타이머
         {
             keyTime -= Time.deltaTime;
             int minute = (int)keyTime / 60;
@@ -49,7 +49,7 @@ public class DemoTopManager : MonoBehaviour
             keyTimeTx.text = minute + "분 " + second + "초";
             if ((int)keyTime == 0)
             {
-                DemoDataManager.moneyItemList[2].count += 1;
+                DemoDataManager.Instance.moneyItemList[2].count += 1;
                 keyTime = 900;
             }
         }
@@ -98,7 +98,7 @@ public class DemoTopManager : MonoBehaviour
     }
     void OnDestroy()
     {
-        if (DemoDataManager.moneyItemList[2].count < 5)
+        if (Convert.ToInt32(keyCount.text) < 5)
         {
             PlayerPrefs.SetString("게임 종료 시간", System.DateTime.Now.ToString());
             PlayerPrefs.SetFloat("열쇠 타이머", keyTime);
@@ -113,7 +113,7 @@ public class DemoTopManager : MonoBehaviour
     {
         if (pause)
         {
-            if (DemoDataManager.moneyItemList[2].count < 5)
+            if (Convert.ToInt32(keyCount.text) < 5)
             {
                 PlayerPrefs.SetString("게임 종료 시간", System.DateTime.Now.ToString());
                 PlayerPrefs.SetFloat("열쇠 타이머", keyTime);
@@ -220,9 +220,9 @@ public class DemoTopManager : MonoBehaviour
             else
             {
                 float tempTime = totalSeconds - PlayerPrefs.GetFloat("열쇠 타이머");
-                DemoDataManager.moneyItemList[2].count += ((int)tempTime / 900) + 1;
-                if (DemoDataManager.moneyItemList[2].count > 5)
-                    DemoDataManager.moneyItemList[2].count = 5;
+                DemoDataManager.Instance.moneyItemList[2].count += ((int)tempTime / 900) + 1;
+                if (DemoDataManager.Instance.moneyItemList[2].count > 5)
+                    DemoDataManager.Instance.moneyItemList[2].count = 5;
                 keyTime = 900 - (tempTime) % 900;
             }
             PlayerPrefs.DeleteKey("게임 종료 시간");

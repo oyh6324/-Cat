@@ -17,45 +17,45 @@ public class DemoAlarmManager : MonoBehaviour
         int invenCount = 0;
         int collectionRewardCount = 0;
         int collectionCount = 0;
-        for (int i = 0; i < DemoDataManager.achievementDataList.Count; i++) //업적 알람
+        for (int i = 0; i < DemoDataManager.Instance.achievementDataList.Count; i++) //업적 알람
         {
-            if (DemoDataManager.achievementDataList[i].progressvalue >= DemoDataManager.achievementDataList[i].value &&
-                DemoDataManager.achievementDataList[i].maxlevel > DemoDataManager.achievementDataList[i].level)
+            if (DemoDataManager.Instance.achievementDataList[i].progressvalue >= DemoDataManager.Instance.achievementDataList[i].value &&
+                DemoDataManager.Instance.achievementDataList[i].maxlevel > DemoDataManager.Instance.achievementDataList[i].level)
                 achieveAlarmImg.gameObject.SetActive(true);
-            if (DemoDataManager.achievementDataList[i].progressvalue < DemoDataManager.achievementDataList[i].value ||
-                DemoDataManager.achievementDataList[i].maxlevel == DemoDataManager.achievementDataList[i].level)
+            if (DemoDataManager.Instance.achievementDataList[i].progressvalue < DemoDataManager.Instance.achievementDataList[i].value ||
+                DemoDataManager.Instance.achievementDataList[i].maxlevel == DemoDataManager.Instance.achievementDataList[i].level)
                 achieveCount++;
         }
-        if (achieveCount == DemoDataManager.achievementDataList.Count)
+        if (achieveCount == DemoDataManager.Instance.achievementDataList.Count)
             achieveAlarmImg.gameObject.SetActive(false);
 
-        for (int i = 0; i < DemoDataManager.allWeaponItemList.Count; i++) //무기고 알람
+        for (int i = 0; i < DemoDataManager.Instance.allWeaponItemList.Count; i++) //무기고 알람
         {
-            if (DemoDataManager.allWeaponItemList[i].isnew)
+            if (DemoDataManager.Instance.allWeaponItemList[i].isnew)
                 weaponAlarmImg.gameObject.SetActive(true);
             else
                 weaponCount++;
         }
-        if (weaponCount == DemoDataManager.allWeaponItemList.Count)
+        if (weaponCount == DemoDataManager.Instance.allWeaponItemList.Count)
             weaponAlarmImg.gameObject.SetActive(false);
 
-        for (int i = 0; i < DemoDataManager.allClothesItemList.Count; i++) //인벤토리 알람
+        for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++) //인벤토리 알람
         {
-            if (DemoDataManager.allClothesItemList[i].isnew)
+            if (DemoDataManager.Instance.allClothesItemList[i].isnew)
                 inventoryAlarmImg.gameObject.SetActive(true);
             else
                 invenCount++;
         }
-        if (invenCount == DemoDataManager.allClothesItemList.Count)
+        if (invenCount == DemoDataManager.Instance.allClothesItemList.Count)
             inventoryAlarmImg.gameObject.SetActive(false);
 
-        for (int i = 0; i < DemoDataManager.monsterCollectionDataList.Count; i++) //도감 알람
+        for (int i = 0; i < DemoDataManager.Instance.monsterCollectionDataList.Count; i++) //도감 알람
         {
-            if (DemoDataManager.monsterCollectionDataList[i].stage <= DemoDataManager.characterDatasList[0].stage && DemoDataManager.monsterCollectionDataList[i].isreward == false)
+            if (DemoDataManager.Instance.monsterCollectionDataList[i].stage <= DemoDataManager.Instance.characterDatasList[0].stage && DemoDataManager.Instance.monsterCollectionDataList[i].isreward == false)
                 collectionAlarmImg.gameObject.SetActive(true);
-            else if (DemoDataManager.monsterCollectionDataList[i].stage <= DemoDataManager.characterDatasList[0].stage && DemoDataManager.monsterCollectionDataList[i].isreward)
+            else if (DemoDataManager.Instance.monsterCollectionDataList[i].stage <= DemoDataManager.Instance.characterDatasList[0].stage && DemoDataManager.Instance.monsterCollectionDataList[i].isreward)
                 collectionRewardCount++;
-            if (DemoDataManager.monsterCollectionDataList[i].stage <= DemoDataManager.characterDatasList[0].stage)
+            if (DemoDataManager.Instance.monsterCollectionDataList[i].stage <= DemoDataManager.Instance.characterDatasList[0].stage)
                 collectionCount++;
         }
         if (collectionCount == collectionRewardCount)

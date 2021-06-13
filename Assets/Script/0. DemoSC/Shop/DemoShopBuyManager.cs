@@ -50,11 +50,11 @@ public class DemoShopBuyManager : MonoBehaviour
     //버튼 연결
     public void AnchovyboxBtClick()
     {
-        if (PlayerPrefs.HasKey("isClothes") && DemoDataManager.moneyItemList[3].count > 0) //무료사용권 있을 때
+        if (PlayerPrefs.HasKey("isClothes") && DemoDataManager.Instance.moneyItemList[3].count > 0) //무료사용권 있을 때
         {
             BuyBoxFree(0);
         }
-        else if (PlayerPrefs.HasKey("isClothes") == false && DemoDataManager.moneyItemList[5].count > 0)
+        else if (PlayerPrefs.HasKey("isClothes") == false && DemoDataManager.Instance.moneyItemList[5].count > 0)
         {
             BuyBoxFree(1);
         }
@@ -63,11 +63,11 @@ public class DemoShopBuyManager : MonoBehaviour
     }
     public void PearlboxBtClick()
     {
-        if (PlayerPrefs.HasKey("isClothes") && DemoDataManager.moneyItemList[4].count > 0) //무료사용권 있을 때
+        if (PlayerPrefs.HasKey("isClothes") && DemoDataManager.Instance.moneyItemList[4].count > 0) //무료사용권 있을 때
         {
             BuyBoxFree(2);
         }
-        else if (PlayerPrefs.HasKey("isClothes") == false && DemoDataManager.moneyItemList[6].count > 0)
+        else if (PlayerPrefs.HasKey("isClothes") == false && DemoDataManager.Instance.moneyItemList[6].count > 0)
         {
             BuyBoxFree(3);
         }
@@ -131,22 +131,22 @@ public class DemoShopBuyManager : MonoBehaviour
                 if (isFreeBox[0])
                 {
                     PlayerPrefs.SetInt("멸치의상뽑기", 1);
-                    DemoDataManager.moneyItemList[3].count -= 1;
+                    DemoDataManager.Instance.moneyItemList[3].count -= 1;
                 }
                 else if (isFreeBox[1])
                 {
                     PlayerPrefs.SetInt("멸치무기뽑기", 1);
-                    DemoDataManager.moneyItemList[5].count -= 1;
+                    DemoDataManager.Instance.moneyItemList[5].count -= 1;
                 }
                 else if (isFreeBox[2])
                 {
                     PlayerPrefs.SetInt("진주의상뽑기", 1);
-                    DemoDataManager.moneyItemList[4].count -= 1;
+                    DemoDataManager.Instance.moneyItemList[4].count -= 1;
                 }
                 else if (isFreeBox[3])
                 {
                     PlayerPrefs.SetInt("진주무기뽑기", 1);
-                    DemoDataManager.moneyItemList[6].count -= 1;
+                    DemoDataManager.Instance.moneyItemList[6].count -= 1;
                 }
                 isFreeUse = false;
                 StartCoroutine(WatingForBoxOpen());
@@ -192,11 +192,11 @@ public class DemoShopBuyManager : MonoBehaviour
                 tempNumber = i;
         }
         //구매 가능 여부
-        for (int i = 0; i < DemoDataManager.moneyItemList.Count; i++)
+        for (int i = 0; i < DemoDataManager.Instance.moneyItemList.Count; i++)
         {
-            if (DemoDataManager.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].priceName))
+            if (DemoDataManager.Instance.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].priceName))
             {
-                if (DemoDataManager.moneyItemList[i].count < buyitemdataList[tempNumber].price)
+                if (DemoDataManager.Instance.moneyItemList[i].count < buyitemdataList[tempNumber].price)
                 {
                     messageTx.text = buyitemdataList[tempNumber].priceName + "가 부족해요!";
                     yesnoBts.SetActive(false);
@@ -225,17 +225,17 @@ public class DemoShopBuyManager : MonoBehaviour
                     PlayerPrefs.SetInt("진주무기뽑기", 1);
             }
             //계산
-            for (int i = 0; i < DemoDataManager.moneyItemList.Count; i++)
+            for (int i = 0; i < DemoDataManager.Instance.moneyItemList.Count; i++)
             {
-                if (DemoDataManager.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].getProductName))
-                    DemoDataManager.moneyItemList[i].count += buyitemdataList[tempNumber].getProduct;
-                if (DemoDataManager.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].priceName))
-                    DemoDataManager.moneyItemList[i].count -= buyitemdataList[tempNumber].price;
+                if (DemoDataManager.Instance.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].getProductName))
+                    DemoDataManager.Instance.moneyItemList[i].count += buyitemdataList[tempNumber].getProduct;
+                if (DemoDataManager.Instance.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].priceName))
+                    DemoDataManager.Instance.moneyItemList[i].count -= buyitemdataList[tempNumber].price;
             }
             if (buyitemdataList[tempNumber].getProductName == "멸치") //업적 연동
-                DemoDataManager.achievementDataList[0].progressvalue += buyitemdataList[tempNumber].getProduct;
+                DemoDataManager.Instance.achievementDataList[0].progressvalue += buyitemdataList[tempNumber].getProduct;
             if(buyitemdataList[tempNumber].getProductName=="진주")
-                DemoDataManager.achievementDataList[1].progressvalue += buyitemdataList[tempNumber].getProduct;
+                DemoDataManager.Instance.achievementDataList[1].progressvalue += buyitemdataList[tempNumber].getProduct;
             if (productNumber[0] || productNumber[1]) //상자구매시 구매화면
             {
                 StartCoroutine(WatingForBoxOpen());
