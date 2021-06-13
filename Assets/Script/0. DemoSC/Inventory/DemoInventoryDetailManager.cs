@@ -43,9 +43,9 @@ public class DemoInventoryDetailManager : MonoBehaviour
     void OnEnable()
     {
         TextSetting();
-        for(int i=0; i<DemoDataManager.allClothesItemList.Count; i++) //아이템 이미지 씌우기
+        for(int i=0; i<DemoDataManager.Instance.allClothesItemList.Count; i++) //아이템 이미지 씌우기
         {
-            if (DemoDataManager.allClothesItemList[i].name == itemName)
+            if (DemoDataManager.Instance.allClothesItemList[i].name == itemName)
                 itemImg.sprite = itemSprite[i];
         }
     }
@@ -61,33 +61,33 @@ public class DemoInventoryDetailManager : MonoBehaviour
         soundEffectAS.Play();
         itemCount -= sumCount;
         int preItemStr = 0, preItemDef = 0, preItemAgi = 0;
-        for (int i = 0; i < DemoDataManager.allClothesItemList.Count; i++)
+        for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++)
         {
-            if (DemoDataManager.allClothesItemList[i].name.Equals(itemName))
+            if (DemoDataManager.Instance.allClothesItemList[i].name.Equals(itemName))
             {
                 preItemStr = itemStr; preItemDef = itemDef; preItemAgi = itemAgi;
                 itemStr = itemStr / itemLevel * (itemLevel + 1);
                 itemDef = itemDef / itemLevel * (itemLevel + 1);
                 itemAgi = itemAgi / itemLevel * (itemLevel + 1);
 
-                DemoDataManager.allClothesItemList[i].str = itemStr;
-                DemoDataManager.allClothesItemList[i].def = itemDef;
-                DemoDataManager.allClothesItemList[i].agi = itemAgi;
-                DemoDataManager.allClothesItemList[i].level += 1;
+                DemoDataManager.Instance.allClothesItemList[i].str = itemStr;
+                DemoDataManager.Instance.allClothesItemList[i].def = itemDef;
+                DemoDataManager.Instance.allClothesItemList[i].agi = itemAgi;
+                DemoDataManager.Instance.allClothesItemList[i].level += 1;
 
                 if (preItemStr != 0)
-                    DemoDataManager.characterDatasList[0].itemstr += itemStr - preItemStr;
+                    DemoDataManager.Instance.characterDatasList[0].itemstr += itemStr - preItemStr;
                 if (preItemDef != 0)
-                    DemoDataManager.characterDatasList[0].itemdef += itemDef - preItemDef;
+                    DemoDataManager.Instance.characterDatasList[0].itemdef += itemDef - preItemDef;
                 if (preItemAgi != 0)
-                    DemoDataManager.characterDatasList[0].itemagi += itemAgi - preItemAgi;
+                    DemoDataManager.Instance.characterDatasList[0].itemagi += itemAgi - preItemAgi;
 
                 if (itemCount == 0)
-                    DemoDataManager.allClothesItemList[i].count = 1;
+                    DemoDataManager.Instance.allClothesItemList[i].count = 1;
                 else if (itemCount == 1)
-                    DemoDataManager.allClothesItemList[i].count = 2;
+                    DemoDataManager.Instance.allClothesItemList[i].count = 2;
                 else
-                    DemoDataManager.allClothesItemList[i].count = itemCount;
+                    DemoDataManager.Instance.allClothesItemList[i].count = itemCount;
             }
         }
         PlayerPrefs.SetInt("아이템정보변경", 1);
@@ -97,18 +97,18 @@ public class DemoInventoryDetailManager : MonoBehaviour
     void AchievementCheck()
     {
         int count3 = 0, count4 = 0, count5 = 0;
-        for (int i = 0; i < DemoDataManager.allClothesItemList.Count; i++)
+        for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++)
         {
-            if (DemoDataManager.allClothesItemList[i].level >= 3)
+            if (DemoDataManager.Instance.allClothesItemList[i].level >= 3)
                 count3++;
-            if (DemoDataManager.allClothesItemList[i].level >= 4)
+            if (DemoDataManager.Instance.allClothesItemList[i].level >= 4)
                 count4++;
-            if (DemoDataManager.allClothesItemList[i].level == 5)
+            if (DemoDataManager.Instance.allClothesItemList[i].level == 5)
                 count5++;
         }
-        DemoDataManager.achievementDataList[7].progressvalue = count3;
-        DemoDataManager.achievementDataList[8].progressvalue = count4;
-        DemoDataManager.achievementDataList[9].progressvalue = count5;
+        DemoDataManager.Instance.achievementDataList[7].progressvalue = count3;
+        DemoDataManager.Instance.achievementDataList[8].progressvalue = count4;
+        DemoDataManager.Instance.achievementDataList[9].progressvalue = count5;
     }
     void TextSetting()
     {
@@ -123,17 +123,17 @@ public class DemoInventoryDetailManager : MonoBehaviour
         upgradeBtBlind.gameObject.SetActive(true);
         if (DemoInventoryPageManager.isInvenBtClick[0]) //헬멧 아이템 열 때
         {
-            itemName = DemoDataManager.characterDatasList[0].helmet;
+            itemName = DemoDataManager.Instance.characterDatasList[0].helmet;
             itemDataSave(itemName);
         }
         if (DemoInventoryPageManager.isInvenBtClick[1]) //상의 열 때
         {
-            itemName = DemoDataManager.characterDatasList[0].top;
+            itemName = DemoDataManager.Instance.characterDatasList[0].top;
             itemDataSave(itemName);
         }
         if (DemoInventoryPageManager.isInvenBtClick[2]) //하의 열 때
         {
-            itemName = DemoDataManager.characterDatasList[0].bottoms;
+            itemName = DemoDataManager.Instance.characterDatasList[0].bottoms;
             itemDataSave(itemName);
         }
         //글 세팅
@@ -163,9 +163,9 @@ public class DemoInventoryDetailManager : MonoBehaviour
             }
             setNameCountTx.text = itemSetName + " 세트 "; //세트 세팅
             int count = 0;
-            for (int i = 0; i < DemoDataManager.allClothesItemList.Count; i++) //세트를 다 모았는지
+            for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++) //세트를 다 모았는지
             {
-                if (DemoDataManager.allClothesItemList[i].setname.Equals(itemSetName) && DemoDataManager.allClothesItemList[i].count > 0)
+                if (DemoDataManager.Instance.allClothesItemList[i].setname.Equals(itemSetName) && DemoDataManager.Instance.allClothesItemList[i].count > 0)
                     count++;
             }
             setNameCountTx.text += count + "/" + itemSetCount;
@@ -195,23 +195,23 @@ public class DemoInventoryDetailManager : MonoBehaviour
     }
     void itemDataSave(string itemname)
     {
-        for (int i = 0; i < DemoDataManager.allClothesItemList.Count; i++)
+        for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++)
         {
-            if (DemoDataManager.allClothesItemList[i].name.Equals(itemname))
+            if (DemoDataManager.Instance.allClothesItemList[i].name.Equals(itemname))
             {
-                itemClass = DemoDataManager.allClothesItemList[i].star;
-                itemEx = DemoDataManager.allClothesItemList[i].ex;
-                itemLevel = DemoDataManager.allClothesItemList[i].level;
-                itemStr = DemoDataManager.allClothesItemList[i].str;
-                itemDef = DemoDataManager.allClothesItemList[i].def;
-                itemAgi = DemoDataManager.allClothesItemList[i].agi;
-                itemCount = DemoDataManager.allClothesItemList[i].count;
-                itemSetName = DemoDataManager.allClothesItemList[i].setname;
-                itemSetStr = DemoDataManager.allClothesItemList[i].setstr;
-                itemSetDef = DemoDataManager.allClothesItemList[i].setdef;
-                itemSetAgi = DemoDataManager.allClothesItemList[i].setagi;
-                itemSetCrip = DemoDataManager.allClothesItemList[i].setcrip;
-                itemSetCount = DemoDataManager.allClothesItemList[i].setnumber;
+                itemClass = DemoDataManager.Instance.allClothesItemList[i].star;
+                itemEx = DemoDataManager.Instance.allClothesItemList[i].ex;
+                itemLevel = DemoDataManager.Instance.allClothesItemList[i].level;
+                itemStr = DemoDataManager.Instance.allClothesItemList[i].str;
+                itemDef = DemoDataManager.Instance.allClothesItemList[i].def;
+                itemAgi = DemoDataManager.Instance.allClothesItemList[i].agi;
+                itemCount = DemoDataManager.Instance.allClothesItemList[i].count;
+                itemSetName = DemoDataManager.Instance.allClothesItemList[i].setname;
+                itemSetStr = DemoDataManager.Instance.allClothesItemList[i].setstr;
+                itemSetDef = DemoDataManager.Instance.allClothesItemList[i].setdef;
+                itemSetAgi = DemoDataManager.Instance.allClothesItemList[i].setagi;
+                itemSetCrip = DemoDataManager.Instance.allClothesItemList[i].setcrip;
+                itemSetCount = DemoDataManager.Instance.allClothesItemList[i].setnumber;
             }
         }
     }

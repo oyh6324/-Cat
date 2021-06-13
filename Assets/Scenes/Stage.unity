@@ -54393,7 +54393,6 @@ MonoBehaviour:
   ok: {fileID: 712903683}
   player: {fileID: 57347897}
   audiomixer: {fileID: 24100000, guid: 91fe6b3d8efd767459a1dd259ba331b0, type: 2}
-  messageAS: {fileID: 476738985}
   buttonClip: {fileID: 8300000, guid: 972cbe43a28826a4b8189cd1ad2c3ec0, type: 3}
   failClip: {fileID: 8300000, guid: 3ddacbf88983f394fb65a745195b57c9, type: 3}
   clearClip: {fileID: 8300000, guid: 257f6d83e503dc84dbb1a3bb900fc8ee, type: 3}
@@ -70269,49 +70268,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &2038603982
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2038603984}
-  - component: {fileID: 2038603983}
-  m_Layer: 0
-  m_Name: DataManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2038603983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038603982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03f528408e7233640bdb3e797f22fcc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &2038603984
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038603982}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1440, y: 720, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2041307079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 668141205108434429, guid: 15a16f4a3f8b2a24c89dfbe0e0bf8fbf,

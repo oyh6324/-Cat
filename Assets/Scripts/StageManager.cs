@@ -107,7 +107,7 @@ public class StageManager : MonoBehaviour
     public void YesBtClick()
     {
         messageAS.PlayOneShot(buttonClip);
-        if (DemoDataManager.moneyItemList[2].count<1)
+        if (DemoDataManager.Instance.moneyItemList[2].count<1)
         {
             messageTx.text = "열쇠가 부족해요!";
             yesNo.SetActive(false);
@@ -115,7 +115,7 @@ public class StageManager : MonoBehaviour
         }
         else
         {
-            DemoDataManager.moneyItemList[2].count--;
+            DemoDataManager.Instance.moneyItemList[2].count--;
             SceneManager.LoadScene("Stage");
         }
     }
@@ -168,7 +168,7 @@ public class StageManager : MonoBehaviour
             PlayerPrefs.SetInt("returnCat", 1);
             SceneManager.LoadScene("Cat");
         }
-        DemoDataManager.achievementDataList[2].progressvalue++;
+        DemoDataManager.Instance.achievementDataList[2].progressvalue++;
     }
     void EXPGet()
     {
@@ -181,43 +181,43 @@ public class StageManager : MonoBehaviour
         {
             case 1:
                 expTx.text = "EXP +480";
-                DemoDataManager.characterDatasList[0].exp += 480;
+                DemoDataManager.Instance.characterDatasList[0].exp += 480;
                 break;
             case 2:
                 expTx.text = "EXP +494";
-                DemoDataManager.characterDatasList[0].exp += 494;
+                DemoDataManager.Instance.characterDatasList[0].exp += 494;
                 break;
             case 3:
                 expTx.text = "EXP +1113";
-                DemoDataManager.characterDatasList[0].exp += 1113;
+                DemoDataManager.Instance.characterDatasList[0].exp += 1113;
                 break;
             case 4:
                 expTx.text = "EXP +2040";
-                DemoDataManager.characterDatasList[0].exp += 2040;
+                DemoDataManager.Instance.characterDatasList[0].exp += 2040;
                 break;
             case 5:
                 expTx.text = "EXP +3320";
-                DemoDataManager.characterDatasList[0].exp += 3320;
+                DemoDataManager.Instance.characterDatasList[0].exp += 3320;
                 break;
             case 6:
                 expTx.text = "EXP +4998";
-                DemoDataManager.characterDatasList[0].exp += 4998;
+                DemoDataManager.Instance.characterDatasList[0].exp += 4998;
                 break;
             case 7:
                 expTx.text = "EXP +7119";
-                DemoDataManager.characterDatasList[0].exp += 7119;
+                DemoDataManager.Instance.characterDatasList[0].exp += 7119;
                 break;
             case 8:
                 expTx.text = "EXP +9728";
-                DemoDataManager.characterDatasList[0].exp += 9728;
+                DemoDataManager.Instance.characterDatasList[0].exp += 9728;
                 break;
             case 9:
                 expTx.text = "EXP +12870";
-                DemoDataManager.characterDatasList[0].exp += 12870;
+                DemoDataManager.Instance.characterDatasList[0].exp += 12870;
                 break;
             case 10:
                 expTx.text = "EXP +16590";
-                DemoDataManager.characterDatasList[0].exp += 16590;
+                DemoDataManager.Instance.characterDatasList[0].exp += 16590;
                 break;
             default:
                 Debug.Log("스테이지 선택 오류");
@@ -237,17 +237,17 @@ public class StageManager : MonoBehaviour
             weaponImg.sprite = 수리검;
 
             //데이터 받기
-            DemoDataManager.moneyItemList[0].count += 2500;
-            DemoDataManager.moneyItemList[1].count += 10;
-            DemoDataManager.allWeaponItemList[1].count += 1;
+            DemoDataManager.Instance.moneyItemList[0].count += 2500;
+            DemoDataManager.Instance.moneyItemList[1].count += 10;
+            DemoDataManager.Instance.allWeaponItemList[1].count += 1;
 
             //new 알림
-            if (DemoDataManager.allWeaponItemList[1].count == 1)
-                DemoDataManager.allWeaponItemList[1].isnew = true;
+            if (DemoDataManager.Instance.allWeaponItemList[1].count == 1)
+                DemoDataManager.Instance.allWeaponItemList[1].isnew = true;
 
             //업적 연동
-            DemoDataManager.achievementDataList[0].progressvalue += 2500;
-            DemoDataManager.achievementDataList[1].progressvalue += 10;
+            DemoDataManager.Instance.achievementDataList[0].progressvalue += 2500;
+            DemoDataManager.Instance.achievementDataList[1].progressvalue += 10;
         }
         else if (stageNumber == 10)
         {
@@ -259,17 +259,17 @@ public class StageManager : MonoBehaviour
             weaponImg.sprite = 음파건;
 
             //데이터 받기
-            DemoDataManager.moneyItemList[0].count += 3000;
-            DemoDataManager.moneyItemList[1].count += 10;
-            DemoDataManager.allWeaponItemList[2].count += 1;
+            DemoDataManager.Instance.moneyItemList[0].count += 3000;
+            DemoDataManager.Instance.moneyItemList[1].count += 10;
+            DemoDataManager.Instance.allWeaponItemList[2].count += 1;
 
             //new 알림
-            if (DemoDataManager.allWeaponItemList[2].count == 1)
-                DemoDataManager.allWeaponItemList[2].isnew = true;
+            if (DemoDataManager.Instance.allWeaponItemList[2].count == 1)
+                DemoDataManager.Instance.allWeaponItemList[2].isnew = true;
 
             //업적 연동
-            DemoDataManager.achievementDataList[0].progressvalue += 3000;
-            DemoDataManager.achievementDataList[1].progressvalue += 10;
+            DemoDataManager.Instance.achievementDataList[0].progressvalue += 3000;
+            DemoDataManager.Instance.achievementDataList[1].progressvalue += 10;
         }
     }
     public void OkBtClick()

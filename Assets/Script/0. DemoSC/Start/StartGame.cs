@@ -73,7 +73,7 @@ public class StartGame : MonoBehaviour
         effectAS.clip = clickClip;
         effectAS.Play();
 
-        DemoDataManager.characterDatasList[0].name = nameTx.text;
+        DemoDataManager.Instance.characterDatasList[0].name = nameTx.text;
 
         tutorial = true;
         StartCoroutine(waitForFadeIO());
@@ -90,7 +90,7 @@ public class StartGame : MonoBehaviour
         fadeImg.gameObject.SetActive(true);
         fadeIO.fadeout = true;
         yield return new WaitForSeconds(fadeIO.fadeTime);
-        if (DemoDataManager.characterDatasList[0].name == "dmlduddlekduddlqkqh")
+        if (DemoDataManager.Instance.characterDatasList[0].name == "dmlduddlekduddlqkqh")
         {
             background.gameObject.SetActive(false);
             inputName.gameObject.SetActive(true);

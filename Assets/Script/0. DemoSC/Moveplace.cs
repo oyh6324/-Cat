@@ -69,23 +69,23 @@ public class Moveplace : MonoBehaviour
     {
         statImg.gameObject.SetActive(true);
         statBackBt.gameObject.SetActive(true);
-        statExTx.text = "레벨: " + DemoDataManager.characterDatasList[0].level + "\n이름: " + DemoDataManager.characterDatasList[0].name + "\nHP: " + DemoDataManager.characterDatasList[0].hp +
-    "\nSTR: " + DemoDataManager.characterDatasList[0].str;
-        if (DemoDataManager.characterDatasList[0].itemstr != 0)
-            statExTx.text += " (+" + (DemoDataManager.characterDatasList[0].itemstr + DemoDataManager.characterDatasList[0].setstr) + ")";
-        statExTx.text += "\nDEF: " + DemoDataManager.characterDatasList[0].def;
-        if (DemoDataManager.characterDatasList[0].itemdef != 0)
-            statExTx.text += " (+" + (DemoDataManager.characterDatasList[0].itemdef + DemoDataManager.characterDatasList[0].setdef) + ")";
-        statExTx.text += "\nAGI: " + DemoDataManager.characterDatasList[0].agi;
-        if (DemoDataManager.characterDatasList[0].itemagi != 0)
-            statExTx.text += " (+" + (DemoDataManager.characterDatasList[0].itemagi + DemoDataManager.characterDatasList[0].setagi) + ")";
-        statExTx.text += "\n공격 속도: " + DemoDataManager.characterDatasList[0].itemspeed + "\n크리티컬 확률: " + DemoDataManager.characterDatasList[0].crip;
-        if (DemoDataManager.characterDatasList[0].itemcrip != 0)
-            statExTx.text += " (+" + DemoDataManager.characterDatasList[0].itemcrip + "%)";
-        if (DemoDataManager.characterDatasList[0].setname != "")
-            statExTx.text += "\n" + DemoDataManager.characterDatasList[0].setname + " 세트 적용!" + "\nSTR +" + DemoDataManager.characterDatasList[0].setstr +
-                        "\nDEF +" + DemoDataManager.characterDatasList[0].setdef + "\nAGI +" + DemoDataManager.characterDatasList[0].setagi + "\n크리티컬 확률 +" +
-                         DemoDataManager.characterDatasList[0].setcrip;
+        statExTx.text = "레벨: " + DemoDataManager.Instance.characterDatasList[0].level + "\n이름: " + DemoDataManager.Instance.characterDatasList[0].name + "\nHP: " + DemoDataManager.Instance.characterDatasList[0].hp +
+    "\nSTR: " + DemoDataManager.Instance.characterDatasList[0].str;
+        if (DemoDataManager.Instance.characterDatasList[0].itemstr != 0)
+            statExTx.text += " (+" + (DemoDataManager.Instance.characterDatasList[0].itemstr + DemoDataManager.Instance.characterDatasList[0].setstr) + ")";
+        statExTx.text += "\nDEF: " + DemoDataManager.Instance.characterDatasList[0].def;
+        if (DemoDataManager.Instance.characterDatasList[0].itemdef != 0)
+            statExTx.text += " (+" + (DemoDataManager.Instance.characterDatasList[0].itemdef + DemoDataManager.Instance.characterDatasList[0].setdef) + ")";
+        statExTx.text += "\nAGI: " + DemoDataManager.Instance.characterDatasList[0].agi;
+        if (DemoDataManager.Instance.characterDatasList[0].itemagi != 0)
+            statExTx.text += " (+" + (DemoDataManager.Instance.characterDatasList[0].itemagi + DemoDataManager.Instance.characterDatasList[0].setagi) + ")";
+        statExTx.text += "\n공격 속도: " + DemoDataManager.Instance.characterDatasList[0].itemspeed + "\n크리티컬 확률: " + DemoDataManager.Instance.characterDatasList[0].crip;
+        if (DemoDataManager.Instance.characterDatasList[0].itemcrip != 0)
+            statExTx.text += " (+" + DemoDataManager.Instance.characterDatasList[0].itemcrip + "%)";
+        if (DemoDataManager.Instance.characterDatasList[0].setname != "")
+            statExTx.text += "\n" + DemoDataManager.Instance.characterDatasList[0].setname + " 세트 적용!" + "\nSTR +" + DemoDataManager.Instance.characterDatasList[0].setstr +
+                        "\nDEF +" + DemoDataManager.Instance.characterDatasList[0].setdef + "\nAGI +" + DemoDataManager.Instance.characterDatasList[0].setagi + "\n크리티컬 확률 +" +
+                         DemoDataManager.Instance.characterDatasList[0].setcrip;
     }
 
     /*void StatOpen() //정식 버전

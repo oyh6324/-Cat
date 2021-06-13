@@ -34,7 +34,7 @@ public class Tutorial : MonoBehaviour
     private int keyNumber;
     private void Start()
     {
-        tutorials=new string[]{"안녕! 나는 고양이 "+DemoDataManager.characterDatasList[0].name+"!",
+        tutorials=new string[]{"안녕! 나는 고양이 "+DemoDataManager.Instance.characterDatasList[0].name+"!",
                                     "나는 지금 무지 무지 배가 \n고파서 물고기를 잡으러 왔어. ",
                                     "내가 물고기를 잡을 수 있게 \n도와 줄래? ",
                                     "무기고를 눌러 봐! ",
@@ -48,7 +48,7 @@ public class Tutorial : MonoBehaviour
         dialogue.transform.localPosition = lobby_forDialog;
         StartCoroutine(typing(tutorials[0]));
 
-        keyNumber = DemoDataManager.moneyItemList[2].count;
+        keyNumber = DemoDataManager.Instance.moneyItemList[2].count;
     }
     private void Update()
     {
@@ -110,7 +110,7 @@ public class Tutorial : MonoBehaviour
             tutorialBt.transform.localPosition = airgunBt_forBt;
             OnBlind(2);
         }
-        if(weaponCanvas.activeSelf&& tutorialNumber == 6 && DemoDataManager.characterDatasList[0].weapon == "에어건")
+        if(weaponCanvas.activeSelf&& tutorialNumber == 6 && DemoDataManager.Instance.characterDatasList[0].weapon == "에어건")
         {
             waitingClick = false;
 
@@ -144,7 +144,7 @@ public class Tutorial : MonoBehaviour
             tutorialBt.transform.localPosition = helmetBt_forBt;
             OnBlind(5);
         }
-        if (tutorialNumber == 8 && inventoryCanvas.activeSelf && DemoDataManager.characterDatasList[0].helmet == "어항")
+        if (tutorialNumber == 8 && inventoryCanvas.activeSelf && DemoDataManager.Instance.characterDatasList[0].helmet == "어항")
         {
             waitingClick = false;
 
@@ -168,7 +168,7 @@ public class Tutorial : MonoBehaviour
             tutorialBt.transform.localPosition = stage1Bt_forBt;
             OnBlind(7);
         }
-        if (keyNumber > DemoDataManager.moneyItemList[2].count)
+        if (keyNumber > DemoDataManager.Instance.moneyItemList[2].count)
         {
             this.gameObject.SetActive(false);
         }

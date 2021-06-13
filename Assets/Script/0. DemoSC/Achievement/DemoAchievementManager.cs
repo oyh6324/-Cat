@@ -197,9 +197,9 @@ public class DemoAchievementManager : MonoBehaviour
                     if (progressDataList[6 * thisPage + i].rewardname == "진주보석함무기")
                         RewardSetting(i, 5, "진주보석함무기");
 
-                    for (int j=0; j<DemoDataManager.achievementDataList.Count; j++) //업적 이미지 적용
+                    for (int j=0; j<DemoDataManager.Instance.achievementDataList.Count; j++) //업적 이미지 적용
                     {
-                        if (progressDataList[6 * thisPage + i].name == DemoDataManager.achievementDataList[j].name)
+                        if (progressDataList[6 * thisPage + i].name == DemoDataManager.Instance.achievementDataList[j].name)
                             achieveImg[i].sprite = achieveSprite[j];
                     }
                 }
@@ -231,9 +231,9 @@ public class DemoAchievementManager : MonoBehaviour
                     progressCountTx[i].text = "Max";
                     lockBtImg[i].gameObject.SetActive(true); //버튼 잠금
 
-                    for (int j = 0; j < DemoDataManager.achievementDataList.Count; j++) //이미지 적용
+                    for (int j = 0; j < DemoDataManager.Instance.achievementDataList.Count; j++) //이미지 적용
                     {
-                        if (completeDataList[6 * thisPage + i].name == DemoDataManager.achievementDataList[j].name)
+                        if (completeDataList[6 * thisPage + i].name == DemoDataManager.Instance.achievementDataList[j].name)
                             achieveImg[i].sprite = achieveSprite[j];
                     }
                 }
@@ -294,94 +294,94 @@ public class DemoAchievementManager : MonoBehaviour
         soundEffectAS.clip = rewardGetClip;
         soundEffectAS.Play();
 
-        for (int i = 0; i < DemoDataManager.moneyItemList.Count; i++) //보상 주기
+        for (int i = 0; i < DemoDataManager.Instance.moneyItemList.Count; i++) //보상 주기
         {
-            if (DemoDataManager.moneyItemList[i].name.Equals(progressDataList[6 * thisPage + rewardBtNumber].rewardname))
-                DemoDataManager.moneyItemList[i].count += progressDataList[6 * thisPage + rewardBtNumber].rewardcount;
+            if (DemoDataManager.Instance.moneyItemList[i].name.Equals(progressDataList[6 * thisPage + rewardBtNumber].rewardname))
+                DemoDataManager.Instance.moneyItemList[i].count += progressDataList[6 * thisPage + rewardBtNumber].rewardcount;
         }
         if (progressDataList[6 * thisPage + rewardBtNumber].rewardname2 != "") //다른 보상 주기
         {
-            DemoDataManager.moneyItemList[0].count += progressDataList[6 * thisPage + rewardBtNumber].rewardcount2;
-            DemoDataManager.achievementDataList[0].progressvalue += progressDataList[6 * thisPage + rewardBtNumber].rewardcount2;
+            DemoDataManager.Instance.moneyItemList[0].count += progressDataList[6 * thisPage + rewardBtNumber].rewardcount2;
+            DemoDataManager.Instance.achievementDataList[0].progressvalue += progressDataList[6 * thisPage + rewardBtNumber].rewardcount2;
         }
         if (progressDataList[6 * thisPage + rewardBtNumber].rewardname == "멸치") //업적 연동
-            DemoDataManager.achievementDataList[0].progressvalue += progressDataList[6 * thisPage + rewardBtNumber].rewardcount;
+            DemoDataManager.Instance.achievementDataList[0].progressvalue += progressDataList[6 * thisPage + rewardBtNumber].rewardcount;
         if (progressDataList[6 * thisPage + rewardBtNumber].rewardname == "진주")
-            DemoDataManager.achievementDataList[1].progressvalue += progressDataList[6 * thisPage + rewardBtNumber].rewardcount;
+            DemoDataManager.Instance.achievementDataList[1].progressvalue += progressDataList[6 * thisPage + rewardBtNumber].rewardcount;
 
         //데이터 바꾸기
-        for (int i = 0; i < DemoDataManager.achievementDataList.Count; i++)
+        for (int i = 0; i < DemoDataManager.Instance.achievementDataList.Count; i++)
         {
-            if (DemoDataManager.achievementDataList[i].name.Equals(progressDataList[6 * thisPage + rewardBtNumber].name))
+            if (DemoDataManager.Instance.achievementDataList[i].name.Equals(progressDataList[6 * thisPage + rewardBtNumber].name))
             {
-                DemoDataManager.achievementDataList[i].level += 1;
-                progressDataList[6 * thisPage + rewardBtNumber].level = DemoDataManager.achievementDataList[i].level;
+                DemoDataManager.Instance.achievementDataList[i].level += 1;
+                progressDataList[6 * thisPage + rewardBtNumber].level = DemoDataManager.Instance.achievementDataList[i].level;
                 if (progressDataList[6 * thisPage + rewardBtNumber].name == "의상 Lv.3 만들기" || progressDataList[6 * thisPage + rewardBtNumber].name == "의상 Lv.4 만들기" ||
                     progressDataList[6 * thisPage + rewardBtNumber].name == "의상 Lv.5 만들기")
                 {
-                    if (DemoDataManager.achievementDataList[i].level == 2)
-                        DemoDataManager.achievementDataList[i].value = 5;
-                    if (DemoDataManager.achievementDataList[i].level == 3)
-                        DemoDataManager.achievementDataList[i].value = 10;
-                    if (DemoDataManager.achievementDataList[i].level == 4)
-                        DemoDataManager.achievementDataList[i].value = 20;
-                    if (DemoDataManager.achievementDataList[i].level == 5)
-                        DemoDataManager.achievementDataList[i].value = 31;
-                    DemoDataManager.achievementDataList[i].rewardcount += 5;
-                    DemoDataManager.achievementDataList[i].rewardcount2 += 500;
+                    if (DemoDataManager.Instance.achievementDataList[i].level == 2)
+                        DemoDataManager.Instance.achievementDataList[i].value = 5;
+                    if (DemoDataManager.Instance.achievementDataList[i].level == 3)
+                        DemoDataManager.Instance.achievementDataList[i].value = 10;
+                    if (DemoDataManager.Instance.achievementDataList[i].level == 4)
+                        DemoDataManager.Instance.achievementDataList[i].value = 20;
+                    if (DemoDataManager.Instance.achievementDataList[i].level == 5)
+                        DemoDataManager.Instance.achievementDataList[i].value = 31;
+                    DemoDataManager.Instance.achievementDataList[i].rewardcount += 5;
+                    DemoDataManager.Instance.achievementDataList[i].rewardcount2 += 500;
                 }
                 if (progressDataList[6 * thisPage + rewardBtNumber].name == "무기 Lv.3 만들기" || progressDataList[6 * thisPage + rewardBtNumber].name == "무기 Lv.4 만들기" ||
                     progressDataList[6 * thisPage + rewardBtNumber].name == "무기 Lv.5 만들기")
                 {
-                    if (DemoDataManager.achievementDataList[i].level == 2)
-                        DemoDataManager.achievementDataList[i].value = 5;
-                    if (DemoDataManager.achievementDataList[i].level == 3)
-                        DemoDataManager.achievementDataList[i].value = 10;
-                    if (DemoDataManager.achievementDataList[i].level == 4)
-                        DemoDataManager.achievementDataList[i].value = 17;
-                    DemoDataManager.achievementDataList[i].rewardcount += 5;
-                    DemoDataManager.achievementDataList[i].rewardcount2 += 500;
+                    if (DemoDataManager.Instance.achievementDataList[i].level == 2)
+                        DemoDataManager.Instance.achievementDataList[i].value = 5;
+                    if (DemoDataManager.Instance.achievementDataList[i].level == 3)
+                        DemoDataManager.Instance.achievementDataList[i].value = 10;
+                    if (DemoDataManager.Instance.achievementDataList[i].level == 4)
+                        DemoDataManager.Instance.achievementDataList[i].value = 17;
+                    DemoDataManager.Instance.achievementDataList[i].rewardcount += 5;
+                    DemoDataManager.Instance.achievementDataList[i].rewardcount2 += 500;
                 }
             }
         }
         if (progressDataList[6 * thisPage + rewardBtNumber].name == "멸치를 모아봐요")
         {
-            DemoDataManager.achievementDataList[0].progressvalue = progressDataList[6 * thisPage + rewardBtNumber].progressvalue - progressDataList[6 * thisPage + rewardBtNumber].value;
-            DemoDataManager.achievementDataList[0].value += 5000;
-            DemoDataManager.achievementDataList[0].rewardcount += progressDataList[6 * thisPage + rewardBtNumber].level * (progressDataList[6 * thisPage + rewardBtNumber].level - 1);
+            DemoDataManager.Instance.achievementDataList[0].progressvalue = progressDataList[6 * thisPage + rewardBtNumber].progressvalue - progressDataList[6 * thisPage + rewardBtNumber].value;
+            DemoDataManager.Instance.achievementDataList[0].value += 5000;
+            DemoDataManager.Instance.achievementDataList[0].rewardcount += progressDataList[6 * thisPage + rewardBtNumber].level * (progressDataList[6 * thisPage + rewardBtNumber].level - 1);
         }
         else if (progressDataList[6 * thisPage + rewardBtNumber].name == "진주를 모아봐요")
         {
-            DemoDataManager.achievementDataList[1].progressvalue = progressDataList[6 * thisPage + rewardBtNumber].progressvalue - progressDataList[6 * thisPage + rewardBtNumber].value;
-            DemoDataManager.achievementDataList[1].value += 20;
-            DemoDataManager.achievementDataList[1].rewardcount += 1000;
+            DemoDataManager.Instance.achievementDataList[1].progressvalue = progressDataList[6 * thisPage + rewardBtNumber].progressvalue - progressDataList[6 * thisPage + rewardBtNumber].value;
+            DemoDataManager.Instance.achievementDataList[1].value += 20;
+            DemoDataManager.Instance.achievementDataList[1].rewardcount += 1000;
         }
         else if (progressDataList[6 * thisPage + rewardBtNumber].name == "스테이지 클리어")
         {
-            DemoDataManager.achievementDataList[2].value = (progressDataList[6 * thisPage + rewardBtNumber].level - 1) * 10;
-            DemoDataManager.achievementDataList[2].rewardcount += 10;
+            DemoDataManager.Instance.achievementDataList[2].value = (progressDataList[6 * thisPage + rewardBtNumber].level - 1) * 10;
+            DemoDataManager.Instance.achievementDataList[2].rewardcount += 10;
         }
         else if (progressDataList[6 * thisPage + rewardBtNumber].name == "헬멧을 모아봐요")
         {
-            DemoDataManager.achievementDataList[3].value += 5;
-            DemoDataManager.achievementDataList[3].rewardname = "진주보석함의상";
+            DemoDataManager.Instance.achievementDataList[3].value += 5;
+            DemoDataManager.Instance.achievementDataList[3].rewardname = "진주보석함의상";
         }
         else if (progressDataList[6 * thisPage + rewardBtNumber].name == "상의를 모아봐요")
         {
-            DemoDataManager.achievementDataList[4].value += 6;
-            DemoDataManager.achievementDataList[4].rewardname = "진주보석함의상";
+            DemoDataManager.Instance.achievementDataList[4].value += 6;
+            DemoDataManager.Instance.achievementDataList[4].rewardname = "진주보석함의상";
         }
         else if (progressDataList[6 * thisPage + rewardBtNumber].name == "하의를 모아봐요")
         {
-            DemoDataManager.achievementDataList[5].value += 5;
-            DemoDataManager.achievementDataList[5].rewardname = "진주보석함의상";
+            DemoDataManager.Instance.achievementDataList[5].value += 5;
+            DemoDataManager.Instance.achievementDataList[5].rewardname = "진주보석함의상";
         }
         else if (progressDataList[6 * thisPage + rewardBtNumber].name == "무기를 모아봐요")
         {
-            DemoDataManager.achievementDataList[6].value += 5;
-            if (DemoDataManager.achievementDataList[6].level == 3)
-                DemoDataManager.achievementDataList[6].value = 17;
-            DemoDataManager.achievementDataList[6].rewardname = "진주보석함무기";
+            DemoDataManager.Instance.achievementDataList[6].value += 5;
+            if (DemoDataManager.Instance.achievementDataList[6].level == 3)
+                DemoDataManager.Instance.achievementDataList[6].value = 17;
+            DemoDataManager.Instance.achievementDataList[6].rewardname = "진주보석함무기";
         }
 
         RewardMoveManager(rewardBtNumber, progressDataList[6 * thisPage + rewardBtNumber].rewardname, progressDataList[6 * thisPage + rewardBtNumber].rewardname2);
@@ -390,16 +390,16 @@ public class DemoAchievementManager : MonoBehaviour
     {
         progressDataList.Clear();
         completeDataList.Clear();
-        for (int i = 0; i < DemoDataManager.achievementDataList.Count; i++)
+        for (int i = 0; i < DemoDataManager.Instance.achievementDataList.Count; i++)
         {
-            if (DemoDataManager.achievementDataList[i].maxlevel >= DemoDataManager.achievementDataList[i].level)
-                progressDataList.Add(new ProgressData(DemoDataManager.achievementDataList[i].name, DemoDataManager.achievementDataList[i].rewardname, DemoDataManager.achievementDataList[i].rewardname2,
-                    DemoDataManager.achievementDataList[i].level, DemoDataManager.achievementDataList[i].maxlevel, DemoDataManager.achievementDataList[i].progressvalue,
-                    DemoDataManager.achievementDataList[i].rewardcount, DemoDataManager.achievementDataList[i].rewardcount2, DemoDataManager.achievementDataList[i].value));
+            if (DemoDataManager.Instance.achievementDataList[i].maxlevel >= DemoDataManager.Instance.achievementDataList[i].level)
+                progressDataList.Add(new ProgressData(DemoDataManager.Instance.achievementDataList[i].name, DemoDataManager.Instance.achievementDataList[i].rewardname, DemoDataManager.Instance.achievementDataList[i].rewardname2,
+                    DemoDataManager.Instance.achievementDataList[i].level, DemoDataManager.Instance.achievementDataList[i].maxlevel, DemoDataManager.Instance.achievementDataList[i].progressvalue,
+                    DemoDataManager.Instance.achievementDataList[i].rewardcount, DemoDataManager.Instance.achievementDataList[i].rewardcount2, DemoDataManager.Instance.achievementDataList[i].value));
             else
-                completeDataList.Add(new CompleteData(DemoDataManager.achievementDataList[i].name, DemoDataManager.achievementDataList[i].rewardname, DemoDataManager.achievementDataList[i].rewardname2,
-                    DemoDataManager.achievementDataList[i].level, DemoDataManager.achievementDataList[i].maxlevel, DemoDataManager.achievementDataList[i].rewardcount, DemoDataManager.achievementDataList[i].rewardcount2,
-                    DemoDataManager.achievementDataList[i].value));
+                completeDataList.Add(new CompleteData(DemoDataManager.Instance.achievementDataList[i].name, DemoDataManager.Instance.achievementDataList[i].rewardname, DemoDataManager.Instance.achievementDataList[i].rewardname2,
+                    DemoDataManager.Instance.achievementDataList[i].level, DemoDataManager.Instance.achievementDataList[i].maxlevel, DemoDataManager.Instance.achievementDataList[i].rewardcount, DemoDataManager.Instance.achievementDataList[i].rewardcount2,
+                    DemoDataManager.Instance.achievementDataList[i].value));
         }
     }
     public class ProgressData

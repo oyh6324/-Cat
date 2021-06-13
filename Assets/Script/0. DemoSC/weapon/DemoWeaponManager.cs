@@ -69,11 +69,11 @@ public class DemoWeaponManager : MonoBehaviour
         isLeft = false;
         weaponItemDataList.Clear();
         InputWeaponData();
-        if (DemoDataManager.characterDatasList[0].weapon != "")
+        if (DemoDataManager.Instance.characterDatasList[0].weapon != "")
         {
-            for (int i = 0; i < DemoDataManager.allWeaponItemList.Count; i++)
+            for (int i = 0; i < DemoDataManager.Instance.allWeaponItemList.Count; i++)
             {
-                if (weaponItemDataList[i].name.Equals(DemoDataManager.characterDatasList[0].weapon))
+                if (weaponItemDataList[i].name.Equals(DemoDataManager.Instance.characterDatasList[0].weapon))
                     thisPage = i;
             }
         }
@@ -108,7 +108,7 @@ public class DemoWeaponManager : MonoBehaviour
             isMove = false;
 
         //장착 관리
-        if (DemoDataManager.characterDatasList[0].weapon == weaponItemDataList[thisPage].name)
+        if (DemoDataManager.Instance.characterDatasList[0].weapon == weaponItemDataList[thisPage].name)
             installBtTx.text = "장착 해제";
         else
             installBtTx.text = "장착";
@@ -119,10 +119,10 @@ public class DemoWeaponManager : MonoBehaviour
     {
         StatSetDestroy();
 
-        DemoDataManager.characterDatasList[0].allstr = DemoDataManager.characterDatasList[0].str + DemoDataManager.characterDatasList[0].itemstr;
-        DemoDataManager.characterDatasList[0].alldef = DemoDataManager.characterDatasList[0].def + DemoDataManager.characterDatasList[0].itemdef;
-        DemoDataManager.characterDatasList[0].allagi = DemoDataManager.characterDatasList[0].agi + DemoDataManager.characterDatasList[0].itemagi;
-        DemoDataManager.characterDatasList[0].allcrip = DemoDataManager.characterDatasList[0].crip + DemoDataManager.characterDatasList[0].itemcrip;
+        DemoDataManager.Instance.characterDatasList[0].allstr = DemoDataManager.Instance.characterDatasList[0].str + DemoDataManager.Instance.characterDatasList[0].itemstr;
+        DemoDataManager.Instance.characterDatasList[0].alldef = DemoDataManager.Instance.characterDatasList[0].def + DemoDataManager.Instance.characterDatasList[0].itemdef;
+        DemoDataManager.Instance.characterDatasList[0].allagi = DemoDataManager.Instance.characterDatasList[0].agi + DemoDataManager.Instance.characterDatasList[0].itemagi;
+        DemoDataManager.Instance.characterDatasList[0].allcrip = DemoDataManager.Instance.characterDatasList[0].crip + DemoDataManager.Instance.characterDatasList[0].itemcrip;
 
         //블라인드 옮기기
         rightBlindImg1.transform.localPosition = new Vector2(1500, -1000);
@@ -180,106 +180,106 @@ public class DemoWeaponManager : MonoBehaviour
     {
         for(int i=0; i<weaponItemDataList.Count; i++)
         {
-            if(DemoDataManager.characterDatasList[0].weapon== weaponItemDataList[i].name)
+            if(DemoDataManager.Instance.characterDatasList[0].weapon== weaponItemDataList[i].name)
             {
-                DemoDataManager.characterDatasList[0].itemstr -= weaponItemDataList[i].str;
-                DemoDataManager.characterDatasList[0].itemspeed -= weaponItemDataList[i].strspeed;
-                DemoDataManager.characterDatasList[0].itemcrip -= weaponItemDataList[i].crip;
+                DemoDataManager.Instance.characterDatasList[0].itemstr -= weaponItemDataList[i].str;
+                DemoDataManager.Instance.characterDatasList[0].itemspeed -= weaponItemDataList[i].strspeed;
+                DemoDataManager.Instance.characterDatasList[0].itemcrip -= weaponItemDataList[i].crip;
             }
         }
 
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
-        DemoDataManager.allWeaponItemList[thisPage].strspeed -= (decimal)0.02;
-        DemoDataManager.allWeaponItemList[thisPage].level += 1;
+        DemoDataManager.Instance.allWeaponItemList[thisPage].strspeed -= (decimal)0.02;
+        DemoDataManager.Instance.allWeaponItemList[thisPage].level += 1;
         if (weaponItemDataList[thisPage].name == "에어건")
         {
-            DemoDataManager.allWeaponItemList[thisPage].str += 2;
-            DemoDataManager.allWeaponItemList[thisPage].crip += (decimal)0.1;
+            DemoDataManager.Instance.allWeaponItemList[thisPage].str += 2;
+            DemoDataManager.Instance.allWeaponItemList[thisPage].crip += (decimal)0.1;
         }
         else
         {
-            DemoDataManager.allWeaponItemList[thisPage].crip += (decimal)0.2;
+            DemoDataManager.Instance.allWeaponItemList[thisPage].crip += (decimal)0.2;
             if (weaponItemDataList[thisPage].name == "수리검")
-                DemoDataManager.allWeaponItemList[thisPage].str += 3;
+                DemoDataManager.Instance.allWeaponItemList[thisPage].str += 3;
             else if (weaponItemDataList[thisPage].name == "음파건")
-                DemoDataManager.allWeaponItemList[thisPage].str += 4;
+                DemoDataManager.Instance.allWeaponItemList[thisPage].str += 4;
             else if (weaponItemDataList[thisPage].name == "쥬얼건"||weaponItemDataList[thisPage].name == "썬더건")
-                DemoDataManager.allWeaponItemList[thisPage].str += 5;
+                DemoDataManager.Instance.allWeaponItemList[thisPage].str += 5;
         }
-        DemoDataManager.allWeaponItemList[thisPage].count = weaponItemDataList[thisPage].count - sumCount+1;
+        DemoDataManager.Instance.allWeaponItemList[thisPage].count = weaponItemDataList[thisPage].count - sumCount+1;
 
-        gunNameTx[2].text = DemoDataManager.allWeaponItemList[thisPage].name+ "\n<size=35>보유 개수: " + DemoDataManager.allWeaponItemList[thisPage].count + "</size>"; //개수 바꿔주기
+        gunNameTx[2].text = DemoDataManager.Instance.allWeaponItemList[thisPage].name+ "\n<size=35>보유 개수: " + DemoDataManager.Instance.allWeaponItemList[thisPage].count + "</size>"; //개수 바꿔주기
         InputWeaponData();
         StatSetting();
         AchievementCheck();
 
         for (int i = 0; i < weaponItemDataList.Count; i++)
         {
-            if (DemoDataManager.characterDatasList[0].weapon == weaponItemDataList[i].name)
+            if (DemoDataManager.Instance.characterDatasList[0].weapon == weaponItemDataList[i].name)
             {
-                DemoDataManager.characterDatasList[0].itemstr += weaponItemDataList[i].str;
-                DemoDataManager.characterDatasList[0].itemspeed += weaponItemDataList[i].strspeed;
-                DemoDataManager.characterDatasList[0].itemcrip += weaponItemDataList[i].crip;
+                DemoDataManager.Instance.characterDatasList[0].itemstr += weaponItemDataList[i].str;
+                DemoDataManager.Instance.characterDatasList[0].itemspeed += weaponItemDataList[i].strspeed;
+                DemoDataManager.Instance.characterDatasList[0].itemcrip += weaponItemDataList[i].crip;
             }
         }
     }
     void AchievementCheck() //업적 연동
     {
         int count3 = 0, count4 = 0, count5 = 0;
-        for (int i = 0; i < DemoDataManager.allWeaponItemList.Count; i++)
+        for (int i = 0; i < DemoDataManager.Instance.allWeaponItemList.Count; i++)
         {
-            if (DemoDataManager.allWeaponItemList[i].level >= 3)
+            if (DemoDataManager.Instance.allWeaponItemList[i].level >= 3)
                 count3++;
-            if (DemoDataManager.allWeaponItemList[i].level >= 4)
+            if (DemoDataManager.Instance.allWeaponItemList[i].level >= 4)
                 count4++;
-            if (DemoDataManager.allWeaponItemList[i].level == 5)
+            if (DemoDataManager.Instance.allWeaponItemList[i].level == 5)
                 count5++;
         }
-        DemoDataManager.achievementDataList[10].progressvalue = count3;
-        DemoDataManager.achievementDataList[11].progressvalue = count4;
-        DemoDataManager.achievementDataList[12].progressvalue = count5;
+        DemoDataManager.Instance.achievementDataList[10].progressvalue = count3;
+        DemoDataManager.Instance.achievementDataList[11].progressvalue = count4;
+        DemoDataManager.Instance.achievementDataList[12].progressvalue = count5;
     }
     public void InstallitemBtClick()
     {
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
-        if (DemoDataManager.characterDatasList[0].weapon == "") //아무것도 착용 하지 않았을 시
+        if (DemoDataManager.Instance.characterDatasList[0].weapon == "") //아무것도 착용 하지 않았을 시
         {
-            DemoDataManager.characterDatasList[0].weapon = weaponItemDataList[thisPage].name;
-            DemoDataManager.characterDatasList[0].itemstr += weaponItemDataList[thisPage].str;
-            DemoDataManager.characterDatasList[0].itemspeed += weaponItemDataList[thisPage].strspeed;
-            DemoDataManager.characterDatasList[0].itemcrip += weaponItemDataList[thisPage].crip;
+            DemoDataManager.Instance.characterDatasList[0].weapon = weaponItemDataList[thisPage].name;
+            DemoDataManager.Instance.characterDatasList[0].itemstr += weaponItemDataList[thisPage].str;
+            DemoDataManager.Instance.characterDatasList[0].itemspeed += weaponItemDataList[thisPage].strspeed;
+            DemoDataManager.Instance.characterDatasList[0].itemcrip += weaponItemDataList[thisPage].crip;
 
             gunImg[2].sprite = gunInstallSprite; //배경 이미지 변경
         }
-        else if (DemoDataManager.characterDatasList[0].weapon != "") //무언가를 착용한 상태
+        else if (DemoDataManager.Instance.characterDatasList[0].weapon != "") //무언가를 착용한 상태
         {
-            if (DemoDataManager.characterDatasList[0].weapon == weaponItemDataList[thisPage].name) //지금 든 무기 장착 해제
+            if (DemoDataManager.Instance.characterDatasList[0].weapon == weaponItemDataList[thisPage].name) //지금 든 무기 장착 해제
             {
-                DemoDataManager.characterDatasList[0].weapon = "";
-                DemoDataManager.characterDatasList[0].itemstr -= weaponItemDataList[thisPage].str;
-                DemoDataManager.characterDatasList[0].itemspeed -= weaponItemDataList[thisPage].strspeed;
-                DemoDataManager.characterDatasList[0].itemcrip -= weaponItemDataList[thisPage].crip;
+                DemoDataManager.Instance.characterDatasList[0].weapon = "";
+                DemoDataManager.Instance.characterDatasList[0].itemstr -= weaponItemDataList[thisPage].str;
+                DemoDataManager.Instance.characterDatasList[0].itemspeed -= weaponItemDataList[thisPage].strspeed;
+                DemoDataManager.Instance.characterDatasList[0].itemcrip -= weaponItemDataList[thisPage].crip;
 
                 gunImg[2].sprite = gunNonInstallSprite; //배경 이미지 변경
             }
             else //앞에 든 무기 장착 해제 후 지금 무기 장착
             {
                 int preItem = 0;
-                for (int i = 0; i < DemoDataManager.allWeaponItemList.Count; i++)
+                for (int i = 0; i < DemoDataManager.Instance.allWeaponItemList.Count; i++)
                 {
-                    if (DemoDataManager.characterDatasList[0].weapon == weaponItemDataList[i].name)
+                    if (DemoDataManager.Instance.characterDatasList[0].weapon == weaponItemDataList[i].name)
                         preItem = i;
                 }
-                DemoDataManager.characterDatasList[0].itemstr -= weaponItemDataList[preItem].str;
-                DemoDataManager.characterDatasList[0].itemspeed -= weaponItemDataList[preItem].strspeed;
-                DemoDataManager.characterDatasList[0].itemcrip -= weaponItemDataList[preItem].crip;
+                DemoDataManager.Instance.characterDatasList[0].itemstr -= weaponItemDataList[preItem].str;
+                DemoDataManager.Instance.characterDatasList[0].itemspeed -= weaponItemDataList[preItem].strspeed;
+                DemoDataManager.Instance.characterDatasList[0].itemcrip -= weaponItemDataList[preItem].crip;
 
-                DemoDataManager.characterDatasList[0].weapon = weaponItemDataList[thisPage].name;
-                DemoDataManager.characterDatasList[0].itemstr += weaponItemDataList[thisPage].str;
-                DemoDataManager.characterDatasList[0].itemspeed += weaponItemDataList[thisPage].strspeed;
-                DemoDataManager.characterDatasList[0].itemcrip += weaponItemDataList[thisPage].crip;
+                DemoDataManager.Instance.characterDatasList[0].weapon = weaponItemDataList[thisPage].name;
+                DemoDataManager.Instance.characterDatasList[0].itemstr += weaponItemDataList[thisPage].str;
+                DemoDataManager.Instance.characterDatasList[0].itemspeed += weaponItemDataList[thisPage].strspeed;
+                DemoDataManager.Instance.characterDatasList[0].itemcrip += weaponItemDataList[thisPage].crip;
 
                 for(int i=0; i<5; i++) //배경 이미지 변경
                 {
@@ -377,7 +377,7 @@ public class DemoWeaponManager : MonoBehaviour
         }
         for(int i=0; i<5; i++) //장착 시 배경 이미지 변경
         {
-            if (DemoDataManager.characterDatasList[0].weapon == gunNameTx[i].text)
+            if (DemoDataManager.Instance.characterDatasList[0].weapon == gunNameTx[i].text)
                 gunImg[i].sprite = gunInstallSprite;
             else
                 gunImg[i].sprite = gunNonInstallSprite;
@@ -389,7 +389,7 @@ public class DemoWeaponManager : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            for (int j = 0; j < DemoDataManager.allWeaponItemList.Count; j++)
+            for (int j = 0; j < DemoDataManager.Instance.allWeaponItemList.Count; j++)
             {
                 if (weaponItemDataList[j].name == gunNameTx[i].text && weaponItemDataList[j].count > 0)
                 {
@@ -427,7 +427,7 @@ public class DemoWeaponManager : MonoBehaviour
             "\n크리티컬 확률 +" + weaponItemDataList[thisPage].crip + "%";
         UpgradeSetting();
 
-        DemoDataManager.allWeaponItemList[thisPage].isnew = false;
+        DemoDataManager.Instance.allWeaponItemList[thisPage].isnew = false;
         newAlarmImg[2].gameObject.SetActive(false);
         InputWeaponData();
     }
@@ -468,10 +468,10 @@ public class DemoWeaponManager : MonoBehaviour
     void InputWeaponData() //아이템 옮겨 담기
     {
         weaponItemDataList.Clear();
-        for (int i = 0; i < DemoDataManager.allWeaponItemList.Count; i++)
-            weaponItemDataList.Add(new WeaponItemData(DemoDataManager.allWeaponItemList[i].name, DemoDataManager.allWeaponItemList[i].ex, DemoDataManager.allWeaponItemList[i].level,
-                DemoDataManager.allWeaponItemList[i].count, DemoDataManager.allWeaponItemList[i].star, DemoDataManager.allWeaponItemList[i].str, DemoDataManager.allWeaponItemList[i].strspeed,
-                DemoDataManager.allWeaponItemList[i].crip, DemoDataManager.allWeaponItemList[i].isnew));
+        for (int i = 0; i < DemoDataManager.Instance.allWeaponItemList.Count; i++)
+            weaponItemDataList.Add(new WeaponItemData(DemoDataManager.Instance.allWeaponItemList[i].name, DemoDataManager.Instance.allWeaponItemList[i].ex, DemoDataManager.Instance.allWeaponItemList[i].level,
+                DemoDataManager.Instance.allWeaponItemList[i].count, DemoDataManager.Instance.allWeaponItemList[i].star, DemoDataManager.Instance.allWeaponItemList[i].str, DemoDataManager.Instance.allWeaponItemList[i].strspeed,
+                DemoDataManager.Instance.allWeaponItemList[i].crip, DemoDataManager.Instance.allWeaponItemList[i].isnew));
     }
     public class WeaponItemData
     {
