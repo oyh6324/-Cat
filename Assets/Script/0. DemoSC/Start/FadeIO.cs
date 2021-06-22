@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class FadeIO : MonoBehaviour
 {
     public Image fadeImg;
-    bool isPlaying = false;
     public float fadeTime;
     public bool fadeout;
     public bool fadein;
+
+    private bool isPlaying = false;
+
     private void Start()
     {
         fadein = true;

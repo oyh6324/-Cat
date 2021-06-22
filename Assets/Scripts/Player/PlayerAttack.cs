@@ -14,13 +14,37 @@ public class PlayerAttack : MonoBehaviour
     private decimal crip;
     private bool isShooting;
     Animator anim;
+
+    //의상
+    public Animator[] dressAnim;
+    public Sprite[] bulletSprites;
+
+    //오디오
+    private AudioSource audioSource;
+    public AudioClip[] weaponClip;
+    private int bulletIndex;
     private void Start()
     {
         //coolTime=DemoDataManager.characterDatasList[0].itemspeed-DemoDataManager.characterDatasList[0].allagi*0.005m;
         anim = GetComponent<Animator>();
-        coolTime = 0.2m; //총속
+        coolTime = coolTime = DemoDataManager.Instance.characterDatasList[0].itemspeed - DemoDataManager.Instance.characterDatasList[0].allagi * 0.005m;
         agi = 15;
         isShooting = false;
+
+        audioSource = GetComponent<AudioSource>();
+    }
+    private void OnEnable()
+    {
+        string weaponName = DemoDataManager.Instance.characterDatasList[0].weapon;
+
+        for(int i=0; i<DemoDataManager.Instance.allWeaponItemList.Count; i++)
+        {
+            if (weaponName == DemoDataManager.Instance.allWeaponItemList[i].name)
+            {
+                bullet.GetComponent<SpriteRenderer>().sprite = bulletSprites[i];
+                bulletIndex = i;
+            }
+        }
     }
     private void Update()
     {
@@ -28,6 +52,10 @@ public class PlayerAttack : MonoBehaviour
         {
             StartCoroutine(shoot());
             anim.SetTrigger("PlayerShoot");
+            audioSource.PlayOneShot(weaponClip[bulletIndex]);
+
+            for (int i = 0; i < 3; i++)
+                dressAnim[i].SetTrigger("PlayerShoot");
         }
     }
     IEnumerator shoot()

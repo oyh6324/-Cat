@@ -39,6 +39,8 @@ public class StageManager : MonoBehaviour
     public AudioClip failClip;
     public AudioClip clearClip;
 
+    public Vector2[] spawn;
+
     private int stageNumber;
     private bool clearCheck;
     private bool failCheck;
@@ -62,6 +64,15 @@ public class StageManager : MonoBehaviour
         Debug.Log("현재 스테이지 "+stageNumber);
 
         StartCoroutine(startCanvasAction());
+
+
+        Debug.Log(DemoDataManager.Instance.characterDatasList[0].top);
+        Debug.Log(DemoDataManager.Instance.characterDatasList[0].bottoms);
+        Debug.Log(DemoDataManager.Instance.characterDatasList[0].helmet);
+    }
+    private void OnEnable()
+    {
+        spawnPlayer();
     }
     void Update()
     {
@@ -73,6 +84,10 @@ public class StageManager : MonoBehaviour
         {
             StageFail();
         }
+    }
+    void spawnPlayer()
+    {
+        player.transform.position = spawn[stageNumber - 1];
     }
     IEnumerator startCanvasAction()
     {

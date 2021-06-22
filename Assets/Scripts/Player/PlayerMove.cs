@@ -30,6 +30,17 @@ public class PlayerMove : MonoBehaviour
     public static float curHp; //스킬을 이용한 공격을 받을 때 체력 불러야함
     public static int MonsterIndex; //스칠 때 데미지 
     int damage;
+
+    //의상
+    public Animator[] dressAnim;
+    public SpriteRenderer[] dressRenderer;
+    public Sprite[] weaponSprites;
+
+    //오디오
+    private AudioSource audioSource;
+    public AudioClip attacktedClip;
+    public AudioClip deadClip;
+    public AudioClip jumpClip;
     void Start()
     {
         isSlow = false;
@@ -38,13 +49,19 @@ public class PlayerMove : MonoBehaviour
         spriterenderer = GetComponent<SpriteRenderer>();
         //gunsprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        maxHp = 300; //maxHp=DemoDataManager.characterDatasList[0].hp; 수정해야함
+        maxHp = maxHp=DemoDataManager.Instance.characterDatasList[0].hp;
         curHp = maxHp;
         HeartCnt = 3;
         hpbar.value = (float)curHp / (float)maxHp;
         Hptx.text = curHp + "/" + maxHp;
         maxSpeed = 4f;
-    }                                                                                       
+
+        audioSource = GetComponent<AudioSource>();
+    }
+    private void OnEnable()
+    {
+        WearingCheck();
+    }
 
     // Update is called once per frame
     void Update()
@@ -61,6 +78,10 @@ public class PlayerMove : MonoBehaviour
         {
             rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
+            audioSource.PlayOneShot(jumpClip);
+
+            for(int i=0; i<3; i++)
+                dressAnim[i].SetBool("isJumping", true);
         }
         //stop speed
         if (Input.GetButtonUp("Horizontal"))
@@ -80,10 +101,16 @@ public class PlayerMove : MonoBehaviour
         if (rigid.velocity.normalized.x==0)
         {
             anim.SetBool("isWalking", false);
+
+            for (int i = 0; i < 3; i++)
+                dressAnim[i].SetBool("isWalking", false);
         }
         else
         {
             anim.SetBool("isWalking", true);
+
+            for (int i = 0; i < 3; i++)
+                dressAnim[i].SetBool("isWalking", true);
         }
         Hptx.text = curHp + "/" + maxHp;
     }
@@ -110,7 +137,12 @@ public class PlayerMove : MonoBehaviour
             if (rayhit.collider != null)
             {
                 if (rayhit.distance < 0.5f)
+                {
                     anim.SetBool("isJumping", false);
+
+                    for (int i = 0; i < 3; i++)
+                        dressAnim[i].SetBool("isJumping", false);
+                }
             }
         }
     }
@@ -148,9 +180,18 @@ public class PlayerMove : MonoBehaviour
             curHp -= damage;
             spriterenderer.color = new Color(1, 1, 1, 0.4f); //반투명화
             gunsprite.color = new Color(1, 1, 1, 0.4f); //반투명화
+
+            for(int i=0; i<3; i++)
+                dressRenderer[i].color= new Color(1, 1, 1, 0.4f); //반투명화
+
             rigid.velocity = Vector2.zero; //붙은 가속 제거
             rigid.AddForce(new Vector2(dirc * 10f,5f), ForceMode2D.Impulse);
             anim.SetTrigger("isAttacked");
+            audioSource.PlayOneShot(attacktedClip);
+
+            for (int i = 0; i < 3; i++)
+                dressAnim[i].SetTrigger("isAttacked");
+
             Invoke("offDameged", 1.2f);
         }
         else
@@ -159,6 +200,12 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = Vector2.zero;
             rigid.AddForce(new Vector2(dirc * 2f, 7f), ForceMode2D.Impulse);
             anim.SetTrigger("isAttacked");
+
+            for (int i = 0; i < 3; i++)
+                dressAnim[i].SetTrigger("isDying");
+            anim.SetTrigger("isDying");
+            audioSource.PlayOneShot(deadClip);
+
             StartCoroutine(onDied());
         }
     }
@@ -167,6 +214,9 @@ public class PlayerMove : MonoBehaviour
         gameObject.layer = 12;
         spriterenderer.color = new Color(1, 1, 1, 1);
         gunsprite.color = new Color(1, 1, 1, 1);
+
+        for (int i = 0; i < 3; i++)
+            dressRenderer[i].color = new Color(1, 1, 1, 1);
     }
     IEnumerator onDied()
     {
@@ -174,12 +224,15 @@ public class PlayerMove : MonoBehaviour
         isLiving = false;
         gameObject.layer = 13;
         curHp = 0;
-        anim.SetTrigger("isDying");
 
-        for(int i=1; i<=5; i++)
+        for (int i=1; i<=5; i++)
         {
             gunsprite.color = new Color(1, 1, 1, 1 - 0.2f * i);
             spriterenderer.color = new Color(1, 1, 1, 1 - 0.2f * i);
+
+            for (int j = 0; j < 3; j++)
+                dressRenderer[j].color = new Color(1, 1, 1, 1 - 0.2f * i);
+
             yield return new WaitForSeconds(0.58f);
         }
         for(int i=0; i<=5; i++)
@@ -218,6 +271,10 @@ public class PlayerMove : MonoBehaviour
         {
             spriterenderer.color = new Color(1, 1, 1, 0+ 0.2f * i);
             gunsprite.color = new Color(1, 1, 1, 0 +0.2f * i);
+
+            for (int j = 0; j < 3; j++)
+                dressRenderer[j].color = new Color(1, 1, 1, 0 + 0.2f * i);
+
             yield return new WaitForSeconds(0.5f);
         }
         isLiving = true;
@@ -265,6 +322,43 @@ public class PlayerMove : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
             }
             gameObject.layer = 12;
+        }
+    }
+
+    private void WearingCheck()
+    {
+        string topName = DemoDataManager.Instance.characterDatasList[0].top;
+        string bottomName = DemoDataManager.Instance.characterDatasList[0].bottoms;
+        string helmetName = DemoDataManager.Instance.characterDatasList[0].helmet;
+        string gunName = DemoDataManager.Instance.characterDatasList[0].weapon;
+
+        for(int i=0; i<DemoDataManager.Instance.allClothesItemList.Count; i++)
+        {
+            if(topName == DemoDataManager.Instance.allClothesItemList[i].name)
+                dressAnim[0].SetInteger("index", i);
+
+            if (bottomName == DemoDataManager.Instance.allClothesItemList[i].name)
+                dressAnim[1].SetInteger("index", i);
+
+            if (helmetName == DemoDataManager.Instance.allClothesItemList[i].name)
+                dressAnim[2].SetInteger("index", i);
+        }
+
+        if (topName == "")
+            dressAnim[0].SetInteger("index", -1);
+
+        if (bottomName == "")
+            dressAnim[1].SetInteger("index", -1);
+
+        if (helmetName == "")
+            dressAnim[2].SetInteger("index", -1);
+
+        for(int i=0; i<DemoDataManager.Instance.allWeaponItemList.Count; i++)
+        {
+            if (gunName == DemoDataManager.Instance.allWeaponItemList[i].name)
+            {
+                weapon.GetComponent<SpriteRenderer>().sprite = weaponSprites[i];
+            }
         }
     }
 }

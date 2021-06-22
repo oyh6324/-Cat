@@ -19,6 +19,10 @@ public class MonsterMove : MonoBehaviour
     private int MonstercurHp;
     int PlayerStr;
     public float MonsterSpeed;
+
+    //오디오
+    private AudioSource audioSource;
+    public AudioClip attacktedClip;
     void Awake()
     {
         isDied = false;
@@ -30,9 +34,11 @@ public class MonsterMove : MonoBehaviour
         anim = GetComponent<Animator>();
         TotalHp = MonsterStat.MonsterTotalHp[index];
         MonstercurHp = TotalHp;
-        PlayerStr = 30; //캐릭터 공격력 수정
+        PlayerStr = DemoDataManager.Instance.characterDatasList[0].allstr;
         //PlayerStr=DemoDataManager.characterDatasList[0].allstr;
         MonsterSpeed = 2f;
+
+        audioSource = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -93,6 +99,7 @@ public class MonsterMove : MonoBehaviour
     {
         if (collision.gameObject.tag == "bullet")
         {
+            audioSource.PlayOneShot(attacktedClip);
             if (MonstercurHp <= PlayerStr)
             {              
                 MonstercurHp = 0;

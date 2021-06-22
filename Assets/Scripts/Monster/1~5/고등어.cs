@@ -5,6 +5,7 @@ using UnityEngine;
 public class 고등어 : MonoBehaviour
 {
     public float speed;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag=="Player")

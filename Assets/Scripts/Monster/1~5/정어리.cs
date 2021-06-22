@@ -19,6 +19,12 @@ public class 정어리 : MonoBehaviour
     int PlayerStr;
     public float MonsterSpeed;
     public string aniName;
+
+    //오디오
+    private AudioSource audioSource;
+    public AudioClip attacktedClip;
+    public AudioClip skilClip;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,10 +38,12 @@ public class 정어리 : MonoBehaviour
         anim = GetComponent<Animator>();
         TotalHp = MonsterStat.MonsterTotalHp[index];
         MonstercurHp = TotalHp;
-        PlayerStr = 30;
+        PlayerStr = DemoDataManager.Instance.characterDatasList[0].allstr;
         //PlayerStr=DemoDataManager.characterDatasList[0].allstr;
         MonsterSpeed = 2f;
         Invoke("onHurricane", r);
+
+        audioSource = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -90,6 +98,7 @@ public class 정어리 : MonoBehaviour
     {
         if (collision.gameObject.tag == "bullet")
         {
+            audioSource.PlayOneShot(attacktedClip);
             if (MonstercurHp <= PlayerStr)
             {
                 isDied = true;
@@ -201,6 +210,7 @@ public class 정어리 : MonoBehaviour
     }
     void onHurricane()
     {
+        audioSource.PlayOneShot(skilClip);
         CancelInvoke("offHurricane");
         anim.SetBool(aniName, true);
         anim.SetInteger("MonsterIndex", index);
