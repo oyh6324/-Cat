@@ -17,6 +17,11 @@ public class 말미잘 : MonoBehaviour
     SpriteRenderer spriterenderer;
     GameObject traceTarget;
     public GameObject droppos;
+
+    //오디오
+    private AudioSource audioSource;
+    public AudioClip attacktedClip;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,8 +32,10 @@ public class 말미잘 : MonoBehaviour
         anim = GetComponent<Animator>();
         TotalHp = MonsterStat.MonsterTotalHp[index];
         MonstercurHp = TotalHp;
-        PlayerStr = 30;
+        PlayerStr = DemoDataManager.Instance.characterDatasList[0].allstr;
         //PlayerStr=DemoDataManager.characterDatasList[0].allstr;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -54,6 +61,7 @@ public class 말미잘 : MonoBehaviour
     {
         if (collision.gameObject.tag == "bullet")
         {
+            audioSource.PlayOneShot(attacktedClip);
             if (MonstercurHp <= PlayerStr)
             {
                 MonstercurHp = 0;

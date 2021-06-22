@@ -9,15 +9,22 @@ public class 말미잘물방울 : MonoBehaviour
     public int index;
     Animator anim;
     public float speed;
+
+    //오디오
+    private AudioSource audioSource;
+    public AudioClip skilClip;
+
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         Invoke("skill", speed);
         anim = GetComponent<Animator>();
     }
     // Update is called once per frame
     void shoot()
     {
+        audioSource.PlayOneShot(skilClip);
         GameObject dropclone = Instantiate(drop, tr.position, tr.rotation);
         Rigidbody2D rigid = dropclone.GetComponent<Rigidbody2D>();
         if (this.gameObject.transform.localScale.x == -0.6f)
@@ -35,6 +42,5 @@ public class 말미잘물방울 : MonoBehaviour
     void skill() //skill 애니 트리거 설정
     {
         anim.SetBool("MonsterSkill",true);
-
     }
 }
