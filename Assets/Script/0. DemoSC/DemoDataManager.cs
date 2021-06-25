@@ -256,5 +256,7 @@ public class DemoDataManager : MonoBehaviour
         //monsterCollectionData
         string jdataMC = File.ReadAllText(Application.persistentDataPath + "/MonsterCollectionData.json");
         monsterCollectionDataList = JsonConvert.DeserializeObject<List<DemoMonsterCollectionData>>(jdataMC);
+
+        gameObject.AddComponent<FreeTicketReset>();
     }
 }
