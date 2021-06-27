@@ -119,9 +119,9 @@ public class DemoDataManager : MonoBehaviour
             return instance;
         }
     }
-    void OnApplicationPause(bool pause) //홈버튼 눌렀을 때
+    void OnApplicationFocus(bool focusStatus) //포커스 잃었을 때
     {
-        if (pause)
+        if (!focusStatus)
             SaveAllData();
     }
     void OnDestroy() //게임을 나갔을 때
@@ -256,7 +256,5 @@ public class DemoDataManager : MonoBehaviour
         //monsterCollectionData
         string jdataMC = File.ReadAllText(Application.persistentDataPath + "/MonsterCollectionData.json");
         monsterCollectionDataList = JsonConvert.DeserializeObject<List<DemoMonsterCollectionData>>(jdataMC);
-
-        gameObject.AddComponent<FreeTicketReset>();
     }
 }

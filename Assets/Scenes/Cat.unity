@@ -7488,7 +7488,6 @@ GameObject:
   m_Component:
   - component: {fileID: 322990437}
   - component: {fileID: 322990436}
-  - component: {fileID: 322990438}
   m_Layer: 0
   m_Name: DataManager
   m_TagString: Untagged
@@ -7522,18 +7521,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &322990438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 322990435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0a406d5f0cb68544820a1ce455b2614, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &325970283
 GameObject:
   m_ObjectHideFlags: 0
@@ -31292,7 +31279,7 @@ MonoBehaviour:
   bgmAS: {fileID: 1473357604}
   effectAS: {fileID: 596026544}
   startBgm: {fileID: 8300000, guid: 268caa56d1629354a94902f177336943, type: 3}
-  startBt: {fileID: 8300000, guid: 74a6fe26c5df41341b530dde536af85d, type: 3}
+  startBt: {fileID: 8300000, guid: 972cbe43a28826a4b8189cd1ad2c3ec0, type: 3}
   clickClip: {fileID: 8300000, guid: 972cbe43a28826a4b8189cd1ad2c3ec0, type: 3}
 --- !u!1 &1120485067
 GameObject:
