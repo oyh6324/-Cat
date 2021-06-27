@@ -44,6 +44,7 @@ public class StageManager : MonoBehaviour
     private int stageNumber;
     private bool clearCheck;
     private bool failCheck;
+    private bool isHomeBt;
     private void Awake()
     {
         //음향
@@ -107,6 +108,16 @@ public class StageManager : MonoBehaviour
         fail.SetActive(true);
         failCheck = true;
     }
+    public void HomeBtClick()
+    {
+        messageCanvas.SetActive(true);
+        messageAS = messageCanvas.GetComponent<AudioSource>();
+        messageAS.PlayOneShot(buttonClip);
+
+        message.gameObject.SetActive(true);
+        messageTx.text = "게임을 종료하겠습니까? 사용한 열쇠는 돌아오지 않아요!";
+        isHomeBt = true;
+    }
     public void BackBtClick()
     {
         messageAS.PlayOneShot(buttonClip);
@@ -122,6 +133,15 @@ public class StageManager : MonoBehaviour
     public void YesBtClick()
     {
         messageAS.PlayOneShot(buttonClip);
+
+        if (isHomeBt)
+        {
+            message.gameObject.SetActive(false);
+            StageFail();
+            isHomeBt = false;
+            return;
+        }
+
         if (DemoDataManager.Instance.moneyItemList[2].count<1)
         {
             messageTx.text = "열쇠가 부족해요!";
@@ -138,6 +158,12 @@ public class StageManager : MonoBehaviour
     {
         messageAS.PlayOneShot(buttonClip);
         message.gameObject.SetActive(false);
+
+        if (isHomeBt)
+        {
+            messageCanvas.SetActive(false);
+            isHomeBt = false;
+        }
     }
     public void MokBtClick()
     {
