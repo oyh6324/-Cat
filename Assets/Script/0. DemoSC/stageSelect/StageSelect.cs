@@ -22,9 +22,6 @@ public class StageSelect : MonoBehaviour
     public Image[] locks;
     public Image[] flags;
 
-    public Image loadingImg;
-    public Text loadingTx;
-
     private int stageNumber;
 
     private void OnEnable()
@@ -163,11 +160,7 @@ public class StageSelect : MonoBehaviour
                 DemoDataManager.Instance.characterDatasList[0].stage += 1; //캐릭터가 입장한 스테이지 증가
 
             stageMessage.gameObject.SetActive(false);
-            //messageCanvas.gameObject.SetActive(false);
-
-            //로딩 화면
-            loadingImg.gameObject.SetActive(true);
-            StartCoroutine(loadingText());
+            messageCanvas.gameObject.SetActive(false);
 
             PlayerPrefs.SetInt("stageNumber", stageNumber);
             SceneManager.LoadScene("Stage");
@@ -182,24 +175,6 @@ public class StageSelect : MonoBehaviour
 
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
-    }
-    IEnumerator loadingText()
-    {
-        float watingTime = 0.2f;
-        loadingTx.text = "로";
-        yield return new WaitForSeconds(watingTime);
-        loadingTx.text += "딩 ";
-        yield return new WaitForSeconds(watingTime);
-        loadingTx.text += "중";
-        yield return new WaitForSeconds(watingTime);
-        loadingTx.text += ".";
-        yield return new WaitForSeconds(watingTime);
-        loadingTx.text += ".";
-        yield return new WaitForSeconds(watingTime);
-        loadingTx.text += ".";
-        yield return new WaitForSeconds(watingTime);
-
-        StartCoroutine(loadingText());
     }
     private void StageFlagOn()
     {
