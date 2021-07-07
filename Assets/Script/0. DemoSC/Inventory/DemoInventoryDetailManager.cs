@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class DemoInventoryDetailManager : MonoBehaviour
 {
-    public Sprite[] itemSprite;
-    public Image detailblindImg;
-    public Image itemImg;
+    public Sprite[] itemSprite; //아이템 스프라이트
+    public Image detailblindImg; //아이템 정보창
+    public Image itemImg; //아이템 이미지
+
+    //아이템 정보 출력 텍스트
     public Text classTx;
     public Text exTx;
     public Text levelnameTx;
@@ -16,6 +18,7 @@ public class DemoInventoryDetailManager : MonoBehaviour
     public Text itemCountTx;
     public Text setNameCountTx;
 
+    //아이템 업그레이드 버튼
     public Image upgradeBtBlind;
     public Text upgradeTx;
 
@@ -23,7 +26,7 @@ public class DemoInventoryDetailManager : MonoBehaviour
     public AudioSource soundEffectAS;
     public AudioClip buttonClickClip;
 
-    //아이템 정보
+    //아이템 정보 변수
     private string itemName;
     private int itemClass;
     private string itemEx;
@@ -49,27 +52,29 @@ public class DemoInventoryDetailManager : MonoBehaviour
                 itemImg.sprite = itemSprite[i];
         }
     }
-    public void BackBtClick()
+    public void BackBtClick() //정보창 닫기
     {
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
         detailblindImg.gameObject.SetActive(false);
     }
-    public void UpgradeBtClick()
+    public void UpgradeBtClick() //아이템 업그레이드
     {
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
-        itemCount -= sumCount;
-        int preItemStr = 0, preItemDef = 0, preItemAgi = 0;
+
+        itemCount -= sumCount; //가진 아이템 개수 제거
+        int preItemStr = 0, preItemDef = 0, preItemAgi = 0; //원래 아이템 스탯
         for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++)
         {
             if (DemoDataManager.Instance.allClothesItemList[i].name.Equals(itemName))
             {
+                //아이템 스탯 업그레이드
                 preItemStr = itemStr; preItemDef = itemDef; preItemAgi = itemAgi;
                 itemStr = itemStr / itemLevel * (itemLevel + 1);
                 itemDef = itemDef / itemLevel * (itemLevel + 1);
                 itemAgi = itemAgi / itemLevel * (itemLevel + 1);
-
+                //데이터에 저장
                 DemoDataManager.Instance.allClothesItemList[i].str = itemStr;
                 DemoDataManager.Instance.allClothesItemList[i].def = itemDef;
                 DemoDataManager.Instance.allClothesItemList[i].agi = itemAgi;

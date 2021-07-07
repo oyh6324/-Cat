@@ -15,20 +15,18 @@ public class DemoInventoryPageManager : MonoBehaviour
     public Image[] items; //1~9
     //아이템 이미지
     public Image[] itemImg; //1~9
-    //스프라이트
-    public Sprite[] itemSprite;
+    public Sprite[] itemSprite; //아이템 스프라이트
     //잠금 이미지
     public Image[] itemsLock; //1~9
     //아이템 이름 텍스트
     public Text[] itemNameTx; //1~9
-    //알람 이미지
-    public Image[] newAlarmImg;
-    public Image detailImg;
-    public Button detailBt;
-    public Button rightBt;
+    public Image[] newAlarmImg; //알람 이미지
+    public Image detailImg; //아이템 정보창 이미지
+    public Button detailBt; //아이템 정보창 버튼
+    public Button rightBt; //아이템 페이지
     public Button leftBt;
-    public Text statExTx;
-    public Image categoryBackImg;
+    public Text statExTx; //캐릭터 스탯
+    public Image categoryBackImg; //카테고리 이미지
     //오디오
     public AudioSource bgmAS;
     public AudioSource soundEffectAS;
@@ -50,8 +48,9 @@ public class DemoInventoryPageManager : MonoBehaviour
     {
         bgmAS.clip = inventoryBgmClip;
         bgmAS.Play();
-        detailImg.gameObject.SetActive(false);
+        detailImg.gameObject.SetActive(false); //아이템 정보창 닫기
 
+        //플레이어 스탯 연동
         allItemStr = DemoDataManager.Instance.characterDatasList[0].itemstr;
         allItemDef = DemoDataManager.Instance.characterDatasList[0].itemdef;
         allItemAgi = DemoDataManager.Instance.characterDatasList[0].itemagi;
@@ -62,6 +61,7 @@ public class DemoInventoryPageManager : MonoBehaviour
     }
     void Update()
     {
+        //카테고리 클릭 시 이동
         for (int i = 0; i < 3; i++)
         {
             if (isInvenBtClick[i])
@@ -71,6 +71,7 @@ public class DemoInventoryPageManager : MonoBehaviour
                 categoryBt[i].transform.localPosition = Vector2.MoveTowards(new Vector2(categoryBt[i].transform.localPosition.x, categoryBt[i].transform.localPosition.y),
                                                                             new Vector2(categoryBt[i].transform.localPosition.x, 300), 15f);
         }
+        //아이템 착용 및 업그레이드 시 플레이어 스탯 변경
         if (PlayerPrefs.HasKey("아이템정보변경"))
         {
             itemDataList.Clear();
@@ -83,6 +84,7 @@ public class DemoInventoryPageManager : MonoBehaviour
             PlayerPrefs.DeleteKey("아이템정보변경");
         }
     }
+    //아이템 장착 버튼
     public void item0BtClick()
     {
         InstallItem(0);
@@ -99,6 +101,7 @@ public class DemoInventoryPageManager : MonoBehaviour
     {
         InstallItem(3);
     }
+    //카테고리 버튼
     public void helmetBtClick()
     {
         soundEffectAS.clip = buttonClickClip;
@@ -117,13 +120,13 @@ public class DemoInventoryPageManager : MonoBehaviour
         soundEffectAS.Play();
         CategoryChange(2);
     }
-    public void detailBtClick()
+    public void detailBtClick() //아이템 정보창 클릭
     {
         soundEffectAS.clip = buttonClickClip;
-        soundEffectAS.Play();
-        detailImg.gameObject.SetActive(true);
+        soundEffectAS.Play(); 
+        detailImg.gameObject.SetActive(true); //아이템 정보창 활성화
     }
-    void InstallItem(int itemnumber)
+    void InstallItem(int itemnumber) //아이템 착용 함수
     {
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
@@ -131,21 +134,21 @@ public class DemoInventoryPageManager : MonoBehaviour
         {
             if (DemoDataManager.Instance.characterDatasList[0].helmet == "") //헬멧 장착이 없을 때
             {
-                DemoDataManager.Instance.characterDatasList[0].helmet = itemDataList[itemnumber].name;
+                DemoDataManager.Instance.characterDatasList[0].helmet = itemDataList[itemnumber].name; //유저가 원하는 헬멧 장착
                 allItemStr += itemDataList[itemnumber].str;
                 allItemDef += itemDataList[itemnumber].def;
                 allItemAgi += itemDataList[itemnumber].agi;
             }
-            else if (DemoDataManager.Instance.characterDatasList[0].helmet != "") //장착된 상태일 때
+            else if (DemoDataManager.Instance.characterDatasList[0].helmet != "") //헬멧이 장착된 상태일 때
             {
-                if (DemoDataManager.Instance.characterDatasList[0].helmet.Equals(itemDataList[itemnumber].name)) //같은 헬멧 장착 해제
+                if (DemoDataManager.Instance.characterDatasList[0].helmet.Equals(itemDataList[itemnumber].name)) //같은 헬멧일 경우 장착 해제
                 {
                     DemoDataManager.Instance.characterDatasList[0].helmet = "";
                     allItemStr -= itemDataList[itemnumber].str;
                     allItemDef -= itemDataList[itemnumber].def;
                     allItemAgi -= itemDataList[itemnumber].agi;
                 }
-                else //다른 헬멧을 장착할 때
+                else //다른 헬멧을 장착했을 때
                 {
                     int preItemNumber = 0;
                     for (int i = 0; i < listIndex; i++)
@@ -157,6 +160,7 @@ public class DemoInventoryPageManager : MonoBehaviour
                     allItemDef -= itemDataList[preItemNumber].def;
                     allItemAgi -= itemDataList[preItemNumber].agi;
 
+                    //유저가 원하는 헬멧 장착
                     DemoDataManager.Instance.characterDatasList[0].helmet = itemDataList[itemnumber].name;
                     allItemStr += itemDataList[itemnumber].str;
                     allItemDef += itemDataList[itemnumber].def;
@@ -285,7 +289,7 @@ public class DemoInventoryPageManager : MonoBehaviour
         DetailBtOn();
         SaveStatData();
     }
-    void SetCheck(int itemnumber)
+    void SetCheck(int itemnumber) //세트 장비 착용 확인 함수
     {
         if (itemDataList[itemnumber].setname != "") //세트 아이템 착용 시
         {
@@ -294,47 +298,47 @@ public class DemoInventoryPageManager : MonoBehaviour
             string installTopName = DemoDataManager.Instance.characterDatasList[0].top;
             string installBottomsName = DemoDataManager.Instance.characterDatasList[0].bottoms;
 
-            for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++)
+            for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++) //세트 장비가 다 모였는지 확인
             {
-                if (DemoDataManager.Instance.allClothesItemList[i].name.Equals(installHelmetName))
+                if (DemoDataManager.Instance.allClothesItemList[i].name.Equals(installHelmetName)) //헬멧 확인
                 {
                     if (DemoDataManager.Instance.allClothesItemList[i].setname.Equals(itemDataList[itemnumber].setname))
                         setCount--;
                 }
-                if (DemoDataManager.Instance.allClothesItemList[i].name.Equals(installTopName))
+                if (DemoDataManager.Instance.allClothesItemList[i].name.Equals(installTopName)) //상의 확인
                 {
                     if (DemoDataManager.Instance.allClothesItemList[i].setname.Equals(itemDataList[itemnumber].setname))
                         setCount--;
                 }
-                if (DemoDataManager.Instance.allClothesItemList[i].name.Equals(installBottomsName))
+                if (DemoDataManager.Instance.allClothesItemList[i].name.Equals(installBottomsName)) //하의 확인
                 {
                     if (DemoDataManager.Instance.allClothesItemList[i].setname.Equals(itemDataList[itemnumber].setname))
                         setCount--;
                 }
             }
-            if (setCount == 0)
+            if (setCount == 0) //세트 착용 중
                 isSet = true;
-            else
+            else //세트 착용 미달성
                 isSet = false;
         }
-        if (isSet)
+        if (isSet) //세트 착용했다면
         {
-            DemoDataManager.Instance.characterDatasList[0].setstr = itemDataList[itemnumber].setstr;
+            DemoDataManager.Instance.characterDatasList[0].setstr = itemDataList[itemnumber].setstr; //세트 스탯 추가
             DemoDataManager.Instance.characterDatasList[0].setdef = itemDataList[itemnumber].setdef;
             DemoDataManager.Instance.characterDatasList[0].setagi = itemDataList[itemnumber].setagi;
             DemoDataManager.Instance.characterDatasList[0].setcrip = itemDataList[itemnumber].setcrip;
             DemoDataManager.Instance.characterDatasList[0].setname = itemDataList[itemnumber].setname;
         }
-        else
+        else //세트 착용이 아니라면
         {
-            DemoDataManager.Instance.characterDatasList[0].setstr = 0;
+            DemoDataManager.Instance.characterDatasList[0].setstr = 0; //세트 스탯 초기화
             DemoDataManager.Instance.characterDatasList[0].setdef = 0;
             DemoDataManager.Instance.characterDatasList[0].setagi = 0;
             DemoDataManager.Instance.characterDatasList[0].setcrip = 0;
             DemoDataManager.Instance.characterDatasList[0].setname = "";
         }
     }
-    void StatExReset()
+    void StatExReset() //플레이어 스탯 설명
     {
         statExTx.text = "레벨: " + DemoDataManager.Instance.characterDatasList[0].level + "\n이름: " + DemoDataManager.Instance.characterDatasList[0].name + "\nHP: " + DemoDataManager.Instance.characterDatasList[0].hp +
             "\nSTR: " + DemoDataManager.Instance.characterDatasList[0].str;
@@ -362,7 +366,7 @@ public class DemoInventoryPageManager : MonoBehaviour
     }
     void CategoryChange(int btnumber) //카테고리 바꿀 때
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++) //해당 카테고리 bool 함수 true
         {
             if (i == btnumber)
                 isInvenBtClick[i] = true;
@@ -370,12 +374,13 @@ public class DemoInventoryPageManager : MonoBehaviour
             else
                 isInvenBtClick[i] = false;
         }
-        categoryBackImg.sprite = categorySprite[btnumber];
-        PageChange();
-        DetailBtOn();
+        categoryBackImg.sprite = categorySprite[btnumber]; //인벤토리 창 변경
+        PageChange(); //페이지 업데이트
+        DetailBtOn(); //아이템 정보창 버튼 활성화
     }
     void PageChange()
     {
+        //장비별로 리스트에 데이터 넣기
         if (isInvenBtClick[0])
         {
             listIndex = InputItemData("헬멧");
@@ -393,42 +398,45 @@ public class DemoInventoryPageManager : MonoBehaviour
             items[i].gameObject.SetActive(true);
             itemsLock[i].gameObject.SetActive(true);
 
-            if (itemDataList[i].count != 0) //아이템 보일 때
+            if (itemDataList[i].count != 0) //아이템을 가지고 있는 경우
             {
-                itemsLock[i].gameObject.SetActive(false);
-                itemNameTx[i].text = itemDataList[i].name;
+                itemsLock[i].gameObject.SetActive(false); //아이템 잠금 이미지 비활성화
+
+                itemNameTx[i].text = itemDataList[i].name; //아이템 이름 출력
                 for(int j=0; j<DemoDataManager.Instance.allClothesItemList.Count; j++) //스프라이트 바꿔주기
                 {
                     if (DemoDataManager.Instance.allClothesItemList[j].name.Equals(itemDataList[i].name))
                         itemImg[i].sprite = itemSprite[j];
                 }
             }
-            else
+            else //아이템이 없는 경우
             {
-                itemsLock[i].gameObject.SetActive(true);
+                itemsLock[i].gameObject.SetActive(true); //아이템 잠금 이미지 활성화
                 itemNameTx[i].text = "";
             }
-            if (itemDataList[i].isnew) //새로운 아이템 알람
-                newAlarmImg[i].gameObject.SetActive(true);
-            else
-                newAlarmImg[i].gameObject.SetActive(false);
+
+            if (itemDataList[i].isnew) //새로운 아이템이 생긴 경우
+                newAlarmImg[i].gameObject.SetActive(true); //new 이미지 활성화
+            else //새로운 아이템이 아닌 경우
+                newAlarmImg[i].gameObject.SetActive(false); //new 이미지 비활성화
         }
         for(int i=listIndex; i<9; i++) //자리가 빈 아이템 창 제거
         {
             items[i].gameObject.SetActive(false);
             itemsLock[i].gameObject.SetActive(false);
         }
+        //데모 전용
         rightBt.gameObject.SetActive(false);
         leftBt.gameObject.SetActive(false);
     }
-    void DetailBtOn() //살펴보기 버튼 관리
+    void DetailBtOn() //아이템 정보창 버튼 관리
     {
         int count = 0;
         if (isInvenBtClick[0])
         {
             for (int i = 0; i < listIndex; i++)
             {
-                if (itemDataList[i].name.Equals(DemoDataManager.Instance.characterDatasList[0].helmet))
+                if (itemDataList[i].name.Equals(DemoDataManager.Instance.characterDatasList[0].helmet)) //헬멧을 착용한 경우
                     count++;
             }
         }
@@ -436,7 +444,7 @@ public class DemoInventoryPageManager : MonoBehaviour
         {
             for (int i = 0; i < listIndex; i++)
             {
-                if (itemDataList[i].name.Equals(DemoDataManager.Instance.characterDatasList[0].top))
+                if (itemDataList[i].name.Equals(DemoDataManager.Instance.characterDatasList[0].top)) //상의를 착용한 경우
                     count++;
             }
         }
@@ -444,16 +452,17 @@ public class DemoInventoryPageManager : MonoBehaviour
         {
             for (int i = 0; i < listIndex; i++)
             {
-                if (itemDataList[i].name.Equals(DemoDataManager.Instance.characterDatasList[0].bottoms))
+                if (itemDataList[i].name.Equals(DemoDataManager.Instance.characterDatasList[0].bottoms)) //하의를 착용한 경우
                     count++;
             }
         }
+        //착용한 아이템이 있을 시 정보창 버튼 활성화
         if (count == 1)
             detailBt.gameObject.SetActive(true);
         else
             detailBt.gameObject.SetActive(false);
     }
-    void SaveStatData() //능력치 데이터 저장
+    void SaveStatData() //플레이어 스탯 데이터 저장
     {
         DemoDataManager.Instance.characterDatasList[0].itemstr = allItemStr;
         DemoDataManager.Instance.characterDatasList[0].itemdef = allItemDef;
@@ -465,13 +474,13 @@ public class DemoInventoryPageManager : MonoBehaviour
         DemoDataManager.Instance.characterDatasList[0].allagi = DemoDataManager.Instance.characterDatasList[0].itemagi + DemoDataManager.Instance.characterDatasList[0].setagi + DemoDataManager.Instance.characterDatasList[0].agi;
         DemoDataManager.Instance.characterDatasList[0].allcrip = DemoDataManager.Instance.characterDatasList[0].itemcrip + DemoDataManager.Instance.characterDatasList[0].setcrip + DemoDataManager.Instance.characterDatasList[0].crip;
     }
-    int InputItemData(string type) //필요한 데이터만 저장하기
+    int InputItemData(string type) //필요한 장비 아이템 데이터 리스트에 담기
     {
-        itemDataList.Clear();
+        itemDataList.Clear(); //장비 리스트 초기화
         int count = 0;
         for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++)
         {
-            if (DemoDataManager.Instance.allClothesItemList[i].type.Equals(type))
+            if (DemoDataManager.Instance.allClothesItemList[i].type.Equals(type)) //헬멧, 상의, 하의 구분
             {
                 itemDataList.Add(new ItemData(DemoDataManager.Instance.allClothesItemList[i].name, DemoDataManager.Instance.allClothesItemList[i].count,
                     DemoDataManager.Instance.allClothesItemList[i].str, DemoDataManager.Instance.allClothesItemList[i].def, DemoDataManager.Instance.allClothesItemList[i].agi,
