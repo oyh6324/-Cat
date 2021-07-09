@@ -80,6 +80,7 @@ public class DemoInventoryDetailManager : MonoBehaviour
                 DemoDataManager.Instance.allClothesItemList[i].agi = itemAgi;
                 DemoDataManager.Instance.allClothesItemList[i].level += 1;
 
+                //캐릭터 착용 장비 스탯 변경
                 if (preItemStr != 0)
                     DemoDataManager.Instance.characterDatasList[0].itemstr += itemStr - preItemStr;
                 if (preItemDef != 0)
@@ -87,6 +88,7 @@ public class DemoInventoryDetailManager : MonoBehaviour
                 if (preItemAgi != 0)
                     DemoDataManager.Instance.characterDatasList[0].itemagi += itemAgi - preItemAgi;
 
+                //업그레이드 장비 개수 변경
                 if (itemCount == 0)
                     DemoDataManager.Instance.allClothesItemList[i].count = 1;
                 else if (itemCount == 1)
@@ -99,7 +101,7 @@ public class DemoInventoryDetailManager : MonoBehaviour
         TextSetting();
         AchievementCheck(); //업적 연동
     }
-    void AchievementCheck()
+    void AchievementCheck() //업적 아이템 관련 정보 변경
     {
         int count3 = 0, count4 = 0, count5 = 0;
         for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++)
@@ -115,7 +117,7 @@ public class DemoInventoryDetailManager : MonoBehaviour
         DemoDataManager.Instance.achievementDataList[8].progressvalue = count4;
         DemoDataManager.Instance.achievementDataList[9].progressvalue = count5;
     }
-    void TextSetting()
+    void TextSetting() //아이템 정보 출력
     {
         classTx.text = "";
         exTx.text = "";
@@ -198,7 +200,7 @@ public class DemoInventoryDetailManager : MonoBehaviour
             upgradeTx.text = "업그레이드가 종료되었습니다.";
         }
     }
-    void itemDataSave(string itemname)
+    void itemDataSave(string itemname) //아이템 정보 저장
     {
         for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++)
         {

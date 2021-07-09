@@ -7,6 +7,7 @@ using System.IO;
 
 public class DemoClothesItemData
 {
+    //의상
     public DemoClothesItemData(string _name, string _setname, string _ex, string _type, int _level, int _count, int _star, int _str, int _def, int _agi,
         int _setstr, int _setdef, int _setagi, int _setnumber, decimal _setcrip, bool _isnew)
     {
@@ -19,7 +20,7 @@ public class DemoClothesItemData
     public decimal setcrip;
     public bool isnew;
 }
-
+//무기
 public class DemoWeaponItemData
 {
     public DemoWeaponItemData(string _name, string _ex, int _level, int _count, int _star, int _str, decimal _strspeed, decimal _crip, bool _isnew)
@@ -31,7 +32,7 @@ public class DemoWeaponItemData
     public decimal strspeed, crip;
     public bool isnew;
 }
-
+//게임 머니
 public class DemoMoneyItemData
 {
     public DemoMoneyItemData(string _name, int _count)
@@ -41,6 +42,7 @@ public class DemoMoneyItemData
     public string name;
     public int count;
 }
+//플레이어
 public class DemoCharacterData
 {
     public DemoCharacterData(string _name, string _helmet, string _top, string _bottoms, string _weapon, string _setname, int _level, int _str, int _def, int _agi, int _hp,
@@ -58,6 +60,7 @@ public class DemoCharacterData
     public int level, str, def, agi, hp, itemstr, itemdef, itemagi, allstr, alldef, allagi, setstr, setdef, setagi, stage, exp, totalexp;
     public decimal crip, itemcrip, allcrip, setcrip, itemspeed;
 }
+//업적
 public class DemoAchievementData
 {
     public DemoAchievementData(string _name, string _rewardname, string _rewardname2, int _level, int _maxlevel, int _progressvalue, int _rewardcount, int _rewradcount2, int _value)
@@ -68,6 +71,7 @@ public class DemoAchievementData
     public string name, rewardname, rewardname2;
     public int value, rewardcount, rewardcount2, maxlevel, level, progressvalue;
 }
+//몬스터 도감
 public class DemoMonsterCollectionData
 {
     public DemoMonsterCollectionData(string _name, string _realname, string _habitat, string _kind, int _stage, bool _isreward)
@@ -88,6 +92,7 @@ public class DemoDataManager : MonoBehaviour
     //0: anchovy 1:pearl 2:key 3:anchovyboxClothes 4:pearlboxClothes 5:anchovyboxWeapon 6:pearlboxWeapon 
     public List<DemoMoneyItemData> moneyItemList;
 
+    //singleton
     private static DemoDataManager instance=null;
 
     void Awake()
@@ -95,22 +100,22 @@ public class DemoDataManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); //씬 이동해도 데이터매니저가 파괴되지 않게 해줌
         }
-        else
+        else //다른 데이터매니저가 있다면
         {
-            Destroy(gameObject);
+            Destroy(gameObject); //파괴
         }
 
-        if (PlayerPrefs.HasKey("first"))
-            LoadAllData();
-        else
+        if (PlayerPrefs.HasKey("first")) //처음 게임에 들어오는 게 아니라면
+            LoadAllData(); //데이터 로드
+        else //처음 게임에 들어왔다면
         {
-            PlayerPrefs.SetInt("first", 1);
-            SaveFirstData();
+            PlayerPrefs.SetInt("first", 1); 
+            SaveFirstData(); //초기 데이터 저장
         }
     }
-    public static DemoDataManager Instance
+    public static DemoDataManager Instance //다른 곳에서 인스턴스에 접근할 수 있게
     {
         get
         {
@@ -119,7 +124,7 @@ public class DemoDataManager : MonoBehaviour
             return instance;
         }
     }
-    void OnApplicationFocus(bool focusStatus) //포커스 잃었을 때
+    void OnApplicationFocus(bool focusStatus) //게임 포커스 잃었을 때
     {
         if (!focusStatus)
             SaveAllData();
@@ -128,7 +133,7 @@ public class DemoDataManager : MonoBehaviour
     {
         SaveAllData();
     }
-    void SaveFirstData() //게임을 처음 시작할 때 실행해야 함
+    void SaveFirstData() //게임을 처음 시작할 때 초기 데이터 저장
     {
         allClothesItemList = new List<DemoClothesItemData>(); //의상
         allWeaponItemList = new List<DemoWeaponItemData>(); //무기
@@ -205,7 +210,7 @@ public class DemoDataManager : MonoBehaviour
 
         SaveAllData();
     }
-    void SaveAllData() //json 저장
+    void SaveAllData() //게임 데이터 json 저장
     {
         //clothesItemData
         string jdataC = JsonConvert.SerializeObject(allClothesItemList);
@@ -231,7 +236,7 @@ public class DemoDataManager : MonoBehaviour
         string jdataMC = JsonConvert.SerializeObject(monsterCollectionDataList);
         File.WriteAllText(Application.persistentDataPath + "/MonsterCollectionData.json", jdataMC);
     }
-    void LoadAllData() //json 불러오기
+    void LoadAllData() //게임 데이터 json 불러오기
     {
         //clothesItemData
         string jdataC = File.ReadAllText(Application.persistentDataPath + "/ClothesItem.json");

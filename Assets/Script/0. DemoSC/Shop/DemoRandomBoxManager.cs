@@ -30,7 +30,7 @@ public class DemoRandomBoxManager : MonoBehaviour
         messageImg.gameObject.SetActive(false);
         boxonImg.gameObject.SetActive(true);
 
-        if (PlayerPrefs.HasKey("멸치의상뽑기"))
+        if (PlayerPrefs.HasKey("멸치의상뽑기"))  //멸치 의상 뽑기 신호
         {
             randomPercent = Random.Range(0, 100);
             if (randomPercent < 50) //1등급
@@ -42,7 +42,7 @@ public class DemoRandomBoxManager : MonoBehaviour
             ClothesBoxRandom();
             PlayerPrefs.DeleteKey("멸치의상뽑기");
         }
-        if (PlayerPrefs.HasKey("진주의상뽑기"))
+        if (PlayerPrefs.HasKey("진주의상뽑기")) //진주 의상 뽑기 신호
         {
             randomPercent = Random.Range(0, 100);
             if (randomPercent < 80) //3등급
@@ -52,7 +52,7 @@ public class DemoRandomBoxManager : MonoBehaviour
             ClothesBoxRandom();
             PlayerPrefs.DeleteKey("진주의상뽑기");
         }
-        if (PlayerPrefs.HasKey("멸치무기뽑기"))
+        if (PlayerPrefs.HasKey("멸치무기뽑기")) //멸치 무기 뽑기 신호
         {
             randomPercent = Random.Range(0, 100);
             if (randomPercent < 50) //1등급
@@ -64,7 +64,7 @@ public class DemoRandomBoxManager : MonoBehaviour
             WeaponBoxRandom();
             PlayerPrefs.DeleteKey("멸치무기뽑기");
         }
-        if (PlayerPrefs.HasKey("진주무기뽑기"))
+        if (PlayerPrefs.HasKey("진주무기뽑기")) //진주 무기 뽑기 신호
         {
             randomPercent = Random.Range(0, 100);
             if (randomPercent < 80) //3등급
@@ -76,23 +76,24 @@ public class DemoRandomBoxManager : MonoBehaviour
         }
         AchievementCheck(); //업적 연동
     }
-    void OnDisable()
-    {
+    void OnDisable() //오브젝트 비활성화
+    { //출력 문구 리셋
         classTx.text = "";
         levelnameTx.text = "";
         exTx.text = "";
         statTx.text = "";
         setTx.text = "";
     }
-    public void OkBtClick()
+    public void OkBtClick() //확인 버튼 클릭
     {
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
+        //뽑기 창 비활성화
         boxonImg.gameObject.SetActive(false);
         messageImg.gameObject.SetActive(true);
         messageCanvas.gameObject.SetActive(false);
     }
-    void ClothesBoxRandom()
+    void ClothesBoxRandom() //의상 정보 출력
     {
         //설명에 필요한 정보 옮겨담기
         List<Stat> statList = new List<Stat>();
@@ -135,8 +136,8 @@ public class DemoRandomBoxManager : MonoBehaviour
             if (clothesSetcrip != 0)
                 setTx.text += "크리티컬 확률 +" + clothesSetcrip + "%";
         }
-        if (DemoDataManager.Instance.allClothesItemList[random].count == 1)
-            DemoDataManager.Instance.allClothesItemList[random].isnew = true;
+        if (DemoDataManager.Instance.allClothesItemList[random].count == 1) //새로운 아이템이라면
+            DemoDataManager.Instance.allClothesItemList[random].isnew = true; //new 신호
 
         //의상 스프라이트
         itemImg.sprite = clothesSprite[random];
@@ -150,7 +151,7 @@ public class DemoRandomBoxManager : MonoBehaviour
         else
             itemImg.transform.localPosition = new Vector2(-5, 80);
     }
-    void WeaponBoxRandom()
+    void WeaponBoxRandom() //무기 정보 출력
     {
         //정보 옮겨담기
         string weaponName = DemoDataManager.Instance.allWeaponItemList[random].name;
@@ -161,7 +162,7 @@ public class DemoRandomBoxManager : MonoBehaviour
         decimal weaponSpeed = DemoDataManager.Instance.allWeaponItemList[random].strspeed;
         decimal weaponCrip = DemoDataManager.Instance.allWeaponItemList[random].crip;
 
-        DemoDataManager.Instance.allWeaponItemList[random].count += 1;
+        DemoDataManager.Instance.allWeaponItemList[random].count += 1; //보유 개수 증가
 
         for (int i = 0; i < weaponStar; i++) //등급 표시
             classTx.text += "★";
@@ -180,29 +181,30 @@ public class DemoRandomBoxManager : MonoBehaviour
         itemImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 300);
         itemImg.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 300);
     }
-    void AchievementCheck()
+    void AchievementCheck() //업적 연동
     {
         int helmetCount = 0, topCount = 0, bottomsCount = 0, weaponCount = 0;
         for (int i = 0; i < DemoDataManager.Instance.allClothesItemList.Count; i++)
         {
-            if (DemoDataManager.Instance.allClothesItemList[i].type == "헬멧" && DemoDataManager.Instance.allClothesItemList[i].count > 0)
+            if (DemoDataManager.Instance.allClothesItemList[i].type == "헬멧" && DemoDataManager.Instance.allClothesItemList[i].count > 0) //헬멧 개수 확인
                 helmetCount++;
-            if (DemoDataManager.Instance.allClothesItemList[i].type == "상의" && DemoDataManager.Instance.allClothesItemList[i].count > 0)
+            if (DemoDataManager.Instance.allClothesItemList[i].type == "상의" && DemoDataManager.Instance.allClothesItemList[i].count > 0) //상의 개수 확인
                 topCount++;
-            if (DemoDataManager.Instance.allClothesItemList[i].type == "하의" && DemoDataManager.Instance.allClothesItemList[i].count > 0)
+            if (DemoDataManager.Instance.allClothesItemList[i].type == "하의" && DemoDataManager.Instance.allClothesItemList[i].count > 0) //하의 개수 확인
                 bottomsCount++;
         }
         for (int i = 0; i < DemoDataManager.Instance.allWeaponItemList.Count; i++)
         {
-            if (DemoDataManager.Instance.allWeaponItemList[i].count > 0)
+            if (DemoDataManager.Instance.allWeaponItemList[i].count > 0) //무기 개수 확인
                 weaponCount++;
         }
+        //아이템 개수 관련 업적과 연동
         DemoDataManager.Instance.achievementDataList[3].progressvalue = helmetCount;
         DemoDataManager.Instance.achievementDataList[4].progressvalue = topCount;
         DemoDataManager.Instance.achievementDataList[5].progressvalue = bottomsCount;
         DemoDataManager.Instance.achievementDataList[6].progressvalue = weaponCount;
     }
-    public class Stat
+    public class Stat //아이템 스탯
     {
         public string name;
         public int number;
