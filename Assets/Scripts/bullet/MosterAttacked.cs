@@ -7,7 +7,6 @@ public class MosterAttacked : MonoBehaviour
     public LayerMask isLayer;
     Vector2 frontVec;
     RaycastHit2D rayhit;
-
     //cri 확률
     private decimal crip;
     GameObject bullet;
@@ -18,7 +17,7 @@ public class MosterAttacked : MonoBehaviour
         crip = 0.05m;//crip=DemoDataManager.characterDatasList[0].allcrip;  
         bullet = this.gameObject;
     }
-    private void Update()
+    private void Update() //총알 오브젝트 방향전환
     {
         if (this.gameObject.transform.localScale.x == 0.5f)
         {
@@ -30,14 +29,14 @@ public class MosterAttacked : MonoBehaviour
             rayhit = Physics2D.Raycast(transform.position, -transform.right, 0.5f, isLayer);
             Debug.DrawRay(transform.position, -transform.right, new Color(0, 1, 0));
         }
-        if (rayhit.collider != null)
+        if (rayhit.collider != null) //장애물과 부딪히면 제거
         {
             Destroy(bullet);
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag=="Enemy")
+        if(collision.gameObject.tag=="Enemy") //몬스터의 콜라이더와 충돌시 데미지 입힘
         {
             int r;
             if (crip == 0.5m)
@@ -62,7 +61,7 @@ public class MosterAttacked : MonoBehaviour
             Destroy(bullet);
             //OnDestroy();
         }
-        if(collision.gameObject.tag=="Collider"||collision.gameObject.tag=="EmemySkill")
+        if(collision.gameObject.tag=="Collider"||collision.gameObject.tag=="EmemySkill") 
         {
             Destroy(bullet);
         }
@@ -70,6 +69,6 @@ public class MosterAttacked : MonoBehaviour
     
     private void OnDestroy()
     {
-        Destroy(bullet);
+        Destroy(bullet); 
     }
 }

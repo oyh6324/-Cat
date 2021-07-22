@@ -146,7 +146,7 @@ public class PlayerMove : MonoBehaviour
             }
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision) //적, 적스킬, 적공격에 충돌할 경우
     {
         if(collision.gameObject.tag=="Enemy")
         {
@@ -164,14 +164,14 @@ public class PlayerMove : MonoBehaviour
             StartCoroutine(offFall());
         }
     }
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision) //적 총알과 충돌시 적 총알 삭제
     {
         if(collision.gameObject.tag=="EnemyBullet")
         {
             Destroy(collision.gameObject);
         }
     }
-    void onDamaged(Vector2 targetPos)
+    void onDamaged(Vector2 targetPos) //데미지 입었을 때
     {
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
         if (curHp >damage)
@@ -209,7 +209,7 @@ public class PlayerMove : MonoBehaviour
             StartCoroutine(onDied());
         }
     }
-    void offDameged()
+    void offDameged() //투명화 상태 돌아옴
     {
         gameObject.layer = 12;
         spriterenderer.color = new Color(1, 1, 1, 1);
@@ -218,7 +218,7 @@ public class PlayerMove : MonoBehaviour
         for (int i = 0; i < 3; i++)
             dressRenderer[i].color = new Color(1, 1, 1, 1);
     }
-    IEnumerator onDied()
+    IEnumerator onDied() //하트 소모
     {
         weapon.SetActive(false);
         isLiving = false;
@@ -261,7 +261,7 @@ public class PlayerMove : MonoBehaviour
         }
         StartCoroutine(offDied());
     }
-    IEnumerator offDied()
+    IEnumerator offDied() //부활할때 투명도, 레이어 조절
     {
         yield return new WaitForSeconds(1.2f);
         curHp = maxHp;
@@ -282,7 +282,7 @@ public class PlayerMove : MonoBehaviour
         gameObject.layer = 12;
     }
 
-    IEnumerator offFall()
+    IEnumerator offFall() //추락시 다시 부활
     {
         isLiving = false;
         gameObject.layer = 13;

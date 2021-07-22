@@ -208,7 +208,7 @@ public class 정어리 : MonoBehaviour
         }
         transform.position += moveVelocity * (MonsterSpeed + 1f) * Time.deltaTime;
     }
-    void onHurricane()
+    void onHurricane() //정어리 스킬 사용
     {
         audioSource.PlayOneShot(skilClip);
         CancelInvoke("offHurricane");
@@ -217,7 +217,7 @@ public class 정어리 : MonoBehaviour
         MonsterSpeed = MonsterSpeed + 0.5f;
         Invoke("offHurricane", 4f);
     }
-    void offHurricane()
+    void offHurricane() //skill off
     {
         float r = Random.Range(3, 5);
         CancelInvoke("onHurricane");

@@ -22,7 +22,7 @@ public class 말미잘물방울 : MonoBehaviour
         anim = GetComponent<Animator>();
     }
     // Update is called once per frame
-    void shoot()
+    void shoot() //말미잘 총알 생성
     {
         audioSource.PlayOneShot(skilClip);
         GameObject dropclone = Instantiate(drop, tr.position, tr.rotation);
