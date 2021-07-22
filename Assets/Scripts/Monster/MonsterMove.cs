@@ -40,7 +40,7 @@ public class MonsterMove : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
     }
-    private void Update()
+    private void Update() //체력바, 플레이어 위치 업데이트
     {
         bar.value = Mathf.Lerp(bar.value, (float)MonstercurHp / (float)TotalHp, Time.deltaTime * 10);
         if (isTracing&&isDied==false)
@@ -95,7 +95,7 @@ public class MonsterMove : MonoBehaviour
             spriterenderer.flipX = false;
         }
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision) //피격시
     {
         if (collision.gameObject.tag == "bullet")
         {
@@ -131,7 +131,7 @@ public class MonsterMove : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) //플레이어 발견시 추격
     {
         if (collision.gameObject.tag =="Player")
         {
@@ -167,7 +167,7 @@ public class MonsterMove : MonoBehaviour
     }
 
     //재귀 함수 몬스터의 일반 움직임 설정
-    void Think()
+    void Think() //랜덤으로 움직임 설정
     {
         if (isDied == false)
         {

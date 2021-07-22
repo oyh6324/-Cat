@@ -174,7 +174,7 @@ public class 바다토끼 : MonoBehaviour
             Invoke("Think", nextThinkTime);
         }
     }
-    void shoot()
+    void shoot() //총알 생성
     {
         GameObject dropclone = Instantiate(drop, tr.position, tr.rotation);
         Rigidbody2D rigid = dropclone.GetComponent<Rigidbody2D>();
@@ -189,7 +189,7 @@ public class 바다토끼 : MonoBehaviour
         StartCoroutine(activedrop(dropclone));
         Destroy(dropclone,4f);
     }
-    IEnumerator activedrop(GameObject drop)
+    IEnumerator activedrop(GameObject drop) 
     {
         yield return new WaitForSeconds(1f);
         drop.gameObject.SetActive(false);

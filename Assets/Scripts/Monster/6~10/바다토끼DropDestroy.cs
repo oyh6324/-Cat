@@ -14,7 +14,7 @@ public class 바다토끼DropDestroy : MonoBehaviour
         anim = GetComponent<Animator>();
         drop = this.gameObject;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision) //총알과 콜라이더가 부딪힐 때
     {
         if (collision.gameObject.tag == "Player")
         {
@@ -28,17 +28,17 @@ public class 바다토끼DropDestroy : MonoBehaviour
             anim.SetTrigger("boom");
         }
     }
-    void OnDestroy()
+    void OnDestroy() //총알 삭제
     {
         this.gameObject.SetActive(false);
         Destroy(drop,4f);
     }
-    void lowspeed()
+    void lowspeed() //총알과 부딪히면 플레이어 속도 늦춤
     {
         PlayerMove.maxSpeed = 2.5f;
         PlayerMove.isSlow = true;
     }
-    void normalSpeed()
+    void normalSpeed() //속도 돌아옴
     {
         Debug.Log("실행");
         PlayerMove.isSlow = false;

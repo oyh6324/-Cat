@@ -206,7 +206,7 @@ public class 천사어 : MonoBehaviour
         }
         transform.position += moveVelocity * (MonsterSpeed + 1f) * Time.deltaTime;
     }
-    void onSkill()
+    void onSkill() //천사어 스킬, 속도증가
     {
         anim.SetBool(aniName, true);
         MonsterSpeed = MonsterSpeed + 1;
@@ -214,7 +214,7 @@ public class 천사어 : MonoBehaviour
         gameObject.tag = "EnemySkill";
         Invoke("offSkill", 0.5f);
     }
-    void offSkill()
+    void offSkill() //skill off
     {
         PlaySkill = false;
         gameObject.tag = "Enemy";
