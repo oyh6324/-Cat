@@ -26,33 +26,38 @@ public class DemoLevelManager : MonoBehaviour
     public AudioClip buttonClickClip;
     public AudioClip levelUpClip;
 
+    //보상 스프라이트
     private Sprite reward1;
     private Sprite reward2;
     void OnEnable()
     {
-        if (DemoDataManager.Instance.characterDatasList[0].exp >= DemoDataManager.Instance.characterDatasList[0].totalexp)
+        if (DemoDataManager.Instance.characterDatasList[0].exp >= DemoDataManager.Instance.characterDatasList[0].totalexp) //레벨 경험치가 다 모였을때
         {
             soundEffectAS.PlayOneShot(levelUpClip);
             LevelUpReward();
         }
     }
-    public void OkBtClick()
+    public void OkBtClick() //확인 버튼
     {
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
+        //메시지 비활성화
         messageImg.gameObject.SetActive(true);
         levelupMessageImg.gameObject.SetActive(false);
         messageCanvas.gameObject.SetActive(false);
     }
     void LevelUpReward() //레벨 업 보상과 스탯 증가
     {
+        //메시지 활성화
         messageCanvas.gameObject.SetActive(true);
         messageImg.gameObject.SetActive(false);
         levelupMessageImg.gameObject.SetActive(true);
+
+        //스탯 변수
         int level ,str, agi, def, hp;
         int reward1Count = 0, reward2Count = 0;
-        int preHp=DemoDataManager.Instance.characterDatasList[0].hp;
         decimal crip;
+        int preHp=DemoDataManager.Instance.characterDatasList[0].hp;
 
         DemoDataManager.Instance.characterDatasList[0].level += 1; //레벨 올리기
         level = DemoDataManager.Instance.characterDatasList[0].level;
@@ -64,6 +69,7 @@ public class DemoLevelManager : MonoBehaviour
         DemoDataManager.Instance.characterDatasList[0].agi += 2; //민첩 올리기
         DemoDataManager.Instance.characterDatasList[0].crip += (decimal)0.1; //크리티컬 확률 올리기
 
+        //스탯 변수에 담기
         str = DemoDataManager.Instance.characterDatasList[0].str;
         def = DemoDataManager.Instance.characterDatasList[0].def;
         agi = DemoDataManager.Instance.characterDatasList[0].agi;
@@ -125,7 +131,8 @@ public class DemoLevelManager : MonoBehaviour
             DemoDataManager.Instance.moneyItemList[0].count += 15000;
             DemoDataManager.Instance.moneyItemList[1].count += 150;
         }
-        if (reward1 == anchovy) //업적 연동
+
+        if (reward1 == anchovy) //게임 머니 관련 업적 연동
             DemoDataManager.Instance.achievementDataList[0].progressvalue += reward1Count;
         if(reward2 == pearl)
             DemoDataManager.Instance.achievementDataList[1].progressvalue += reward2Count;

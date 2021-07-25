@@ -28,44 +28,45 @@ public class Moveplace : MonoBehaviour
         statBackBt.gameObject.SetActive(false);
         statImg.gameObject.SetActive(false);
     }
-    public void ShopBtClick()
+    public void ShopBtClick() //상점 버튼 클릭
     {
-        PlayerMove(1, 0);
+        PlayerMove(1, 0); //화면 이동
     }
-    public void InventoryBtClick()
+    public void InventoryBtClick() //인벤토리 버튼 클릭
     {
         PlayerMove(2,0);
     }
-    public void WeaponBtClick()
+    public void WeaponBtClick() //무기고 버튼 클릭
     {
         PlayerMove(3, 0);
     }
-    public void AchievementBtClick()
+    public void AchievementBtClick() //업적 버튼 클릭
     {
         PlayerMove(4, 0);
     }
-    public void CollectionBtClick()
+    public void CollectionBtClick() //도감 버튼 클릭
     {
         PlayerMove(5, 0);
     }
-    public void PlayBtClick()
+    public void PlayBtClick() //게임 플레이 버튼 클릭
     {
 
         PlayerMove(6, 0);
     }
-    public void CatBtClick()
+    public void CatBtClick() //고양이 클릭
     {
-        StatOpen();
+        StatOpen(); //고양이 스탯 창 활성화
     }
-    public void statBackBtClick()
+    public void statBackBtClick() //스탯 창 받기 버튼 클릭
     {
+        //스탯 창 비활성화
         statBackBt.gameObject.SetActive(false);
         statImg.gameObject.SetActive(false);
 
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
     }
-    void StatOpen() //데모 버전
+    void StatOpen() //유저 고양이 스탯 창
     {
         statImg.gameObject.SetActive(true);
         statBackBt.gameObject.SetActive(true);
@@ -87,30 +88,7 @@ public class Moveplace : MonoBehaviour
                         "\nDEF +" + DemoDataManager.Instance.characterDatasList[0].setdef + "\nAGI +" + DemoDataManager.Instance.characterDatasList[0].setagi + "\n크리티컬 확률 +" +
                          DemoDataManager.Instance.characterDatasList[0].setcrip;
     }
-
-    /*void StatOpen() //정식 버전
-    {
-        statImg.gameObject.SetActive(true);
-        statBackBt.gameObject.SetActive(true);
-        statExTx.text = "레벨: " + DataManager.characterDatasList[0].level + "\n이름: " + DataManager.characterDatasList[0].name + "\nHP: " + DataManager.characterDatasList[0].hp +
-    "\nSTR: " + DataManager.characterDatasList[0].str;
-        if (DataManager.characterDatasList[0].itemstr != 0)
-            statExTx.text += " (+" + DataManager.characterDatasList[0].itemstr + ")";
-        statExTx.text += "\nDEF: " + DataManager.characterDatasList[0].def;
-        if (DataManager.characterDatasList[0].itemdef != 0)
-            statExTx.text += " (+" + DataManager.characterDatasList[0].itemdef + ")";
-        statExTx.text += "\nAGI: " + DataManager.characterDatasList[0].agi;
-        if (DataManager.characterDatasList[0].itemagi != 0)
-            statExTx.text += " (+" + DataManager.characterDatasList[0].itemagi + ")";
-        statExTx.text += "\n공격 속도: " + DataManager.characterDatasList[0].itemspeed + "\n크리티컬 확률: " + DataManager.characterDatasList[0].crip;
-        if (DataManager.characterDatasList[0].itemcrip != 0)
-            statExTx.text += " (+" + DataManager.characterDatasList[0].itemcrip + "%)";
-        if (DataManager.characterDatasList[0].setname != "")
-            statExTx.text += "\n" + DataManager.characterDatasList[0].setname + " 세트 적용!" + "\nSTR +" + DataManager.characterDatasList[0].setstr +
-                        "\nDEF +" + DataManager.characterDatasList[0].setdef + "\nAGI +" + DataManager.characterDatasList[0].setagi + "\n크리티컬 확률 +" +
-                         DataManager.characterDatasList[0].setcrip;
-    }*/
-    void PlayerMove(int inplace, int outplace)
+    void PlayerMove(int inplace, int outplace) //화면 이동
     {
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();

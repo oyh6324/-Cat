@@ -10,7 +10,7 @@ public class DemoWeaponManager : MonoBehaviour
     public Image rightBlindImg2;
     public Image leftBlindImg1;
     public Image leftBlindImg2;
-    public GameObject gunImgs;
+    public GameObject gunImgs; 
     public Image[] gunImg;
     public Image[] gunLockImg;
     public Image[] newAlarmImg;
@@ -53,7 +53,7 @@ public class DemoWeaponManager : MonoBehaviour
     private bool isGunClick;
     private int sumCount;
 
-    List<WeaponItemData> weaponItemDataList;
+    List<WeaponItemData> weaponItemDataList; //무기 정보 리스트
     void Awake()
     {
         nextPlaceX = -1820;
@@ -67,18 +67,18 @@ public class DemoWeaponManager : MonoBehaviour
         gunImgs.transform.localPosition = new Vector2(nextPlaceX, gunImgs.transform.localPosition.y);
         isRight = false;
         isLeft = false;
-        weaponItemDataList.Clear();
-        InputWeaponData();
-        if (DemoDataManager.Instance.characterDatasList[0].weapon != "")
+        weaponItemDataList.Clear(); //리스트 정리
+        InputWeaponData(); //무기 데이터 넣기
+        if (DemoDataManager.Instance.characterDatasList[0].weapon != "") //캐릭터가 장착한 무기가 있다면
         {
             for (int i = 0; i < DemoDataManager.Instance.allWeaponItemList.Count; i++)
             {
                 if (weaponItemDataList[i].name.Equals(DemoDataManager.Instance.characterDatasList[0].weapon))
-                    thisPage = i;
+                    thisPage = i; //장착한 무기 페이지
             }
         }
-        else
-            thisPage = 0;
+        else //장착한 무기가 없다면
+            thisPage = 0; //첫 페이지
         PageSetting();
     }
     void Update()
@@ -92,33 +92,34 @@ public class DemoWeaponManager : MonoBehaviour
             new Vector2(-880, 0),60);
         leftBlindImg2.transform.localPosition = Vector2.MoveTowards(new Vector2(leftBlindImg2.transform.localPosition.x, leftBlindImg2.transform.localPosition.y),
             new Vector2(-880, 0), 60);
-        if (isRight)
+        if (isRight) //오른쪽으로 이동
         {
             gunImgs.transform.localPosition = Vector2.MoveTowards(new Vector2(gunImgs.transform.localPosition.x, gunImgs.transform.localPosition.y),
                  new Vector2(nextPlaceX, gunImgs.transform.localPosition.y), 50f);
         }
-        if (isLeft)
+        if (isLeft) //왼쪽으로 이동
         {
             gunImgs.transform.localPosition = Vector2.MoveTowards(new Vector2(gunImgs.transform.localPosition.x, gunImgs.transform.localPosition.y),
                 new Vector2(nextPlaceX, gunImgs.transform.localPosition.y), 50f);
         }
-        if (gunImgs.transform.localPosition.x == nextPlaceX)
+        if (gunImgs.transform.localPosition.x == nextPlaceX) //이동할 위치에 도착했다면
             isMove = true;
-        else
+        else //이동할 위치에 도착하지 않았다면
             isMove = false;
 
         //장착 관리
-        if (DemoDataManager.Instance.characterDatasList[0].weapon == weaponItemDataList[thisPage].name)
-            installBtTx.text = "장착 해제";
-        else
-            installBtTx.text = "장착";
+        if (DemoDataManager.Instance.characterDatasList[0].weapon == weaponItemDataList[thisPage].name) //장착한 무기가 현재 페이지 무기와 같다면
+            installBtTx.text = "장착 해제"; //장착 해제 text 출력
+        else  //다르다면
+            installBtTx.text = "장착"; //장착 text 출력
 
-        pageTx.text = thisPage + 1 +"/"+ weaponItemDataList.Count.ToString();
+        pageTx.text = thisPage + 1 +"/"+ weaponItemDataList.Count.ToString(); //현재 페이지 출력
     }
     void OnDisable()
     {
-        StatSetDestroy();
+        StatSetDestroy(); //스탯 리셋
 
+        //플레이어가 착용한 장비 스탯에 무기 스탯 추가
         DemoDataManager.Instance.characterDatasList[0].allstr = DemoDataManager.Instance.characterDatasList[0].str + DemoDataManager.Instance.characterDatasList[0].itemstr;
         DemoDataManager.Instance.characterDatasList[0].alldef = DemoDataManager.Instance.characterDatasList[0].def + DemoDataManager.Instance.characterDatasList[0].itemdef;
         DemoDataManager.Instance.characterDatasList[0].allagi = DemoDataManager.Instance.characterDatasList[0].agi + DemoDataManager.Instance.characterDatasList[0].itemagi;
@@ -130,56 +131,57 @@ public class DemoWeaponManager : MonoBehaviour
         leftBlindImg1.transform.localPosition = new Vector2(-1500, -1000);
         leftBlindImg2.transform.localPosition = new Vector2(-1500, 1000);
     }
-    public void RightBtClick()
+    public void RightBtClick() //오른쪽으로 이동 버튼 클릭
     {
         soundEffectAS.clip = rightLeftBtClip;
         soundEffectAS.Play();
-        if (isMove)
+        if (isMove) //이동 가능
         {
-            if (thisPage == 4)
-                thisPage = 0;
-            else
-                thisPage++;
-            nextPlaceX = (int)gunImgs.transform.localPosition.x - 910;
-            isRight = true;
+            if (thisPage == 4) //마지막 페이지일 때
+                thisPage = 0; //첫 페이지로 돌아옴
+            else //마지막 페이지가 아닐 때
+                thisPage++; //현재 페이지 증가
+            nextPlaceX = (int)gunImgs.transform.localPosition.x - 910; //다음 이동할 장소 지정
+            isRight = true; //오른쪽으로 이동 신호
             isLeft = false;
             PageSetting();
         }
     }
-    public void LeftBtClick()
+    public void LeftBtClick() //오른쪽으로 이동 버튼 클릭
     {
         soundEffectAS.clip = rightLeftBtClip;
         soundEffectAS.Play();
-        if (isMove)
+        if (isMove) //이동 가능
         {
-            if (thisPage == 0)
-                thisPage = 4;
-            else
-                thisPage--;
-            nextPlaceX = (int)gunImgs.transform.localPosition.x + 910;
+            if (thisPage == 0) //첫 페이지일 때
+                thisPage = 4; //마지막 페이지로 돌아옴
+            else //첫 페이지가 아닐 때
+                thisPage--; //현재 페이지 감소
+            nextPlaceX = (int)gunImgs.transform.localPosition.x + 910; //다음 이동할 장소 지정
             isRight = false;
-            isLeft = true;
+            isLeft = true; //왼쪽으로 이동 신호
             PageSetting();
         }
     }
-    public void GunClick()
+    public void GunClick() //무기 버튼 클릭
     {
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
-        if (isGunClick)
+        if (isGunClick) //클릭한 무기라면
         {
-            StatSetDestroy();
+            StatSetDestroy(); //스탯 창 비활성화
         }
-        else
+        else 
         {
-            isGunClick = true;
-            StatSetting();
+            isGunClick = true; 
+            StatSetting(); //스탯 창 활성화
         }
     }
-    public void UpgradeBtClick()
+    public void UpgradeBtClick() //무기 업그레이드 함수
     {
         for(int i=0; i<weaponItemDataList.Count; i++)
         {
+            //캐릭터가 장착한 무기라면 원래 스탯 제거
             if(DemoDataManager.Instance.characterDatasList[0].weapon== weaponItemDataList[i].name)
             {
                 DemoDataManager.Instance.characterDatasList[0].itemstr -= weaponItemDataList[i].str;
@@ -190,6 +192,7 @@ public class DemoWeaponManager : MonoBehaviour
 
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
+        //스탯 증가
         DemoDataManager.Instance.allWeaponItemList[thisPage].strspeed -= (decimal)0.02;
         DemoDataManager.Instance.allWeaponItemList[thisPage].level += 1;
         if (weaponItemDataList[thisPage].name == "에어건")
@@ -216,6 +219,7 @@ public class DemoWeaponManager : MonoBehaviour
 
         for (int i = 0; i < weaponItemDataList.Count; i++)
         {
+            //업그레이드 한 스탯 유저에게 저장
             if (DemoDataManager.Instance.characterDatasList[0].weapon == weaponItemDataList[i].name)
             {
                 DemoDataManager.Instance.characterDatasList[0].itemstr += weaponItemDataList[i].str;
@@ -240,12 +244,13 @@ public class DemoWeaponManager : MonoBehaviour
         DemoDataManager.Instance.achievementDataList[11].progressvalue = count4;
         DemoDataManager.Instance.achievementDataList[12].progressvalue = count5;
     }
-    public void InstallitemBtClick()
+    public void InstallitemBtClick() //무기 장착 버튼 클릭
     {
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
         if (DemoDataManager.Instance.characterDatasList[0].weapon == "") //아무것도 착용 하지 않았을 시
         {
+            //무기 스탯 장착
             DemoDataManager.Instance.characterDatasList[0].weapon = weaponItemDataList[thisPage].name;
             DemoDataManager.Instance.characterDatasList[0].itemstr += weaponItemDataList[thisPage].str;
             DemoDataManager.Instance.characterDatasList[0].itemspeed += weaponItemDataList[thisPage].strspeed;
@@ -296,7 +301,7 @@ public class DemoWeaponManager : MonoBehaviour
         Text temText;
         Image tempImg;
         Button tempBt;
-        if (isRight)
+        if (isRight) //오른쪽으로 이동 시
         {
             gunImg[0].transform.localPosition = new Vector2(gunImg[4].transform.localPosition.x + 910, 0); //총 이미지 이동
             gunLockImg[0].transform.localPosition = new Vector2(gunLockImg[4].transform.localPosition.x + 910, 0); //잠금 이미지 이동
@@ -315,7 +320,7 @@ public class DemoWeaponManager : MonoBehaviour
             gunBt[0] = gunBt[1]; gunBt[1] = gunBt[2]; gunBt[2] = gunBt[3];
             gunBt[3] = gunBt[4]; gunBt[4] = tempBt;
         }
-        if (isLeft)
+        if (isLeft) //왼쪽으로 이동 시
         {
             gunImg[4].transform.localPosition = new Vector2(gunImg[0].transform.localPosition.x - 910, 0);
             gunLockImg[4].transform.localPosition = new Vector2(gunLockImg[0].transform.localPosition.x - 910, 0);
@@ -385,37 +390,39 @@ public class DemoWeaponManager : MonoBehaviour
         StatSetDestroy();
         CheckWeaponLock();
     }
-    void CheckWeaponLock()
+    void CheckWeaponLock() 
     {
         for (int i = 0; i < 5; i++)
         {
             for (int j = 0; j < DemoDataManager.Instance.allWeaponItemList.Count; j++)
             {
-                if (weaponItemDataList[j].name == gunNameTx[i].text && weaponItemDataList[j].count > 0)
+                if (weaponItemDataList[j].name == gunNameTx[i].text && weaponItemDataList[j].count > 0) //가지고 있는 무기라면
                 {
                     gunNameTx[i].gameObject.SetActive(true);
                     gunNameTx[i].text += "\n<size=35>보유 개수: " + weaponItemDataList[j].count + "</size>";
-                    gunLockImg[i].gameObject.SetActive(false);
+                    gunLockImg[i].gameObject.SetActive(false); //잠금 이미지 비활성화
                     gunBt[i].image.sprite = gunSprite[j]; //총 이미지에 알맞는 스프라이트 씌우기
-                    if (weaponItemDataList[j].isnew)
-                        newAlarmImg[i].gameObject.SetActive(true);
-                    else
-                        newAlarmImg[i].gameObject.SetActive(false);
+                    if (weaponItemDataList[j].isnew) //새로 얻은 무기라면
+                        newAlarmImg[i].gameObject.SetActive(true); //new 알람 활성화
+                    else 
+                        newAlarmImg[i].gameObject.SetActive(false); //new 알람 비활성화
                 }
-                else if (weaponItemDataList[j].name == gunNameTx[i].text && weaponItemDataList[j].count == 0)
+                else if (weaponItemDataList[j].name == gunNameTx[i].text && weaponItemDataList[j].count == 0) //가지고 있는 무기가 아니라면
                 {
+                    //무기 이미지 잠금
                     gunNameTx[i].gameObject.SetActive(false);
                     gunLockImg[i].gameObject.SetActive(true);
                     newAlarmImg[i].gameObject.SetActive(false);
                 }
             }
         }
+        //무기 보유 여부에 따라 장착 잠금 이미지 해제
         if (weaponItemDataList[thisPage].count > 0)
             installBlindImg.gameObject.SetActive(false);
         else
             installBlindImg.gameObject.SetActive(true);
     }
-    void StatSetting()
+    void StatSetting() //무기 스탯 출력
     {
         classTx.text = "";
         statImg.gameObject.SetActive(true);
@@ -431,7 +438,7 @@ public class DemoWeaponManager : MonoBehaviour
         newAlarmImg[2].gameObject.SetActive(false);
         InputWeaponData();
     }
-    void StatSetDestroy()
+    void StatSetDestroy() //무기 스탯 비활성화
     {
         classTx.text = "";
         isGunClick = false;
@@ -441,7 +448,7 @@ public class DemoWeaponManager : MonoBehaviour
     {
         //업그레이드 세팅
         int k = 0;
-        for (int i = 1; i <= weaponItemDataList[thisPage].level + 1; i++)
+        for (int i = 1; i <= weaponItemDataList[thisPage].level + 1; i++) //업그레이드에 필요한 개수
         {
             if (i > 1)
             {
@@ -449,23 +456,23 @@ public class DemoWeaponManager : MonoBehaviour
                 k = sumCount;
             }
         }
-        if (weaponItemDataList[thisPage].level != 5)
+        if (weaponItemDataList[thisPage].level != 5) //무기 레벨이 5 이하라면
         {
-            if (weaponItemDataList[thisPage].count < sumCount)
+            if (weaponItemDataList[thisPage].count < sumCount) //업그레이드 불가능
             {
                 upgradeTx.text = "다음 업그레이드까지 " + weaponItemDataList[thisPage].count + "/" + sumCount;
-                upgradeBlind.gameObject.SetActive(true);
+                upgradeBlind.gameObject.SetActive(true); //업그레이드 버튼 잠금 활성화
             }
-            else
-                upgradeBlind.gameObject.SetActive(false);
+            else //업그레이드 가능
+                upgradeBlind.gameObject.SetActive(false); //업그레이드 버튼 잠금 비활성화
         }
-        else
+        else //무기 레벨이 5라면
         {
-            upgradeBlind.gameObject.SetActive(true);
+            upgradeBlind.gameObject.SetActive(true); //업그레이드 버튼 잠금 활성화
             upgradeTx.text = "업그레이드가 종료되었습니다.";
         }
     }
-    void InputWeaponData() //아이템 옮겨 담기
+    void InputWeaponData() //무기 정보 담기
     {
         weaponItemDataList.Clear();
         for (int i = 0; i < DemoDataManager.Instance.allWeaponItemList.Count; i++)

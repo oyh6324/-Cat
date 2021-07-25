@@ -19,14 +19,13 @@ public class StageSelect : MonoBehaviour
     public GameObject yesNobts;
     public GameObject okBt;
 
-    public Image[] locks;
-    public Image[] flags;
+    public Image[] locks; //스테이지 잠금 이미지
+    public Image[] flags; //스테이지 클리어 깃발 이미지
 
-    private int stageNumber;
+    private int stageNumber; //스테이지 숫자
 
     private void OnEnable()
     {
-        //soundEffectAS.clip = divingClip;
         soundEffectAS.PlayOneShot(divingClip);
 
         StageFlagOn();
@@ -36,6 +35,7 @@ public class StageSelect : MonoBehaviour
         if (!messageCanvas.gameObject.activeSelf)
             stageTitleTx.gameObject.SetActive(false);
     }
+    //스테이지 버튼
     public void Stage1Click()
     {
         stageNumber = 1;
@@ -111,24 +111,9 @@ public class StageSelect : MonoBehaviour
         stageNumber = 15;
         StageCilck();
     }
-    public void YesBtClick()
+    private void StageCilck() //스테이지 클릭 시
     {
-        UseKey();
-    }
-    public void NoBtClick()
-    {
-        stageMessage.gameObject.SetActive(false);
-        messageCanvas.gameObject.SetActive(false);
-    }
-    public void OkBtClick()
-    {
-        okBt.SetActive(false);
-        yesNobts.SetActive(true);
-        stageMessage.gameObject.SetActive(false);
-        messageCanvas.gameObject.SetActive(false);
-    }
-    private void StageCilck()
-    {
+        //메시지 활성화
         messageCanvas.gameObject.SetActive(true);
         stageMessage.gameObject.SetActive(true);
         stageTitleTx.gameObject.SetActive(true);
@@ -138,10 +123,29 @@ public class StageSelect : MonoBehaviour
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
     }
+    //메시지 버튼
+    public void YesBtClick() //예 버튼 클릭
+    {
+        UseKey(); //열쇠 사용
+    }
+    public void NoBtClick() //아니오 버튼 클릭
+    {
+        //메시지 비활성화
+        stageMessage.gameObject.SetActive(false);
+        messageCanvas.gameObject.SetActive(false);
+    }
+    public void OkBtClick() //확인 버튼 클릭
+    {
+        //메시지 비활성화
+        okBt.SetActive(false);
+        yesNobts.SetActive(true);
+        stageMessage.gameObject.SetActive(false);
+        messageCanvas.gameObject.SetActive(false);
+    }
     private void UseKey()
     {
         if (DemoDataManager.Instance.characterDatasList[0].weapon == "") //아무것도 착용 하지 않았을 시
-        { //기본 무기 장착
+        { //기본 무기 장착(에어건)
             DemoDataManager.Instance.characterDatasList[0].weapon = DemoDataManager.Instance.allWeaponItemList[0].name;
             DemoDataManager.Instance.characterDatasList[0].itemstr += DemoDataManager.Instance.allWeaponItemList[0].str;
             DemoDataManager.Instance.characterDatasList[0].itemspeed += DemoDataManager.Instance.allWeaponItemList[0].strspeed;
@@ -159,9 +163,11 @@ public class StageSelect : MonoBehaviour
             if (stageNumber > DemoDataManager.Instance.characterDatasList[0].stage) //새로운 스테이지라면
                 DemoDataManager.Instance.characterDatasList[0].stage += 1; //캐릭터가 입장한 스테이지 증가
 
+            //메시지 비활성화
             stageMessage.gameObject.SetActive(false);
             messageCanvas.gameObject.SetActive(false);
 
+            //스테이지 숫자 신호 보낸 후 씬 로드
             PlayerPrefs.SetInt("stageNumber", stageNumber);
             SceneManager.LoadScene("Stage");
         }
@@ -176,13 +182,14 @@ public class StageSelect : MonoBehaviour
         soundEffectAS.clip = buttonClickClip;
         soundEffectAS.Play();
     }
-    private void StageFlagOn()
+    private void StageFlagOn() //스테이지 클리어 확인 함수
     {
         if (PlayerPrefs.HasKey("stage clear")==false) return;
+        //클리어 했다면
         for(int i=0; i<PlayerPrefs.GetInt("stage clear"); i++)
         {
-            flags[i].gameObject.SetActive(true);
-            locks[i + 1].gameObject.SetActive(false);
+            flags[i].gameObject.SetActive(true); //깃발 활성화
+            locks[i + 1].gameObject.SetActive(false); //클리어한 스테이지 +1 잠금 비활성화
         }
     }
 }

@@ -7,15 +7,16 @@ using UnityEngine.Audio;
 
 public class StageManager : MonoBehaviour
 {
-    public GameObject startCanvas;
-    public GameObject[] map;
-    public GameObject[] stage;
+    public GameObject startCanvas; //게임 시작 화면
 
-    public GameObject messageCanvas;
-    public GameObject clears;
-    public Text expTx;
+    public GameObject[] map; //스테이지 배경
+    public GameObject[] stage; //스테이지 타일
 
-    public GameObject rewards;
+    public GameObject messageCanvas; //메시지 창
+    public GameObject clears; //스테이지 클리어 화면
+    public Text expTx; //경험치 출력 텍스트
+
+    public GameObject rewards; //보상 화면
     public Text rewardTitle;
     public Image anchovyImg;
     public Text anchovyTx;
@@ -25,7 +26,7 @@ public class StageManager : MonoBehaviour
     public Sprite 수리검;
     public Sprite 음파건;
 
-    public GameObject fail;
+    public GameObject fail; //스테이지 실패 화면
     public Image message;
     public Text messageTx;
     public GameObject yesNo;
@@ -73,20 +74,20 @@ public class StageManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        spawnPlayer();
+        spawnPlayer(); //플레이어 위치 재설정
     }
     void Update()
     {
-        if(GameObject.FindWithTag("Enemy")==null)
+        if(GameObject.FindWithTag("Enemy")==null) //현재 스테이지에 적이 없다면
         {
-            StageClear();
+            StageClear(); //클리어
         }
-        if (player.GetComponent<PlayerMove>().HeartCnt < 1)
+        if (player.GetComponent<PlayerMove>().HeartCnt < 0) //플레이어 체력이 다 떨어진 경우
         {
-            StageFail();
+            StageFail(); //실패
         }
     }
-    void spawnPlayer()
+    void spawnPlayer() //플레이어 위치 재설정
     {
         player.transform.position = spawn[stageNumber - 1];
     }
@@ -96,7 +97,7 @@ public class StageManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         startCanvas.SetActive(false);
     }
-    void StageFail()
+    void StageFail() //스테이지 실패 시
     {
         if (failCheck) return;
 
@@ -108,7 +109,7 @@ public class StageManager : MonoBehaviour
         fail.SetActive(true);
         failCheck = true;
     }
-    public void HomeBtClick()
+    public void HomeBtClick() //뒤로가기 버튼 클릭 시
     {
         messageCanvas.SetActive(true);
         messageAS = messageCanvas.GetComponent<AudioSource>();
@@ -118,19 +119,19 @@ public class StageManager : MonoBehaviour
         messageTx.text = "게임을 종료하겠습니까? 사용한 열쇠는 돌아오지 않아요!";
         isHomeBt = true;
     }
-    public void BackBtClick()
+    public void BackBtClick() //돌아가기 버튼
     {
         messageAS.PlayOneShot(buttonClip);
         PlayerPrefs.SetInt("returnCat", 1);
         SceneManager.LoadScene("Cat");
     }
-    public void AgainBtClick()
+    public void AgainBtClick() //다시하기 버튼
     {
         messageAS.PlayOneShot(buttonClip);
         message.gameObject.SetActive(true);
         messageTx.text = "열쇠를 사용하시겠습니까?";
     }
-    public void YesBtClick()
+    public void YesBtClick() //예 버튼
     {
         messageAS.PlayOneShot(buttonClip);
 
@@ -154,7 +155,7 @@ public class StageManager : MonoBehaviour
             SceneManager.LoadScene("Stage");
         }
     }
-    public void NoBtClick()
+    public void NoBtClick() //아니오 버튼
     {
         messageAS.PlayOneShot(buttonClip);
         message.gameObject.SetActive(false);
@@ -165,14 +166,14 @@ public class StageManager : MonoBehaviour
             isHomeBt = false;
         }
     }
-    public void MokBtClick()
+    public void MokBtClick() //확인 버튼
     {
         messageAS.PlayOneShot(buttonClip);
         yesNo.SetActive(true);
         ok.SetActive(false);
         message.gameObject.SetActive(false);
     }
-    void StageClear()
+    void StageClear() //스테이지 클리어 시
     {
         if (clearCheck) return;
 
@@ -186,7 +187,7 @@ public class StageManager : MonoBehaviour
         EXPGet();
         clearCheck = true;
     }
-    public void ClearBtClick()
+    public void ClearBtClick() //스테이지 클리어 버튼
     {
         messageAS.PlayOneShot(buttonClip);
 
@@ -211,14 +212,14 @@ public class StageManager : MonoBehaviour
         }
         DemoDataManager.Instance.achievementDataList[2].progressvalue++;
     }
-    void EXPGet()
+    void EXPGet() //경험치 획득
     {
         if (PlayerPrefs.HasKey("stage clear") && PlayerPrefs.GetInt("stage clear") >= stageNumber) //이미 클리어 한 게임이라면
             return;
 
         expTx.gameObject.SetActive(true);
 
-        switch (stageNumber)
+        switch (stageNumber) //스테이지별 획득 경험치
         {
             case 1:
                 expTx.text = "EXP +480";
@@ -265,7 +266,7 @@ public class StageManager : MonoBehaviour
                 break;
         }
     }
-    void RewardGet()
+    void RewardGet() //보상 받기
     {
         rewardTitle.text = stageNumber.ToString();
         if (stageNumber == 5)

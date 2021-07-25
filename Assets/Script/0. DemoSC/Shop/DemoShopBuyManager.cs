@@ -48,130 +48,77 @@ public class DemoShopBuyManager : MonoBehaviour
         isFreeBox = new bool[4];
     }
     //버튼 연결
-    public void AnchovyboxBtClick()
+    public void AnchovyboxBtClick() //멸치 보석함 클릭
     {
         if (PlayerPrefs.HasKey("isClothes") && DemoDataManager.Instance.moneyItemList[3].count > 0) //무료사용권 있을 때
         {
-            BuyBoxFree(0);
+            BuyBoxFree(0); //의상 뽑기
         }
         else if (PlayerPrefs.HasKey("isClothes") == false && DemoDataManager.Instance.moneyItemList[5].count > 0)
         {
-            BuyBoxFree(1);
+            BuyBoxFree(1); //무기 뽑기
         }
         else //없을 때
             BuyItem(0);
     }
-    public void PearlboxBtClick()
+    public void PearlboxBtClick() //진주 보석함 클릭
     {
         if (PlayerPrefs.HasKey("isClothes") && DemoDataManager.Instance.moneyItemList[4].count > 0) //무료사용권 있을 때
         {
-            BuyBoxFree(2);
+            BuyBoxFree(2); //의상 뽑기
         }
         else if (PlayerPrefs.HasKey("isClothes") == false && DemoDataManager.Instance.moneyItemList[6].count > 0)
         {
-            BuyBoxFree(3);
+            BuyBoxFree(3); //무기 뽑기
         }
         else //없을 때
             BuyItem(1);
     }
-    public void Anchovy1000BtClick()
+    public void Anchovy1000BtClick() //멸치 1000마리 구매
     {
         BuyItem(2);
     }
-    public void Anchovy2000BtClick()
+    public void Anchovy2000BtClick() //멸치 2000마리 구매
     {
         BuyItem(3);
     }
-    public void Anchovy3000BtClick()
+    public void Anchovy3000BtClick() //멸치 3000마리 구매
     {
         BuyItem(4);
     }
-    public void Pearl50BtClick()
+    public void Pearl50BtClick() //진주 150개 구매
     {
         BuyItem(5);
     }
-    public void Pearl100BtClick()
+    public void Pearl100BtClick() //진주 100개 구매
     {
         BuyItem(6);
     }
-    public void Pearl200BtClick()
+    public void Pearl200BtClick() //진주 200개 구매
     {
         BuyItem(7);
     }
-    public void Key1BtClick()
+    public void Key1BtClick() //열쇠 1개 구매
     {
         BuyItem(8);
     }
-    public void Key3BtClick()
+    public void Key3BtClick() //열쇠 3개 구매
     {
         BuyItem(9);
     }
-    public void Key5BtClick()
+    public void Key5BtClick() //열쇠 5개 구매
     {
         BuyItem(10);
     }
-    //message yes or no
-    public void NoBtClick()
-    {
-        soundEffectAS.clip = buttonClickClip;
-        soundEffectAS.Play();
-        isFreeUse = false;
-        messageCanvas.gameObject.SetActive(false);
-    }
-    public void YesBtClick()
-    {
-        soundEffectAS.clip = buttonClickClip;
-        soundEffectAS.Play();
-        if (DemoTopManager.isLobby) //로비에서 뒤로가기 눌렀을때 메시지 창
-            Application.Quit();
-        else //상점에 있을 때
-        {
-            if (isFreeUse) //무료뽑기 진행 시
-            {
-                if (isFreeBox[0])
-                {
-                    PlayerPrefs.SetInt("멸치의상뽑기", 1);
-                    DemoDataManager.Instance.moneyItemList[3].count -= 1;
-                }
-                else if (isFreeBox[1])
-                {
-                    PlayerPrefs.SetInt("멸치무기뽑기", 1);
-                    DemoDataManager.Instance.moneyItemList[5].count -= 1;
-                }
-                else if (isFreeBox[2])
-                {
-                    PlayerPrefs.SetInt("진주의상뽑기", 1);
-                    DemoDataManager.Instance.moneyItemList[4].count -= 1;
-                }
-                else if (isFreeBox[3])
-                {
-                    PlayerPrefs.SetInt("진주무기뽑기", 1);
-                    DemoDataManager.Instance.moneyItemList[6].count -= 1;
-                }
-                isFreeUse = false;
-                StartCoroutine(WatingForBoxOpen());
-            }
-            else //돈 계산 필요 시
-                PayMoney();
-        }
-    }
-    public void OkBtClick()
-    {
-        soundEffectAS.clip = buttonClickClip;
-        soundEffectAS.Play();
-        yesnoBts.SetActive(true);
-        okBt.gameObject.SetActive(false);
-        messageCanvas.gameObject.SetActive(false);
-    }
-    void BuyItem(int itemnumber)
+    void BuyItem(int itemnumber) //아이템 buy 함수
     {
         soundEffectAS.clip = paperClickClip;
         soundEffectAS.Play();
-        messageCanvas.gameObject.SetActive(true);
+        messageCanvas.gameObject.SetActive(true); //메시지 활성화
         messageTx.text = buyitemdataList[itemnumber].productName + buyitemdataList[itemnumber].priceName + buyitemdataList[itemnumber].price +
             buyitemdataList[itemnumber].priceUnit + "로 구매하시겠습니까?";
 
-        //무엇을 사는지
+        //유저가 구매하는 물건 확인 
         for (int i = 0; i < buyitemdataList.Count; i++)
         {
             if (i == itemnumber)
@@ -180,7 +127,61 @@ public class DemoShopBuyManager : MonoBehaviour
                 productNumber[i] = false;
         }
     }
-    void PayMoney()
+
+    //message yes or no
+    public void NoBtClick() //메시지 아니오 클릭
+    {
+        soundEffectAS.clip = buttonClickClip;
+        soundEffectAS.Play();
+        isFreeUse = false; //무료이용권 사용 취소
+        messageCanvas.gameObject.SetActive(false); //메시지 비활성화
+    }
+    public void YesBtClick() //메시지 예 클릭
+    {
+        soundEffectAS.clip = buttonClickClip;
+        soundEffectAS.Play();
+        if (DemoTopManager.isLobby) //로비에서 뒤로가기 눌렀을때 메시지 창
+            Application.Quit(); //게임 종료
+        else //상점에 있을 때
+        {
+            if (isFreeUse) //무료뽑기 진행 시
+            {
+                if (isFreeBox[0]) //멸치 보석함 의상
+                {
+                    PlayerPrefs.SetInt("멸치의상뽑기", 1);
+                    DemoDataManager.Instance.moneyItemList[3].count -= 1; //게임 머니 데이터에서 무료이용권 제거
+                }
+                else if (isFreeBox[1]) //멸치 보석함 무기
+                {
+                    PlayerPrefs.SetInt("멸치무기뽑기", 1);
+                    DemoDataManager.Instance.moneyItemList[5].count -= 1; //게임 머니 데이터에서 무료이용권 제거
+                }
+                else if (isFreeBox[2]) //진주 보석함 의상
+                {
+                    PlayerPrefs.SetInt("진주의상뽑기", 1);
+                    DemoDataManager.Instance.moneyItemList[4].count -= 1; //게임 머니 데이터에서 무료이용권 제거
+                }
+                else if (isFreeBox[3]) //진주 보석함 무기
+                {
+                    PlayerPrefs.SetInt("진주무기뽑기", 1);
+                    DemoDataManager.Instance.moneyItemList[6].count -= 1; //게임 머니 데이터에서 무료이용권 제거
+                }
+                isFreeUse = false;
+                StartCoroutine(WatingForBoxOpen()); //뽑기 모션
+            }
+            else //무료 뽑기 제외 돈 계산 필요 시
+                PayMoney();
+        }
+    }
+    public void OkBtClick() //메시지 확인 클릭
+    {
+        soundEffectAS.clip = buttonClickClip;
+        soundEffectAS.Play();
+        yesnoBts.SetActive(true);
+        okBt.gameObject.SetActive(false);
+        messageCanvas.gameObject.SetActive(false);
+    }
+    void PayMoney() //돈 계산 함수
     {
         int tempNumber = 0;
         bool isBuy = false;
@@ -194,30 +195,30 @@ public class DemoShopBuyManager : MonoBehaviour
         //구매 가능 여부
         for (int i = 0; i < DemoDataManager.Instance.moneyItemList.Count; i++)
         {
-            if (DemoDataManager.Instance.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].priceName))
+            if (DemoDataManager.Instance.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].priceName)) //필요한 게임 머니 종류 확인
             {
-                if (DemoDataManager.Instance.moneyItemList[i].count < buyitemdataList[tempNumber].price)
+                if (DemoDataManager.Instance.moneyItemList[i].count < buyitemdataList[tempNumber].price) //게임 머니 개수가 적다면
                 {
                     messageTx.text = buyitemdataList[tempNumber].priceName + "가 부족해요!";
                     yesnoBts.SetActive(false);
                     okBt.gameObject.SetActive(true);
                 }
                 else
-                    isBuy = true;
+                    isBuy = true; //구매 가능
             }
         }
         //구매 가능하다면
         if (isBuy)
         {
-            //상자일때
-            if (productNumber[0])
+            //보석함 구매
+            if (productNumber[0]) //멸치 보석함
             {
                 if (PlayerPrefs.HasKey("isClothes"))
                     PlayerPrefs.SetInt("멸치의상뽑기", 1);
                 else
                     PlayerPrefs.SetInt("멸치무기뽑기", 1);
             }
-            else if (productNumber[1])
+            else if (productNumber[1]) //진주 보석함
             {
                 if (PlayerPrefs.HasKey("isClothes"))
                     PlayerPrefs.SetInt("진주의상뽑기", 1);
@@ -227,18 +228,19 @@ public class DemoShopBuyManager : MonoBehaviour
             //계산
             for (int i = 0; i < DemoDataManager.Instance.moneyItemList.Count; i++)
             {
-                if (DemoDataManager.Instance.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].getProductName))
-                    DemoDataManager.Instance.moneyItemList[i].count += buyitemdataList[tempNumber].getProduct;
-                if (DemoDataManager.Instance.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].priceName))
-                    DemoDataManager.Instance.moneyItemList[i].count -= buyitemdataList[tempNumber].price;
+                if (DemoDataManager.Instance.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].getProductName)) //게임 머니 구매했다면
+                    DemoDataManager.Instance.moneyItemList[i].count += buyitemdataList[tempNumber].getProduct; //게임 머니 추가
+                if (DemoDataManager.Instance.moneyItemList[i].name.Equals(buyitemdataList[tempNumber].priceName)) //게임 머니 지불했다면
+                    DemoDataManager.Instance.moneyItemList[i].count -= buyitemdataList[tempNumber].price; //게임 머니 감소
             }
             if (buyitemdataList[tempNumber].getProductName == "멸치") //업적 연동
                 DemoDataManager.Instance.achievementDataList[0].progressvalue += buyitemdataList[tempNumber].getProduct;
             if(buyitemdataList[tempNumber].getProductName=="진주")
                 DemoDataManager.Instance.achievementDataList[1].progressvalue += buyitemdataList[tempNumber].getProduct;
-            if (productNumber[0] || productNumber[1]) //상자구매시 구매화면
+            
+            if (productNumber[0] || productNumber[1]) //보석함 구매했다면
             {
-                StartCoroutine(WatingForBoxOpen());
+                StartCoroutine(WatingForBoxOpen()); //보석함 애니메이션
             }
             else //나머지 구매화면
             {
@@ -248,7 +250,7 @@ public class DemoShopBuyManager : MonoBehaviour
             }
         }
     }
-    void BuyBoxFree(int boxnumber)
+    void BuyBoxFree(int boxnumber) //무료이용권 사용 함수
     {
         soundEffectAS.clip = paperClickClip;
         soundEffectAS.Play();

@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour
 {
-    public Image dialogue;
-    public Text dialTx;
-    public GameObject tutorialBt;
+    public Image dialogue; //튜토리얼 말풍선
+    public Text dialTx; //말풍선 text
+    public GameObject tutorialBt; //튜토리얼 화살표 이미지
     public Image[] blinds; //0: all 1: weapon 2: airgun 3: backBt 4: inventory 5: helmet 6: playBt 7: stageBt
-    public GameObject weaponCanvas;
-    public GameObject inventoryCanvas;
-    public GameObject stageCanvas;
+    public GameObject weaponCanvas; //무기고 화면
+    public GameObject inventoryCanvas; //인벤토리 화면
+    public GameObject stageCanvas; //스테이지 선택 화면
 
-    public float typing_speed;
+    public float typing_speed; //말풍선 text 속도
 
+    //튜토리얼 화살표 위치
     public Vector2 weaponBt_forBt;
     public Vector2 airgunBt_forBt;
     public Vector2 backBt_forBt;
@@ -23,17 +24,19 @@ public class Tutorial : MonoBehaviour
     public Vector2 playBt_forBt;
     public Vector2 stage1Bt_forBt;
 
+    //튜토리얼 말풍선 위치
     public Vector2 lobby_forDialog;
     public Vector2 weapon_forDialog;
     public Vector2 inventory_forDialog;
 
     private bool waitingClick;
     private bool isTyping;
-    private int tutorialNumber;
+    private int tutorialNumber; //튜토리얼 순서
     private string[] tutorials;
-    private int keyNumber;
+    private int keyNumber; //열쇠 개수 변수
     private void Start()
     {
+        //튜토리얼 string
         tutorials=new string[]{"안녕! 나는 고양이 "+DemoDataManager.Instance.characterDatasList[0].name+"!",
                                     "나는 지금 무지 무지 배가 \n고파서 물고기를 잡으러 왔어. ",
                                     "내가 물고기를 잡을 수 있게 \n도와 줄래? ",
@@ -45,52 +48,56 @@ public class Tutorial : MonoBehaviour
                                     "여기는 내 보물 창고야. \n어항을 착용해볼까? ",
                                     "이게 없으면 숨쉴 수 없지! \n자, 이제 물고기를 잡으러 가자! "};
 
-        dialogue.transform.localPosition = lobby_forDialog;
+        dialogue.transform.localPosition = lobby_forDialog; //말풍선 위치
         StartCoroutine(typing(tutorials[0]));
 
-        keyNumber = DemoDataManager.Instance.moneyItemList[2].count;
+        keyNumber = DemoDataManager.Instance.moneyItemList[2].count; //열쇠 개수 저장
     }
     private void Update()
     {
         CheckTutorialPhase();
     }
-    public void BtClick()
+    public void BtClick() //말풍선 클릭
     {
-        if (waitingClick)
+        if (waitingClick) //다른 오브젝트 클릭 기다림
             return;
 
-        if (isTyping)
+        if (isTyping) //text가 타이핑 중이라면
         {
-            isTyping = false;
-            dialTx.text = tutorials[tutorialNumber];
+            isTyping = false; //타이밍 끝냄
+            dialTx.text = tutorials[tutorialNumber]; //해당 튜토리얼 string 출력
         }
-        else
+        else //타이핑 중이 아니라면
         {
+            //튜토리얼 진행 넘어감
             tutorialNumber++;
             StartCoroutine(typing(tutorials[tutorialNumber]));
         }
     }
-    IEnumerator typing(string message)
+    IEnumerator typing(string message) //말풍선 text 타이핑 모션 구현
     {
-        isTyping = true;
-        for(int i=0; i< message.Length; i++)
+        isTyping = true; //타이핑 중
+        for(int i=0; i< message.Length; i++) 
         {
-            if (message.Length == i + 1 || isTyping == false)
+            if (message.Length == i + 1 || isTyping == false) //string이 모두 구현됐거나 타이핑을 끝낼 때
             {
-                isTyping = false;
+                isTyping = false; //타이핑 종료
                 break;
             }
-            dialTx.text = message.Substring(0, i + 1);
-            yield return new WaitForSeconds(typing_speed);
+            dialTx.text = message.Substring(0, i + 1); //한 글자씩 말풍선 text에 추가
+            yield return new WaitForSeconds(typing_speed); //타이핑 속도 기다림
         }
     }
-    void CheckTutorialPhase()
+    void CheckTutorialPhase() //튜토리얼 진행에 따른 오브젝트 위치
     {
+        //튜토리얼 화살표가 필요 없을 때
         if (isTyping||tutorialNumber == 0 || tutorialNumber == 1 || tutorialNumber == 2 || tutorialNumber == 4 || tutorialNumber == 5)
             return;
 
         waitingClick = true;
-        tutorialBt.gameObject.SetActive(true);
+        tutorialBt.gameObject.SetActive(true); //튜토리얼 화살표 활성화
+
+        //튜토리얼 진행에 따른 말풍선과 화살표 위치 변경
         if (tutorialNumber == 3)
         {
             tutorialBt.transform.localPosition = weaponBt_forBt;
@@ -173,7 +180,7 @@ public class Tutorial : MonoBehaviour
             this.gameObject.SetActive(false);
         }
     }
-    void OnBlind(int blindNumber)
+    void OnBlind(int blindNumber) //특정 오브젝트 외에 클릭 불가
     {
         for(int i=0; i<blinds.Length; i++)
         {
