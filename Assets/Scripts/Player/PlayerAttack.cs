@@ -27,13 +27,13 @@ public class PlayerAttack : MonoBehaviour
     {
         //coolTime=DemoDataManager.characterDatasList[0].itemspeed-DemoDataManager.characterDatasList[0].allagi*0.005m;
         anim = GetComponent<Animator>();
-        coolTime = coolTime = DemoDataManager.Instance.characterDatasList[0].itemspeed - DemoDataManager.Instance.characterDatasList[0].allagi * 0.005m;
+        coolTime = coolTime = DemoDataManager.Instance.characterDatasList[0].itemspeed - DemoDataManager.Instance.characterDatasList[0].allagi * 0.005m; //탄속
         agi = 15;
         isShooting = false;
 
         audioSource = GetComponent<AudioSource>();
     }
-    private void OnEnable()
+    private void OnEnable() 
     {
         string weaponName = DemoDataManager.Instance.characterDatasList[0].weapon;
 
@@ -58,11 +58,14 @@ public class PlayerAttack : MonoBehaviour
                 dressAnim[i].SetTrigger("PlayerShoot");
         }
     }
-    IEnumerator shoot()
+    IEnumerator shoot() 
     {
+        //총알 생성
         isShooting = true;
         GameObject bulletclone = Instantiate(bullet, tr.position, tr.rotation);
         Rigidbody2D rigid = bulletclone.GetComponent<Rigidbody2D>();
+
+        //총알 방향
         if (this.gameObject.transform.localScale.x==-0.5f|| Input.GetAxisRaw("Horizontal") == 1)
         {
             bullet.transform.localScale = new Vector3(0.7f, 0.7f, 1);
@@ -75,6 +78,8 @@ public class PlayerAttack : MonoBehaviour
         }
         yield return new WaitForSeconds(decimal.ToSingle(coolTime));
         isShooting = false;
+
+        //삭제
         Destroy(bulletclone, 0.8f);    
     }
 
