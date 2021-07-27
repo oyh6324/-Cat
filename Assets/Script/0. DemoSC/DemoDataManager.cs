@@ -200,12 +200,12 @@ public class DemoDataManager : MonoBehaviour
         //캐릭터 데이터 추가
         characterDatasList.Add(new DemoCharacterData("dmlduddlekduddlqkqh", "", "", "", "", "", 1, 7, 3, 5, 100, 0, 0, 0, 7, 3, 5, 0, 0, 0, 0, 0, 600, 5, 0, 5, 0, 0));
         //돈, 무료이용권 데이터 추가
-        moneyItemList.Add(new DemoMoneyItemData("멸치", 1000000));
-        moneyItemList.Add(new DemoMoneyItemData("진주", 10000));
+        moneyItemList.Add(new DemoMoneyItemData("멸치", 1000));
+        moneyItemList.Add(new DemoMoneyItemData("진주", 10));
         moneyItemList.Add(new DemoMoneyItemData("열쇠", 5));
         moneyItemList.Add(new DemoMoneyItemData("멸치보석함의상", 1));
-        moneyItemList.Add(new DemoMoneyItemData("진주보석함의상", 10));
-        moneyItemList.Add(new DemoMoneyItemData("멸치보석함무기", 10));
+        moneyItemList.Add(new DemoMoneyItemData("진주보석함의상", 1));
+        moneyItemList.Add(new DemoMoneyItemData("멸치보석함무기", 1));
         moneyItemList.Add(new DemoMoneyItemData("진주보석함무기", 1));
 
         SaveAllData();
