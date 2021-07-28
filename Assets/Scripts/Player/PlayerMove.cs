@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerMove : MonoBehaviour
 {
@@ -41,6 +42,9 @@ public class PlayerMove : MonoBehaviour
     public AudioClip attacktedClip;
     public AudioClip deadClip;
     public AudioClip jumpClip;
+
+    public bool jumpbt;
+    public static int dirbt;
     void Start()
     {
         isSlow = false;
@@ -55,7 +59,7 @@ public class PlayerMove : MonoBehaviour
         hpbar.value = (float)curHp / (float)maxHp;
         Hptx.text = curHp + "/" + maxHp;
         maxSpeed = 4f;
-
+        jumpbt = false;
         audioSource = GetComponent<AudioSource>();
     }
     private void OnEnable()
@@ -74,26 +78,27 @@ public class PlayerMove : MonoBehaviour
         //체력바 업데이트
         hpbar.value = Mathf.Lerp(hpbar.value, (float)curHp / (float)maxHp, Time.deltaTime * 10);
         //jump ani
-        if (Input.GetButtonDown("Jump")&&!anim.GetBool("isJumping")&&isLiving==true)
+        if (jumpbt!=false&&!anim.GetBool("isJumping")&&isLiving==true)
         {
             rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
             audioSource.PlayOneShot(jumpClip);
-
-            for(int i=0; i<3; i++)
+            for (int i=0; i<3; i++)
                 dressAnim[i].SetBool("isJumping", true);
+            jumpbt = false;
+            Debug.Log(jumpbt);
         }
         //stop speed
-        if (Input.GetButtonUp("Horizontal"))
+        if (/*Input.GetButtonUp("Horizontal")*/dirbt==0)
         {
-            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
+            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0, rigid.velocity.y);
         }
         //direction sprite
-        if (Input.GetAxisRaw("Horizontal") == 1 && isLiving == true)
+        if (/*Input.GetAxisRaw("Horizontal") == 1*/ dirbt == 1&& isLiving == true)
         {
             transform.localScale = new Vector3(-0.5f, 0.5f, 1);
         }
-        else if (Input.GetAxisRaw("Horizontal") == -1 && isLiving == true)
+        else if (/*Input.GetAxisRaw("Horizontal") == -1*/ dirbt == -1&& isLiving == true)
         {
             transform.localScale = new Vector3(0.5f, 0.5f, 1);
         }
@@ -117,11 +122,11 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate()
     {
         //press directionn key
-        float h = Input.GetAxisRaw("Horizontal");
+        //float h = Input.GetAxisRaw("Horizontal");
         Vector3 raypos = new Vector3(transform.position.x, transform.position.y - 0.5f); //지면에 붙어있는지 확인하는 선
         if(isLiving==true)
         {
-            rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse); //addforce 누를수록 가속
+            rigid.AddForce(Vector2.right * dirbt, ForceMode2D.Impulse); //addforce 누를수록 가속
             if (rigid.velocity.x > maxSpeed)
             {
                 rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
@@ -136,7 +141,7 @@ public class PlayerMove : MonoBehaviour
             RaycastHit2D rayhit = Physics2D.Raycast(raypos, Vector3.down, 1, LayerMask.GetMask("tile"));
             if (rayhit.collider != null)
             {
-                if (rayhit.distance < 0.5f)
+                if (rayhit.distance < 0.1f)
                 {
                     anim.SetBool("isJumping", false);
 
@@ -324,7 +329,26 @@ public class PlayerMove : MonoBehaviour
             gameObject.layer = 12;
         }
     }
-
+    public void JumpBtClick()
+    {
+        if(jumpbt==false)
+            jumpbt = true;
+    }
+    public void onLeftDown()
+    {
+        dirbt = -1;
+        Debug.Log(dirbt);
+    }
+    public void onRightDown()
+    {
+        dirbt = 1;
+        Debug.Log(dirbt);
+    }
+    public void onPointUp()
+    {
+        dirbt = 0;
+        Debug.Log(dirbt);
+    }
     private void WearingCheck()
     {
         string topName = DemoDataManager.Instance.characterDatasList[0].top;
