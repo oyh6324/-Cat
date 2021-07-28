@@ -23,6 +23,7 @@ public class PlayerAttack : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip[] weaponClip;
     private int bulletIndex;
+    private bool shootbt_click;
     private void Start()
     {
         //coolTime=DemoDataManager.characterDatasList[0].itemspeed-DemoDataManager.characterDatasList[0].allagi*0.005m;
@@ -30,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
         coolTime = coolTime = DemoDataManager.Instance.characterDatasList[0].itemspeed - DemoDataManager.Instance.characterDatasList[0].allagi * 0.005m; //탄속
         agi = 15;
         isShooting = false;
-
+        shootbt_click = false;
         audioSource = GetComponent<AudioSource>();
     }
     private void OnEnable() 
@@ -48,7 +49,7 @@ public class PlayerAttack : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Z) && isShooting == false&&PlayerMove.isLiving==true)
+        if (shootbt_click == true && isShooting == false&&PlayerMove.isLiving==true)
         {
             StartCoroutine(shoot());
             anim.SetTrigger("PlayerShoot");
@@ -56,6 +57,7 @@ public class PlayerAttack : MonoBehaviour
 
             for (int i = 0; i < 3; i++)
                 dressAnim[i].SetTrigger("PlayerShoot");
+            shootbt_click = false;
         }
     }
     IEnumerator shoot() 
@@ -81,6 +83,11 @@ public class PlayerAttack : MonoBehaviour
 
         //삭제
         Destroy(bulletclone, 0.8f);    
+    }
+    public void Shootbt()
+    {
+        shootbt_click = true;
+        Debug.Log("shoot");
     }
 
 }
